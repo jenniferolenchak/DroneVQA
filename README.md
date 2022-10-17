@@ -5,7 +5,7 @@
 - [Members and Roles](#members-and-roles)
 
 ## About
-UCF Senior Design Project, Sponsored by Lockheed Martin
+UCF Senior Design Project, Sponsored by Lockheed Martin\n
 Deep learning for visual inspection performed by simulated drones
 
 ## Members and Roles
@@ -15,5 +15,3 @@ Deep learning for visual inspection performed by simulated drones
 - Robin Perlman
 - Ayden Rebhan
 - Brandon Spangler
-
-VIDL-1
