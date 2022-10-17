@@ -15,3 +15,5 @@ Deep learning for visual inspection performed by simulated drones
 - Robin Perlman
 - Ayden Rebhan
 - Brandon Spangler
+
+VIDL-1
