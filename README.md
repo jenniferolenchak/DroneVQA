@@ -10,8 +10,8 @@ Deep learning for visual inspection performed by simulated drones
 
 ## Members and Roles
 - Samuel Hearn
-- Jennifer Olenchak, Project Manager
+- Jennifer Olenchak - Project Manager
 - Marco Peric
-- Robin Perlman, Neural Network Sub-team Lead
+- Robin Perlman - Neural Network Sub-team Lead
 - Ayden Rebhan
-- Brandon Spangler
+- Brandon Spangler - Simulation Environment Lead
