@@ -5,7 +5,7 @@
 - [Members and Roles](#members-and-roles)
 
 ## About
-UCF Senior Design Project, Sponsored by Lockheed Martin\n
+UCF Senior Design Project, Sponsored by Lockheed Martin \
 Deep learning for visual inspection performed by simulated drones
 
 ## Members and Roles
