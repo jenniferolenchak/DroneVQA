@@ -1,0 +1,11 @@
+{
+    "SettingsVersion": 1.2,
+    "CameraDefaults": {
+        "CaptureSettings": [
+          {
+            "Width": 1280,
+            "Height": 720
+          }
+      ]
+    }
+  }
