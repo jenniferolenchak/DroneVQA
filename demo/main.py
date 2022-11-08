@@ -4,6 +4,9 @@ import cv2
 import numpy as np
 from transformers import ViltForQuestionAnswering, ViltProcessor 
 import torch
+import threading
+from multiprocessing import Process
+
 
 def setupTransformer():
     processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
@@ -67,17 +70,24 @@ def main():
             question = values["-QUESTION-"]
             print(question)
 
+
             # forward pass
-            encoding = processor(image, question, return_tensors="pt")
+            def predict():
+                encoding = processor(image, question, return_tensors="pt")
 
-            outputs = model(**encoding)
-            logits = outputs.logits
-            idx = torch.sigmoid(logits).argmax(-1).item()
+                outputs = model(**encoding)
+                logits = outputs.logits
+                idx = torch.sigmoid(logits).argmax(-1).item()
 
-            # Display Output
-            print("Predicted answer:", model.config.id2label[idx])
-            window["-ANSWER-"].update(model.config.id2label[idx])
-                        
+                # Display Output
+                print("Predicted answer:", model.config.id2label[idx])
+                window["-ANSWER-"].update(model.config.id2label[idx])
+
+            window["-ANSWER-"].update("Awaiting Answer...")
+
+            predict()
+
+
         elif event == "Stop":
             record = False
             img = np.full((720, 1280), 255)
