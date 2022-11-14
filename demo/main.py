@@ -23,7 +23,9 @@ def main():
         [sg.Text("AirSim VQA Demo", size=(60, 1), justification="center")],
         [sg.Image(key='-IMAGE-')],
         [sg.Text("Live Video Feed")],
-        [sg.Button("Init AirSim Client")],
+        [sg.Button("Init AirSim Client"), sg.Button("Toggle Rain"), sg.Button("Toggle Snow"), sg.Button("Toggle Fog"), sg.Button("Toggle Dust")],
+        [sg.Text("Move To: (X,Y,Z)"), sg.InputText(key="-POSITION-"), sg.Button("Move")],
+        [sg.Text("Rotate: (positive left, negative right)"), sg.InputText(key="-ROTATE-"), sg.Button("Rotate")],
         [sg.InputText(key="-QUESTION-")],
         [sg.Button("Predict")],
         [sg.Text("Answer:"), sg.Text("", key="-ANSWER-")],
@@ -32,10 +34,16 @@ def main():
     ]
 
     # Create the window
-    window = sg.Window("AirSim VQA Demo", layout, location=(800, 400))
+    window = sg.Window("AirSim VQA Demo", layout, location=(800, 400), resizable=True)
 
     record = False
     model, processor = None, None
+
+    # Weather Control Values
+    rainValue = 0
+    snowValue = 0
+    fogValue = 0
+    dustValue = 0
 
     while True:
         event, values = window.read(timeout=20)
@@ -48,6 +56,9 @@ def main():
             client.confirmConnection()
             client.enableApiControl(True)
             client.armDisarm(True)
+            
+            # Enable Weather Options
+            client.simEnableWeather(True)
 
             # Async methods returns Future. Call join() to wait for task to complete.
             client.takeoffAsync().join()
@@ -60,6 +71,50 @@ def main():
             DECODE_EXTENSION = '.png'
         
             record = True
+
+        elif event == "Toggle Rain":
+            if rainValue == 0:
+                rainValue = 1
+            else:
+                rainValue = 0
+            client.simSetWeatherParameter(airsim.WeatherParameter.Rain, rainValue)
+            client.simSetWeatherParameter(airsim.WeatherParameter.Roadwetness, rainValue)
+        
+        elif event == "Toggle Snow":
+            if snowValue == 0:
+                snowValue = 1
+            else:
+                snowValue = 0
+            client.simSetWeatherParameter(airsim.WeatherParameter.Snow, snowValue)
+            client.simSetWeatherParameter(airsim.WeatherParameter.RoadSnow, snowValue/2)
+        
+        elif event == "Toggle Fog":
+            if fogValue == 0:
+                fogValue = 0.5
+            else:
+                fogValue = 0
+            client.simSetWeatherParameter(airsim.WeatherParameter.Fog, fogValue)
+        
+        elif event == "Toggle Dust":
+            if dustValue == 0:
+                dustValue = 0.5
+            else:
+                dustValue = 0
+            client.simSetWeatherParameter(airsim.WeatherParameter.Dust, dustValue)
+
+        elif event == "Move":
+            positions = values["-POSITION-"]
+            positions = positions.split(',')
+            try: 
+                print("Moving to: (" + positions[0] + "," + positions[1] + "," + positions[2] + ")")
+                client.moveToPositionAsync(float(positions[0]), float(positions[1]), float(positions[2]), 5).join()
+            except: 
+                print("Please enter in format: X, Y, Z")
+
+        elif event == "Rotate":
+            rotateBy = values["-ROTATE-"]
+            print("Rotating")
+            client.moveByAngleRatesThrottleAsync(0, 0, float(rotateBy), 0.2, 0.5).join()
 
         elif event == "Predict":
             if model == None or processor == None:
