@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/logos">
+        <file>logo.png</file>
+        <file>logo_drone_only.png</file>
+    </qresource>
+</RCC>
