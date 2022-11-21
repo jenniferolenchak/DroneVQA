@@ -69,10 +69,10 @@ class Ui_Form(object):
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_FurtherLaunchInstruction = QLabel(self.verticalLayoutWidget)
-        self.label_FurtherLaunchInstruction.setObjectName(u"label_FurtherLaunchInstruction")
+        self.label_AirSimLaunchInstruction = QLabel(self.verticalLayoutWidget)
+        self.label_AirSimLaunchInstruction.setObjectName(u"label_AirSimLaunchInstruction")
 
-        self.verticalLayout.addWidget(self.label_FurtherLaunchInstruction)
+        self.verticalLayout.addWidget(self.label_AirSimLaunchInstruction)
 
         self.button_StartVQA = QPushButton(self.verticalLayoutWidget)
         self.button_StartVQA.setObjectName(u"button_StartVQA")
@@ -93,7 +93,7 @@ class Ui_Form(object):
         self.button_LaunchCityMap.setText(QCoreApplication.translate("Form", u"Launch City Map", None))
         self.label_LaunchScreenTitle.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:28pt; font-weight:700; color:#000000;\">DroneVQA</span></p></body></html>", None))
         self.label_LaunchScreenDescription.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:16pt; color:#1315a6;\">Utilizing Artifical Intelligence For Visual Question Anwering With Sumulated Drones</span></p></body></html>", None))
-        self.label_FurtherLaunchInstruction.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" color:#740000;\">Click </span><span style=\" font-style:italic; color:#740000;\">&quot;No&quot;</span><span style=\" color:#740000;\"> in AirSim to select quadrotor drone , then click here:</span></p></body></html>", None))
+        self.label_AirSimLaunchInstruction.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" color:#740000;\">Click </span><span style=\" font-style:italic; color:#740000;\">&quot;No&quot;</span><span style=\" color:#740000;\"> in AirSim to select quadrotor drone , then click here:</span></p></body></html>", None))
         self.button_StartVQA.setText(QCoreApplication.translate("Form", u"Start VQA", None))
     # retranslateUi
 

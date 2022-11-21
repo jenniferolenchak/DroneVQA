@@ -24,10 +24,11 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(1246, 608)
+        Form.resize(1500, 1000)
+        Form.setMinimumSize(QSize(1500, 1000))
         self.gridLayoutWidget = QWidget(Form)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(310, 20, 636, 82))
+        self.gridLayoutWidget.setGeometry(QRect(400, 20, 636, 82))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -43,7 +44,7 @@ class Ui_Form(object):
 
         self.verticalLayoutWidget = QWidget(Form)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(30, 130, 241, 116))
+        self.verticalLayoutWidget.setGeometry(QRect(60, 130, 403, 116))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -55,36 +56,48 @@ class Ui_Form(object):
 
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.pushButton_2 = QPushButton(self.verticalLayoutWidget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-
-        self.gridLayout_2.addWidget(self.pushButton_2, 1, 0, 1, 1)
-
         self.pushButton_3 = QPushButton(self.verticalLayoutWidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
 
-        self.gridLayout_2.addWidget(self.pushButton_3, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_3, 1, 3, 1, 1)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_2.addItem(self.horizontalSpacer, 1, 1, 1, 1)
-
-        self.pushButton_4 = QPushButton(self.verticalLayoutWidget)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-
-        self.gridLayout_2.addWidget(self.pushButton_4, 0, 1, 1, 1)
+        self.gridLayout_2.addItem(self.horizontalSpacer, 1, 2, 1, 1)
 
         self.pushButton_5 = QPushButton(self.verticalLayoutWidget)
         self.pushButton_5.setObjectName(u"pushButton_5")
 
-        self.gridLayout_2.addWidget(self.pushButton_5, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_5, 2, 2, 1, 1)
+
+        self.pushButton_7 = QPushButton(self.verticalLayoutWidget)
+        self.pushButton_7.setObjectName(u"pushButton_7")
+        icon = QIcon(QIcon.fromTheme(u"go-up"))
+        self.pushButton_7.setIcon(icon)
+
+        self.gridLayout_2.addWidget(self.pushButton_7, 1, 0, 1, 1)
+
+        self.pushButton_2 = QPushButton(self.verticalLayoutWidget)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+
+        self.gridLayout_2.addWidget(self.pushButton_2, 1, 1, 1, 1)
+
+        self.pushButton_4 = QPushButton(self.verticalLayoutWidget)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+
+        self.gridLayout_2.addWidget(self.pushButton_4, 0, 2, 1, 1)
+
+        self.pushButton_8 = QPushButton(self.verticalLayoutWidget)
+        self.pushButton_8.setObjectName(u"pushButton_8")
+
+        self.gridLayout_2.addWidget(self.pushButton_8, 1, 4, 1, 1)
 
 
         self.verticalLayout.addLayout(self.gridLayout_2)
 
         self.verticalLayoutWidget_2 = QWidget(Form)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(360, 130, 391, 142))
+        self.verticalLayoutWidget_2.setGeometry(QRect(610, 130, 391, 142))
         self.verticalLayout_2 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -165,7 +178,7 @@ class Ui_Form(object):
 
         self.verticalLayoutWidget_3 = QWidget(Form)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(840, 130, 391, 142))
+        self.verticalLayoutWidget_3.setGeometry(QRect(1050, 130, 391, 142))
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -316,10 +329,12 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:28pt; font-weight:700; color:#0021b6;\">DroneVQA: AirSim Interaction Menu</span></p></body></html>", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"PushButton", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">Drone Flight Control</span></p></body></html>", None))
-        self.pushButton_2.setText(QCoreApplication.translate("Form", u"Left", None))
         self.pushButton_3.setText(QCoreApplication.translate("Form", u"Right", None))
-        self.pushButton_4.setText(QCoreApplication.translate("Form", u"Up", None))
         self.pushButton_5.setText(QCoreApplication.translate("Form", u"Down", None))
+        self.pushButton_7.setText(QCoreApplication.translate("Form", u"Rotate Left", None))
+        self.pushButton_2.setText(QCoreApplication.translate("Form", u"Left", None))
+        self.pushButton_4.setText(QCoreApplication.translate("Form", u"Up", None))
+        self.pushButton_8.setText(QCoreApplication.translate("Form", u"Rotate Right", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">Weather Control</span></p></body></html>", None))
         self.label_7.setText(QCoreApplication.translate("Form", u"Dust", None))
         self.label_8.setText(QCoreApplication.translate("Form", u"Fog", None))
