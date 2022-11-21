@@ -301,6 +301,10 @@ class Ui_Form(object):
 
         self.verticalLayout_5.addLayout(self.formLayout_3)
 
+        self.label_16 = QLabel(Form)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setGeometry(QRect(650, 320, 479, 22))
+        self.label_16.setAlignment(Qt.AlignCenter)
 
         self.retranslateUi(Form)
 
@@ -331,5 +335,6 @@ class Ui_Form(object):
         self.pushButton_6.setText(QCoreApplication.translate("Form", u"Ask", None))
         self.label_13.setText(QCoreApplication.translate("Form", u"Answer: ", None))
         self.label_14.setText(QCoreApplication.translate("Form", u"Details:", None))
+        self.label_16.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">Result Visualization</span></p></body></html>", None))
     # retranslateUi
 
