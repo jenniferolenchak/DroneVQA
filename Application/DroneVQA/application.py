@@ -63,11 +63,13 @@ class LaunchScreen(QWidget):
         self.navToVQAScreen()
         threadManager.start(controller.initializeAirSimClient)
 
+
+
+
 class VQAInteractionScreen(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.load_ui()
-
 
     def load_ui(self):
         '''Translate .ui design file to python equivalent and load'''
@@ -87,12 +89,19 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_RotateLeft.setIcon(QIcon("arrow_rotate_left.png"))
 
         # Connect drone navigation button actions to methods
-        self.ui.button_Up.pressed.connect(lambda: controller.startDroneMovementThread("up"))
-        self.ui.button_Down.pressed.connect(lambda: controller.startDroneMovementThread("down"))
-        self.ui.button_Left.pressed.connect(lambda: controller.startDroneMovementThread("left"))
-        self.ui.button_Right.pressed.connect(lambda: controller.startDroneMovementThread("right"))
-        self.ui.button_RotateRight.pressed.connect(lambda: controller.startDroneMovementThread("rotate right"))
-        self.ui.button_RotateLeft.pressed.connect(lambda: controller.startDroneMovementThread("rotate left"))
+        self.ui.button_Up.pressed.connect(lambda: controller.startDroneMovement("up"))
+        self.ui.button_Down.pressed.connect(lambda: controller.startDroneMovement("down"))
+        self.ui.button_Left.pressed.connect(lambda: controller.startDroneMovement("left"))
+        self.ui.button_Right.pressed.connect(lambda: controller.startDroneMovement("right"))
+        self.ui.button_RotateRight.pressed.connect(lambda: controller.startDroneMovement("rotate right"))
+        self.ui.button_RotateLeft.pressed.connect(lambda: controller.startDroneMovement("rotate left"))
+
+        self.ui.button_Up.released.connect(lambda: controller.stopDroneMovement)
+        self.ui.button_Down.released.connect(lambda: controller.stopDroneMovement)
+        self.ui.button_Left.released.connect(lambda: controller.stopDroneMovement)
+        self.ui.button_Right.released.connect(lambda: controller.stopDroneMovement)
+        self.ui.button_RotateRight.released.connect(lambda: controller.stopDroneMovement)
+        self.ui.button_RotateLeft.released.connect(lambda: controller.stopDroneMovement)
 
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.lcdNumber_Rain, self.ui.horizontalSlider_Rain.value()))
@@ -103,6 +112,7 @@ class VQAInteractionScreen(QWidget):
         self.ui.horizontalSlider_RoadSnow.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.RoadSnow, self.ui.lcdNumber_RoadSnow, self.ui.horizontalSlider_RoadSnow.value()))
         self.ui.horizontalSlider_MapleLeaves.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.MapleLeaf, self.ui.lcdNumber_MapleLeaves, self.ui.horizontalSlider_MapleLeaves.value()))
 
+        self.ui.button_ResetDrone.clicked.connect(controller.resetDrone)
 
     def changeWeather(self, command, lcd, sliderVal):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
@@ -113,14 +123,16 @@ class VQAInteractionScreen(QWidget):
         controller.updateAirSimWeather(command, decSliderVal)
 
 
+
+
 class AirSimControl(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
         # Set initial flight coordinates
-        self.x = -10
-        self.y = 10
-        self.z = -10
+        self.x = -5
+        self.y = 5
+        self.z = -5
 
     @Slot()
     def initializeAirSimClient(self):
@@ -137,34 +149,33 @@ class AirSimControl(QWidget):
         self.client.takeoffAsync().join()
         self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
-    #@Slot()
-    def threadedDroneMovement(self, command):
-        print(str(threadManager.activeThreadCount()) + "" + command)
-        '''Moves quadcopter drone based on direction command'''
+
+    def startDroneMovement(self, command):
+        self.client.moveByVelocityAsync(0, 2, 0, 10)
+
         if (command == "rotate left"):
-            self.client.moveByAngleRatesThrottleAsync(0, 0, 1, 0.2, 0.5).join()
+            self.client.moveByVelocityAsync(2, 2, 0, 10)
         elif (command == "rotate right"):
-            self.client.moveByAngleRatesThrottleAsync(0, 0, -1, 0.2, 0.5).join()
+            self.client.moveByVelocityAsync(-2, 2, 0, 10)
         elif (command == "up"):
-            self.x+=1
+            self.client.moveByVelocityAsync(0, 0, 2, 10)
         elif (command == "down"):
-            self.x-=1
+            self.client.moveByVelocityAsync(0, 0, -2, 10)
         elif (command == "left"):
-            self.y+=1
+            self.client.moveByVelocityAsync(0, -2, 0, 10)
         elif (command == "right"):
-            self.y+=1
+            self.client.moveByVelocityAsync(0, +2, 0, 10)
 
-        print("x: " + str(self.x) + "y: " + str(self.y) + "z: " + str(self.z))
+    def stopDroneMovement(self, command):
+        self.client.moveByVelocityAsync(0, 0, 0, 10)
 
-        self.client.moveToPositionAsync(self.x, self.y, self.z, 10)
-
-
-    #@Slot()
-    def startDroneMovementThread(self, command):
-        #threadManager.start(self.threadedDroneMovement(command))
-        #print(threadManager.activeThreadCount())
-        self.threadedDroneMovement(command)
-
+    def resetDrone(self, command):
+        self.client.reset()
+        self.client.confirmConnection()
+        self.client.enableApiControl(True)
+        self.client.armDisarm(True)
+        self.client.takeoffAsync().join()
+        self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
     def updateAirSimWeather(self, parameter, value):
         self.client.simSetWeatherParameter(parameter, value)
