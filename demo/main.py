@@ -14,8 +14,7 @@ def setupTransformer():
 
     return model, processor
 
-
-def main():
+def setupMainWindow():
     sg.theme("LightGreen")
 
     # Define the window layout
@@ -36,6 +35,11 @@ def main():
     # Create the window
     window = sg.Window("AirSim VQA Demo", layout, location=(800, 400), resizable=True)
 
+    return window
+
+
+def main():
+    window = setupMainWindow()
     record = False
     model, processor = None, None
 

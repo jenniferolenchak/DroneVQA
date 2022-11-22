@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Logos">
+        <file>logo.png</file>
+        <file>logo_drone_only.png</file>
+    </qresource>
+    <qresource prefix="/Arrows">
+        <file>arrow_down.png</file>
+        <file>arrow_left.png</file>
+        <file>arrow_right.png</file>
+        <file>arrow_rotate_left.png</file>
+        <file>arrow_rotate_right.png</file>
+        <file>arrow_up.png</file>
+    </qresource>
+</RCC>
