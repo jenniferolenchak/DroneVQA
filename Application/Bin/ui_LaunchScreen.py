@@ -74,10 +74,10 @@ class Ui_Form(object):
 
         self.verticalLayout.addWidget(self.label_AirSimLaunchInstruction)
 
-        self.button_StartVQA = QPushButton(self.verticalLayoutWidget)
-        self.button_StartVQA.setObjectName(u"button_StartVQA")
+        self.button_InitializeClient = QPushButton(self.verticalLayoutWidget)
+        self.button_InitializeClient.setObjectName(u"button_InitializeClient")
 
-        self.verticalLayout.addWidget(self.button_StartVQA)
+        self.verticalLayout.addWidget(self.button_InitializeClient)
 
 
         self.retranslateUi(Form)
@@ -92,8 +92,8 @@ class Ui_Form(object):
         self.button_LaunchTestMap.setText(QCoreApplication.translate("Form", u"Launch Test Map", None))
         self.button_LaunchCityMap.setText(QCoreApplication.translate("Form", u"Launch City Map", None))
         self.label_LaunchScreenTitle.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:28pt; font-weight:700; color:#000000;\">DroneVQA</span></p></body></html>", None))
-        self.label_LaunchScreenDescription.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:16pt; color:#1315a6;\">Utilizing Artifical Intelligence For Visual Question Anwering With Sumulated Drones</span></p></body></html>", None))
+        self.label_LaunchScreenDescription.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:16pt; color:#1315a6;\">Utilizing Artifical Intelligence For Visual Question Anwering With Simulated Drones</span></p></body></html>", None))
         self.label_AirSimLaunchInstruction.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" color:#740000;\">Click </span><span style=\" font-style:italic; color:#740000;\">&quot;No&quot;</span><span style=\" color:#740000;\"> in AirSim to select quadrotor drone , then click here:</span></p></body></html>", None))
-        self.button_StartVQA.setText(QCoreApplication.translate("Form", u"Start VQA", None))
+        self.button_InitializeClient.setText(QCoreApplication.translate("Form", u"Initialize Airsim VQA Client", None))
     # retranslateUi
 
