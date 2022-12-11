@@ -83,12 +83,6 @@ class VQAInteractionScreen(QWidget):
         self.ui = loader.load(ui_file, self)
         ui_file.close()
 
-        # Set button icons
-        self.ui.button_Up.setIcon(QIcon("Images/arrow_up.png"))
-        self.ui.button_Down.setIcon(QIcon("Images/arrow_down.png"))
-        self.ui.button_Left.setIcon(QIcon("Images/arrow_left.png"))
-        self.ui.button_Right.setIcon(QIcon("Images/arrow_right.png"))
-
         # Connect drone navigation button actions to methods
         self.ui.button_Up.pressed.connect(lambda: controller.startDroneMovement("up"))
         self.ui.button_Down.pressed.connect(lambda: controller.startDroneMovement("down"))
@@ -112,10 +106,10 @@ class VQAInteractionScreen(QWidget):
         self.ui.horizontalSlider_RoadSnow.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.RoadSnow, self.ui.lcdNumber_RoadSnow, self.ui.horizontalSlider_RoadSnow.value()))
         self.ui.horizontalSlider_MapleLeaves.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.MapleLeaf, self.ui.lcdNumber_MapleLeaves, self.ui.horizontalSlider_MapleLeaves.value()))
 
+        self.ui.horizontalSlider_MovementVelocity.valueChanged.connect(self.changeMovementVelocity)
+
         # Connect reset button to action method
         self.ui.button_ResetDrone.clicked.connect(controller.resetDrone)
-
-
 
     def changeWeather(self, command, lcd, sliderVal):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
@@ -125,12 +119,20 @@ class VQAInteractionScreen(QWidget):
         decSliderVal = sliderVal / 100
         controller.updateAirSimWeather(command, decSliderVal)
 
+    def changeMovementVelocity(self, value):
+        '''Sets the AirSim controller's movementVelocity variable based on the GUI slider value (horizontalSlider_MovementVelocity)'''
+        controller.movementVelocity = self.ui.horizontalSlider_MovementVelocity.value()
+
+
 
 
 
 class AirSimControl(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        # Set default movement velocity
+        self.movementVelocity = 20
 
         # Set initial flight coordinates
         self.x = 0
@@ -155,17 +157,17 @@ class AirSimControl(QWidget):
 
     def startDroneMovement(self, command):
         if (command == "up"):
-            self.client.moveByVelocityAsync(0, 0, -10, 1)
+            self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1)
         elif (command == "down"):
-            self.client.moveByVelocityAsync(0, 0, +10, 1)
+            self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1)
         elif (command == "left"):
-            self.client.moveByVelocityAsync(0, -10, 0, 1)
+            self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 1)
         elif (command == "right"):
-            self.client.moveByVelocityAsync(0, +10, 0, 1)
+            self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 1)
         elif (command == "forward"):
-            self.client.moveByVelocityAsync(+10, 0, 0, 1)
+            self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 1)
         elif (command == "backward"):
-            self.client.moveByVelocityAsync(-10, 0, 0, 1)
+            self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 1)
 
     def stopDroneMovement(self, command):
         self.client.moveByVelocityAsync(0, 0, 0, 3)
@@ -193,7 +195,7 @@ if __name__ == "__main__":
     stackedWidget.setMinimumHeight(600)
     stackedWidget.setMinimumWidth(500)
     stackedWidget.setWindowTitle("DroneVQA")
-    stackedWidget.setWindowIcon(QIcon("Images/logo_drone_only.png"))
+    stackedWidget.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
 
     # Initialize global variables
     CAMERA_NAME = '0'

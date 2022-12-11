@@ -88,7 +88,7 @@
      <x>80</x>
      <y>540</y>
      <width>331</width>
-     <height>48</height>
+     <height>51</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -118,7 +118,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>60</y>
+     <y>70</y>
      <width>501</width>
      <height>251</height>
     </rect>
@@ -130,7 +130,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>Images/Logo_DroneOnly_ScaledDown.png</pixmap>
+    <pixmap>Images/Logos/Logo_DroneOnly_ScaledDown.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -140,7 +140,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>410</y>
+     <y>420</y>
      <width>441</width>
      <height>111</height>
     </rect>
