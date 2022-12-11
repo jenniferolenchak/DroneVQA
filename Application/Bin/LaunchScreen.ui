@@ -6,84 +6,74 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>481</height>
+    <width>500</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="gridLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>300</y>
-     <width>421</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_SelectVirtalEnvArea">
-    <item row="2" column="0">
-     <widget class="QPushButton" name="button_AlreadyLaunched">
-      <property name="text">
-       <string>[I have already launched AirSim myself]</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_VirtualEnvSelectPrompt">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Select A Virtual  Environment To Explore:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="gridLayout_EnvLaunchButtons">
-      <item row="0" column="1">
-       <widget class="QPushButton" name="button_LaunchTestMap">
-        <property name="text">
-         <string>Launch Test Map</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="button_LaunchCityMap">
-        <property name="text">
-         <string>Launch City Map</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
-  </widget>
+  <property name="styleSheet">
+   <string notr="true">background-color: white;</string>
+  </property>
   <widget class="QLabel" name="label_LaunchScreenTitle">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>0</y>
-     <width>191</width>
+     <x>0</x>
+     <y>-10</y>
+     <width>491</width>
      <height>91</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Perpetua</family>
+     <pointsize>48</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: none;</string>
+   </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; font-weight:700; color:#000000;&quot;&gt;DroneVQA&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:48pt; color:#000000;&quot;&gt;DroneVQA&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_LaunchScreenDescription">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>471</width>
-     <height>61</height>
+     <x>30</x>
+     <y>330</y>
+     <width>441</width>
+     <height>71</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Perpetua</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: none;</string>
+   </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; color:#1315a6;&quot;&gt;Utilizing Artifical Intelligence For Visual Question Anwering With Simulated Drones&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#1315a6;&quot;&gt;Utilizing Artifical Intelligence For Visual Question Anwering With Simulated Drones&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -96,7 +86,7 @@
    <property name="geometry">
     <rect>
      <x>80</x>
-     <y>420</y>
+     <y>540</y>
      <width>331</width>
      <height>48</height>
     </rect>
@@ -105,12 +95,18 @@
     <item>
      <widget class="QLabel" name="label_AirSimLaunchInstruction">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#740000;&quot;&gt;Click &lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#740000;&quot;&gt;&amp;quot;No&amp;quot;&lt;/span&gt;&lt;span style=&quot; color:#740000;&quot;&gt; in AirSim to select quadrotor drone , then click here:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#740000;&quot;&gt;Once the AirSim quadrotor drone has loaded, click here:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="button_InitializeClient">
+      <property name="styleSheet">
+       <string notr="true">background: rgb(229, 229, 229)</string>
+      </property>
       <property name="text">
        <string>Initialize Airsim VQA Client</string>
       </property>
@@ -118,6 +114,108 @@
     </item>
    </layout>
   </widget>
+  <widget class="QLabel" name="Label_ProjectLogo">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>60</y>
+     <width>501</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: none;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>Images/Logo_DroneOnly_ScaledDown.png</pixmap>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>410</y>
+     <width>441</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: rgb(215, 234, 255)</string>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>421</width>
+      <height>86</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_SelectVirtalEnvArea">
+     <item row="3" column="0">
+      <widget class="QPushButton" name="button_AlreadyLaunched">
+       <property name="styleSheet">
+        <string notr="true">background: white;</string>
+       </property>
+       <property name="text">
+        <string>[I have already launched AirSim myself]</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_VirtualEnvSelectPrompt">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Select A Virtual  Environment To Explore:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <layout class="QGridLayout" name="gridLayout_EnvLaunchButtons">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="button_LaunchCityMap">
+         <property name="styleSheet">
+          <string notr="true">background: white;</string>
+         </property>
+         <property name="text">
+          <string>Launch City Map</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="button_LaunchTestMap">
+         <property name="styleSheet">
+          <string notr="true">background: white;</string>
+         </property>
+         <property name="text">
+          <string>Launch Test Map</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <zorder>Label_ProjectLogo</zorder>
+  <zorder>label_LaunchScreenTitle</zorder>
+  <zorder>label_LaunchScreenDescription</zorder>
+  <zorder>verticalLayoutWidget</zorder>
+  <zorder>groupBox</zorder>
  </widget>
  <resources/>
  <connections/>
