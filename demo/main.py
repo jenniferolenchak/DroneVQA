@@ -66,9 +66,6 @@ def main():
 
             # Async methods returns Future. Call join() to wait for task to complete.
             client.takeoffAsync().join()
-            client.moveToPositionAsync(-10, 10, -10, 5).join()
-
-            print("Finished Moving")
 
             CAMERA_NAME = '0'
             IMAGE_TYPE = airsim.ImageType.Scene

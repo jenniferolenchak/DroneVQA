@@ -10,7 +10,7 @@ import airsim
 #import torch
 
 from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon, QPixmap, QScreen
 from PySide6.QtCore import QFile, Qt, QThreadPool, Slot
 from PySide6.QtUiTools import QUiLoader
 
@@ -56,9 +56,17 @@ class LaunchScreen(QWidget):
     def navToVQAScreen(self):
         '''Initialize VQA interaction screen and set at the active stacked frame'''
         stackedWidget.setCurrentWidget(VQAScreen)
+
+        # Set size
         stackedWidget.setMinimumHeight(1000)
-        stackedWidget.setMinimumWidth(1500)
-        stackedWidget.setWindowState(Qt.WindowStates.WindowMaximized)
+        stackedWidget.setMinimumWidth(1041)
+
+        # Set window position
+        center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
+        geo = stackedWidget.frameGeometry()
+        geo.moveCenter(center)
+        stackedWidget.move(geo.topLeft())
+        #stackedWidget.setWindowState(Qt.WindowStates.WindowMaximized)
 
     @Slot()
     def startVQA(self):
