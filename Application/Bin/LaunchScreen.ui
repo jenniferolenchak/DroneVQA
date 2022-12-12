@@ -88,7 +88,7 @@
      <x>80</x>
      <y>540</y>
      <width>331</width>
-     <height>51</height>
+     <height>48</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -164,20 +164,10 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_SelectVirtalEnvArea">
-     <item row="3" column="0">
-      <widget class="QPushButton" name="button_AlreadyLaunched">
-       <property name="styleSheet">
-        <string notr="true">background: white;</string>
-       </property>
-       <property name="text">
-        <string>[I have already launched AirSim myself]</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_VirtualEnvSelectPrompt">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Select A Virtual  Environment To Explore:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Begin Exploring A Virtual Environment:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -196,13 +186,13 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="button_LaunchTestMap">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="button_AlreadyLaunched">
          <property name="styleSheet">
           <string notr="true">background: white;</string>
          </property>
          <property name="text">
-          <string>Launch Test Map</string>
+          <string>[I have already launched AirSim myself]</string>
          </property>
         </widget>
        </item>

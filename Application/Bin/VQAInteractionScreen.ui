@@ -25,8 +25,8 @@
   <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>460</y>
+     <x>610</x>
+     <y>280</y>
      <width>481</width>
      <height>301</height>
     </rect>
@@ -132,8 +132,8 @@
   <widget class="QGroupBox" name="groupBox_DroneFlightControl">
    <property name="geometry">
     <rect>
-     <x>1050</x>
-     <y>120</y>
+     <x>40</x>
+     <y>80</y>
      <width>391</width>
      <height>461</height>
     </rect>
@@ -485,7 +485,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Click the arrows to control the drone's movement in the Z, Y, &amp; Z directions</string>
+     <string>Click the arrows to control the drone's movement in the X, Y, &amp; Z directions</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -553,8 +553,8 @@
   <widget class="QGroupBox" name="groupBox_WeatherAndEnvironment">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>120</y>
+     <x>30</x>
+     <y>580</y>
      <width>411</width>
      <height>401</height>
     </rect>
