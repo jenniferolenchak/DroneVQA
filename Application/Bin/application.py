@@ -58,8 +58,7 @@ class LaunchScreen(QWidget):
         stackedWidget.setCurrentWidget(VQAScreen)
 
         # Set size
-        stackedWidget.setMinimumHeight(1000)
-        stackedWidget.setMinimumWidth(1041)
+        stackedWidget.resize(1041,941)
 
         # Set window position
         center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
