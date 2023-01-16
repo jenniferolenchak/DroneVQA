@@ -690,32 +690,13 @@
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
-   <widget class="QFrame" name="frame_DroneCameraFeed">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>341</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <property name="lineWidth">
-     <number>3</number>
-    </property>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>290</y>
-      <width>341</width>
-      <height>21</height>
+      <width>403</width>
+      <height>26</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_CameraEffects">
@@ -758,10 +739,24 @@
       <x>10</x>
       <y>250</y>
       <width>341</width>
-      <height>24</height>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="pushButton_StartCamera">
+       <property name="styleSheet">
+        <string notr="true">background-color: lightgrey;</string>
+       </property>
+       <property name="text">
+        <string>Start Camera</string>
+       </property>
+       <property name="icon">
+        <iconset theme="media-playback-pause">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QPushButton" name="pushButton_FreezeFeed">
        <property name="styleSheet">
@@ -787,6 +782,28 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label_CameraFeed">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>341</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/Logos/logo.png</pixmap>
+    </property>
    </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_AskAQuestion">
@@ -921,7 +938,7 @@
       <x>70</x>
       <y>410</y>
       <width>301</width>
-      <height>23</height>
+      <height>26</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">

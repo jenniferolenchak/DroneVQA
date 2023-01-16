@@ -10,6 +10,11 @@ from PySide6.QtCore import QFile, Qt, QThreadPool, Slot
 from PySide6.QtUiTools import QUiLoader
 
 class AirSimControl(QWidget):
+
+    # Camera Variables
+    CAMERA_NAME = '0'
+    IMAGE_TYPE = airsim.ImageType.Scene
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -35,6 +40,8 @@ class AirSimControl(QWidget):
         # Async methods returns Future. Call join() to wait for task to complete.
         self.client.takeoffAsync().join()
         self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
+
+        print("AirSim Client Initialized")
 
 
     def startDroneMovement(self, command):
@@ -64,3 +71,6 @@ class AirSimControl(QWidget):
 
     def updateAirSimWeather(self, parameter, value):
         self.client.simSetWeatherParameter(parameter, value)
+
+    def getCurrentDroneImage(self, cameraName = CAMERA_NAME, imageType = IMAGE_TYPE):
+        return self.client.simGetImage(cameraName, imageType)

@@ -5,14 +5,14 @@ from pathlib import Path
 import sys
 
 import airsim
-#import cv2
-#import numpy as np
+import cv2
+import numpy as np
 #from transformers import ViltForQuestionAnswering, ViltProcessor
 #import torch
 
 from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
-from PySide6.QtGui import QIcon, QPixmap, QScreen
-from PySide6.QtCore import QFile, Qt, QThreadPool, Slot
+from PySide6.QtGui import QIcon, QPixmap, QScreen, QImage
+from PySide6.QtCore import QFile, Qt, QThreadPool, Slot, QTimer
 from PySide6.QtUiTools import QUiLoader
 
 class VQAInteractionScreen(QWidget):
@@ -58,6 +58,9 @@ class VQAInteractionScreen(QWidget):
         # Connect reset button to action method
         self.ui.button_ResetDrone.clicked.connect(self.controller.resetDrone)
 
+        # Start Camera Button
+        self.ui.pushButton_StartCamera.clicked.connect(self.setupCamera)
+
     def changeWeather(self, command, lcd, sliderVal):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
         lcd.display(sliderVal)
@@ -70,3 +73,31 @@ class VQAInteractionScreen(QWidget):
         '''Sets the AirSim controller's movementVelocity variable based on the GUI slider value (horizontalSlider_MovementVelocity)'''
         self.controller.movementVelocity = self.ui.horizontalSlider_MovementVelocity.value()
 
+    def setupCamera(self):
+        """
+        Initialize camera.
+        """
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.display_video_stream)
+        self.timer.start(100)
+
+    def display_video_stream(self):
+        """
+        Read frame from camera and repaint QLabel widget.
+        """
+        # Get Feed From AirSim
+        response_image = self.controller.getCurrentDroneImage()
+        np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
+        frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)
+
+        # Reformat Image        
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        #frame = cv2.flip(frame, 1)
+
+        dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
+        frame = cv2.resize(frame, dim)
+
+        # Display Image
+        image = QImage(frame, frame.shape[1], frame.shape[0], 
+                       frame.strides[0], QImage.Format_RGB888)
+        self.ui.label_CameraFeed.setPixmap(QPixmap.fromImage(image))
