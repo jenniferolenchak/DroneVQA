@@ -82,7 +82,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLabel" name="label_FlightControlDirections">
+     <widget class="QLabel" name="label_FlightControlInstructions">
       <property name="font">
        <font>
         <pointsize>8</pointsize>
@@ -695,13 +695,13 @@
      <rect>
       <x>10</x>
       <y>290</y>
-      <width>403</width>
-      <height>26</height>
+      <width>341</width>
+      <height>23</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_CameraEffects">
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="radioButton_CameraEffectNone">
        <property name="text">
         <string>None</string>
        </property>
@@ -711,21 +711,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="radioButton_LensBlur">
        <property name="text">
         <string>Lens Blur</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_3">
+      <widget class="QRadioButton" name="radioButton_PixelCorruption">
        <property name="text">
         <string>Pixel Corruption</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_4">
+      <widget class="QRadioButton" name="radioButton_BlackScreen">
        <property name="text">
         <string>Black Screen</string>
        </property>
@@ -758,12 +758,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_FreezeFeed">
+      <widget class="QPushButton" name="pushButton_FreezeFrame">
        <property name="styleSheet">
         <string notr="true">background-color: lightgrey;</string>
        </property>
        <property name="text">
-        <string>Freeze</string>
+        <string>Freeze Frame</string>
        </property>
        <property name="icon">
         <iconset theme="media-playback-pause">
@@ -772,12 +772,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_Capture">
+      <widget class="QPushButton" name="pushButton_TakeASnapshot">
        <property name="styleSheet">
         <string notr="true">background-color: lightgrey;</string>
        </property>
        <property name="text">
-        <string>Capture</string>
+        <string>Take a Snapshot</string>
        </property>
       </widget>
      </item>
@@ -835,23 +835,23 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gridLayout_Models">
       <item row="0" column="2">
-       <widget class="QRadioButton" name="radioButton_Model_3">
+       <widget class="QRadioButton" name="radioButton_Model3">
         <property name="text">
          <string>Model 3</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QRadioButton" name="radioButton_Model_2">
+       <widget class="QRadioButton" name="radioButton_Model2">
         <property name="text">
          <string>Model 2</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QRadioButton" name="radioButton_Model_1">
+       <widget class="QRadioButton" name="radioButton_Model1">
         <property name="text">
          <string>Model 1</string>
         </property>
@@ -861,7 +861,7 @@
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QRadioButton" name="radioButton_Model_4">
+       <widget class="QRadioButton" name="radioButton_Model4">
         <property name="text">
          <string>Model 4</string>
         </property>
@@ -870,7 +870,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_UserQuestion">
+     <widget class="QLineEdit" name="lineEdit_Question">
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
@@ -886,7 +886,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_QuestionAskExport">
+     <layout class="QHBoxLayout" name="horizontalLayout_AskAndExport">
       <item>
        <widget class="QPushButton" name="pushButton_Ask">
         <property name="styleSheet">
