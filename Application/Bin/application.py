@@ -11,6 +11,7 @@ from PySide6.QtCore import QThreadPool
 from LaunchScreen import LaunchScreen
 from VQAInteractionScreen import VQAInteractionScreen
 from AirSimControl import AirSimControl
+from utils import setupViltTransformer
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -30,7 +31,12 @@ if __name__ == "__main__":
     DECODE_EXTENSION = '.png'
     record = True
 
-    VQAScreen = VQAInteractionScreen(controller)
+    # Setup Models 
+    # TODO: setup models in separate threads/processes for startup performance
+    models = []
+    models.append((setupViltTransformer()))
+
+    VQAScreen = VQAInteractionScreen(threadManager, controller, models)
     launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)
     
     stackedWidget.addWidget(launchScreen)

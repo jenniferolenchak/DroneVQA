@@ -7,18 +7,22 @@ import sys
 import airsim
 import cv2
 import numpy as np
-#from transformers import ViltForQuestionAnswering, ViltProcessor
-#import torch
 
 from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
 from PySide6.QtGui import QIcon, QPixmap, QScreen, QImage
 from PySide6.QtCore import QFile, Qt, QThreadPool, Slot, QTimer
 from PySide6.QtUiTools import QUiLoader
 
+from worker import Worker
+from utils import PredictionResults, predictVilt
+
 class VQAInteractionScreen(QWidget):
-    def __init__(self, controller, parent=None):
+    def __init__(self, threadManager, controller, models, parent=None):
         super().__init__(parent)
+        self.threadManager = threadManager
         self.controller = controller
+        self.models = models
+        self.currentImage = None
         self.load_ui()
       
     def load_ui(self):
@@ -61,6 +65,9 @@ class VQAInteractionScreen(QWidget):
         # Start Camera Button
         self.ui.pushButton_StartCamera.clicked.connect(self.setupCamera)
 
+        # Ask Question Button
+        self.ui.pushButton_Ask.clicked.connect(self.askQuestion)
+
     def changeWeather(self, command, lcd, sliderVal):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
         lcd.display(sliderVal)
@@ -88,12 +95,14 @@ class VQAInteractionScreen(QWidget):
         # Get Feed From AirSim
         response_image = self.controller.getCurrentDroneImage()
         np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
-        frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)
-
-        # Reformat Image        
+        frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        #frame = cv2.flip(frame, 1)
+        self.currentImage = frame
 
+        # TODO: Add in the camera effects...
+
+
+        # Resize Image for Display
         dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
         frame = cv2.resize(frame, dim)
 
@@ -101,3 +110,44 @@ class VQAInteractionScreen(QWidget):
         image = QImage(frame, frame.shape[1], frame.shape[0], 
                        frame.strides[0], QImage.Format_RGB888)
         self.ui.label_CameraFeed.setPixmap(QPixmap.fromImage(image))
+
+    def askQuestion(self):
+        # Obtain the desired model for prediction
+        question = self.ui.lineEdit_Question.text()
+        image = self.currentImage.copy()
+
+        model_index = 0
+        if self.ui.radioButton_Model1.isChecked():
+            model_index = 0
+            model = self.models[model_index]
+            worker = Worker(predictVilt, model[0], model[1], question, image) 
+        elif self.ui.radioButton_Model2.isChecked():
+            model_index = 1
+        elif self.ui.radioButton_Model3.isChecked():
+            model_index = 2
+        elif self.ui.radioButton_Model4.isChecked():
+            model_index = 3
+
+        def completed():
+            print(f"Completed Prediction")
+
+        worker.signals.result.connect(self.showResults)
+        worker.signals.finished.connect(completed)
+        #worker.signals.progress.connect(self.progress_fn)
+
+        self.threadManager.start(worker)
+
+    def showResults(self, results: PredictionResults):
+        
+        self.ui.lineEdit_Answer.clear()
+        self.ui.lineEdit_Answer.setText(results.prediction)
+
+        # Show top predictions
+        detailsBox = self.ui.textEdit_Details
+        detailsBox.clear()
+        details = []
+        for prediction, prob in results.top_predictions:
+            details.append(f"{prediction}\t{prob:.5f}\n")
+        detailsBox.setText("".join(details))
+
+        # TODO: Show Visualizations
