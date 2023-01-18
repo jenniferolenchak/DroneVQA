@@ -10,11 +10,35 @@
     <height>659</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="sizeIncrement">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: white;</string>
+   <string notr="true">* {
+background-color: white;
+}
+#groupBox_DroneCameraFeed 
+{
+ border: 1px solid grey;
+}
+</string>
   </property>
   <widget class="QLabel" name="label_DroneVQATitle">
    <property name="geometry">
@@ -24,6 +48,11 @@
      <width>811</width>
      <height>50</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; font-weight:700; color:#0021b6;&quot;&gt;DroneVQA: AirSim Interaction Menu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -43,11 +72,12 @@
    </property>
    <property name="font">
     <font>
+     <family>.AppleSystemUIFont</family>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 207, 207)</string>
+    <string notr="true">background-color: rgb(255, 207, 207); color: black;</string>
    </property>
    <property name="text">
     <string>Reset Drone</string>
@@ -64,12 +94,13 @@
    </property>
    <property name="font">
     <font>
+     <family>Arial</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: white;</string>
+    <string notr="true">background-color: white; color: black;</string>
    </property>
    <property name="title">
     <string>Drone Flight Control</string>
@@ -85,6 +116,7 @@
      <widget class="QLabel" name="label_FlightControlInstructions">
       <property name="font">
        <font>
+        <family>Arial</family>
         <pointsize>8</pointsize>
         <italic>true</italic>
        </font>
@@ -104,6 +136,11 @@
      <layout class="QGridLayout" name="gridLayout_DirectionalArrows">
       <item row="5" column="1">
        <widget class="QPushButton" name="button_Backward">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
         </property>
@@ -133,6 +170,11 @@
       </item>
       <item row="3" column="4">
        <widget class="QLabel" name="label_Right">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string>Right</string>
         </property>
@@ -143,6 +185,11 @@
       </item>
       <item row="6" column="2">
        <widget class="QLabel" name="label_Down">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string>Down</string>
         </property>
@@ -153,6 +200,11 @@
       </item>
       <item row="3" column="1">
        <widget class="QPushButton" name="button_Left">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -182,6 +234,11 @@
       </item>
       <item row="3" column="3">
        <widget class="QPushButton" name="button_Right">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
         </property>
@@ -211,6 +268,11 @@
       </item>
       <item row="1" column="3">
        <widget class="QPushButton" name="button_Forward">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
         </property>
@@ -240,6 +302,11 @@
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_Left">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string>Left</string>
         </property>
@@ -250,6 +317,11 @@
       </item>
       <item row="5" column="2">
        <widget class="QPushButton" name="button_Down">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -276,6 +348,11 @@
       </item>
       <item row="1" column="2">
        <widget class="QPushButton" name="button_Up">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
         </property>
@@ -305,6 +382,11 @@
       </item>
       <item row="0" column="2">
        <widget class="QLabel" name="label_Up">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string>Up</string>
         </property>
@@ -315,6 +397,11 @@
       </item>
       <item row="0" column="3">
        <widget class="QLabel" name="label_Forward">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string>Forward</string>
         </property>
@@ -325,6 +412,11 @@
       </item>
       <item row="6" column="1">
        <widget class="QLabel" name="label_Backward">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="text">
          <string>Backward</string>
         </property>
@@ -339,6 +431,7 @@
      <widget class="QLabel" name="label_MovementVelocity">
       <property name="font">
        <font>
+        <family>Arial</family>
         <italic>true</italic>
        </font>
       </property>
@@ -355,6 +448,11 @@
     </item>
     <item>
      <widget class="QSlider" name="horizontalSlider_MovementVelocity">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
       <property name="minimum">
        <number>1</number>
       </property>
@@ -391,12 +489,13 @@
    </property>
    <property name="font">
     <font>
+     <family>.AppleSystemUIFont</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: white;</string>
+    <string notr="true">background-color: white; color: black;</string>
    </property>
    <property name="title">
     <string>Weather and Environment</string>
@@ -677,18 +776,32 @@
    </property>
    <property name="font">
     <font>
+     <family>.AppleSystemUIFont</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: white;</string>
+    <string notr="true">background-color: white; color: black; 
+
+
+
+</string>
    </property>
    <property name="title">
     <string>Drone Camera Feed</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
@@ -699,9 +812,15 @@
       <height>26</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_CameraEffects">
+    <layout class="QHBoxLayout" name="horizontalLayout_CameraEffects" stretch="0,0,0,0">
+     <property name="spacing">
+      <number>-1</number>
+     </property>
      <item>
       <widget class="QRadioButton" name="radioButton_CameraEffectNone">
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
+       </property>
        <property name="text">
         <string>None</string>
        </property>
@@ -712,6 +831,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="radioButton_LensBlur">
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
+       </property>
        <property name="text">
         <string>Lens Blur</string>
        </property>
@@ -719,6 +841,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="radioButton_PixelCorruption">
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
+       </property>
        <property name="text">
         <string>Pixel Corruption</string>
        </property>
@@ -726,6 +851,9 @@
      </item>
      <item>
       <widget class="QRadioButton" name="radioButton_BlackScreen">
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
+       </property>
        <property name="text">
         <string>Black Screen</string>
        </property>
@@ -738,11 +866,14 @@
      <rect>
       <x>10</x>
       <y>250</y>
-      <width>341</width>
-      <height>31</height>
+      <width>420</width>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_StartCamera">
        <property name="styleSheet">
@@ -773,6 +904,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_TakeASnapshot">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: lightgrey;</string>
        </property>
@@ -791,6 +928,9 @@
       <width>341</width>
       <height>211</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -820,9 +960,13 @@
    </property>
    <property name="font">
     <font>
+     <family>Arial</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: black;</string>
    </property>
    <property name="title">
     <string>Ask A Question</string>
@@ -849,6 +993,14 @@
       </item>
       <item row="0" column="0">
        <widget class="QRadioButton" name="radioButton_Model1">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: black;</string>
+        </property>
         <property name="text">
          <string>Model 1</string>
         </property>
@@ -868,11 +1020,16 @@
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_Question">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">color: black;</string>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -886,8 +1043,13 @@
      <layout class="QHBoxLayout" name="horizontalLayout_AskAndExport">
       <item>
        <widget class="QPushButton" name="pushButton_Ask">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="styleSheet">
-         <string notr="true">background-color: lightgrey;</string>
+         <string notr="true">background-color: lightgrey; color: black;</string>
         </property>
         <property name="text">
          <string>Ask</string>
@@ -916,12 +1078,13 @@
    </property>
    <property name="font">
     <font>
+     <family>.AppleSystemUIFont</family>
      <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: white;</string>
+    <string notr="true">background-color: white; color: black;</string>
    </property>
    <property name="title">
     <string>Results</string>

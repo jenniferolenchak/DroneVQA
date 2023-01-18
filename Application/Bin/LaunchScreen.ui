@@ -87,8 +87,8 @@
     <rect>
      <x>80</x>
      <y>540</y>
-     <width>331</width>
-     <height>48</height>
+     <width>336</width>
+     <height>59</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -105,7 +105,7 @@
     <item>
      <widget class="QPushButton" name="button_InitializeClient">
       <property name="styleSheet">
-       <string notr="true">background: rgb(229, 229, 229)</string>
+       <string notr="true">background: rgb(229, 229, 229); color: black;</string>
       </property>
       <property name="text">
        <string>Initialize Airsim VQA Client</string>
@@ -146,7 +146,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background: rgb(215, 234, 255)</string>
+    <string notr="true">background: rgb(215, 234, 255); color: black;</string>
    </property>
    <property name="title">
     <string/>
@@ -160,12 +160,15 @@
       <x>10</x>
       <y>10</y>
       <width>421</width>
-      <height>86</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_SelectVirtalEnvArea">
      <item row="0" column="0">
       <widget class="QLabel" name="label_VirtualEnvSelectPrompt">
+       <property name="styleSheet">
+        <string notr="true">color: black</string>
+       </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Begin Exploring A Virtual Environment:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
