@@ -1,20 +1,18 @@
 
 # This Python file uses the following encoding: utf-8
-import os
 from pathlib import Path
-import sys
 
 import airsim
 import cv2
 import numpy as np
 
-from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
-from PySide6.QtGui import QIcon, QPixmap, QScreen, QImage
-from PySide6.QtCore import QFile, Qt, QThreadPool, Slot, QTimer
+from PySide6.QtWidgets import QWidget
+from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
 from worker import Worker
-from utils import PredictionResults, predictVilt
+from utils import PredictionResults, predictVilt, predictLxmert
 
 class VQAInteractionScreen(QWidget):
     def __init__(self, threadManager, controller, models, parent=None):
@@ -23,6 +21,7 @@ class VQAInteractionScreen(QWidget):
         self.controller = controller
         self.models = models
         self.currentImage = None
+        self.predictionResult = None
         self.load_ui()
       
     def load_ui(self):
@@ -117,12 +116,16 @@ class VQAInteractionScreen(QWidget):
         image = self.currentImage.copy()
 
         model_index = 0
+        # ViLT Model
         if self.ui.radioButton_Model1.isChecked():
             model_index = 0
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
+        # LXMERT
         elif self.ui.radioButton_Model2.isChecked():
             model_index = 1
+            model = self.models[model_index]
+            worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
         elif self.ui.radioButton_Model3.isChecked():
             model_index = 2
         elif self.ui.radioButton_Model4.isChecked():
@@ -138,7 +141,9 @@ class VQAInteractionScreen(QWidget):
         self.threadManager.start(worker)
 
     def showResults(self, results: PredictionResults):
-        
+        # Store prediction results (for showing more visualization images later)
+        self.predictionResult = results
+
         self.ui.lineEdit_Answer.clear()
         self.ui.lineEdit_Answer.setText(results.prediction)
 
@@ -150,4 +155,17 @@ class VQAInteractionScreen(QWidget):
             details.append(f"{prediction}\t{prob:.5f}\n")
         detailsBox.setText("".join(details))
 
-        # TODO: Show Visualizations
+        # Show the first visualization on screen
+        if len(results.visualizations):
+
+            # Set visualization radio box
+            self.ui.radioButton_Visualization1.click()
+
+            # Resize Image for Display
+            dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
+            frame = cv2.resize(results.visualizations[0], dim)
+
+            # Display Image
+            image = QImage(frame, frame.shape[1], frame.shape[0], 
+                        frame.strides[0], QImage.Format_RGB888)
+            self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
