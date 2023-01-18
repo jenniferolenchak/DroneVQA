@@ -696,7 +696,7 @@
       <x>10</x>
       <y>290</y>
       <width>341</width>
-      <height>23</height>
+      <height>26</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_CameraEffects">
@@ -800,9 +800,6 @@
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>Images/Logos/logo.png</pixmap>
     </property>
    </widget>
   </widget>
@@ -1001,23 +998,17 @@
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="frame_ResultVisualization">
+   <widget class="QLabel" name="label_ResultVisualization">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>200</y>
-      <width>341</width>
+      <x>30</x>
+      <y>190</y>
+      <width>371</width>
       <height>201</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <property name="lineWidth">
-     <number>3</number>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
