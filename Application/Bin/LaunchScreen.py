@@ -26,7 +26,7 @@ class LaunchScreen(QWidget):
         ui_file.close()
 
 
-        self.stackedWidget.setMinimumHeight(600)
+        self.stackedWidget.setMinimumHeight(625)
         self.stackedWidget.setMinimumWidth(500)
 
         # Connect button actions to methods

@@ -64,6 +64,9 @@ class VQAInteractionScreen(QWidget):
         # Start Camera Button
         self.ui.pushButton_StartCamera.clicked.connect(self.setupCamera)
 
+        # Freeze Frame Button Clicked
+        self.ui.pushButton_FreezeFrame.clicked.connect(self.freezeCamera)
+
         # Ask Question Button
         self.ui.pushButton_Ask.clicked.connect(self.askQuestion)
 
@@ -109,6 +112,9 @@ class VQAInteractionScreen(QWidget):
         image = QImage(frame, frame.shape[1], frame.shape[0], 
                        frame.strides[0], QImage.Format_RGB888)
         self.ui.label_CameraFeed.setPixmap(QPixmap.fromImage(image))
+
+    def freezeCamera(self):
+        self.timer.stop()
 
     def askQuestion(self):
         # Obtain the desired model for prediction

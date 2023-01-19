@@ -2,25 +2,33 @@
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>600</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>600</height>
+    <height>625</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>600</height>
+    <height>625</height>
    </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -39,7 +47,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Perpetua</family>
+     <family>Arial</family>
      <pointsize>48</pointsize>
      <bold>false</bold>
     </font>
@@ -65,7 +73,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Perpetua</family>
+     <family>Arial</family>
      <pointsize>11</pointsize>
     </font>
    </property>
@@ -94,6 +102,11 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_AirSimLaunchInstruction">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#740000;&quot;&gt;Once the AirSim quadrotor drone has loaded, click here:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
@@ -104,6 +117,11 @@
     </item>
     <item>
      <widget class="QPushButton" name="button_InitializeClient">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
       <property name="styleSheet">
        <string notr="true">background: rgb(229, 229, 229); color: black;</string>
       </property>
@@ -122,6 +140,11 @@
      <width>501</width>
      <height>251</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">background: none;</string>
@@ -145,6 +168,11 @@
      <height>111</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">background: rgb(215, 234, 255); color: black;</string>
    </property>
@@ -166,6 +194,11 @@
     <layout class="QGridLayout" name="gridLayout_SelectVirtalEnvArea">
      <item row="0" column="0">
       <widget class="QLabel" name="label_VirtualEnvSelectPrompt">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">color: black</string>
        </property>
@@ -181,6 +214,11 @@
       <layout class="QGridLayout" name="gridLayout_EnvLaunchButtons">
        <item row="0" column="0">
         <widget class="QPushButton" name="button_LaunchCityMap">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">background: white;</string>
          </property>
@@ -191,6 +229,11 @@
        </item>
        <item row="1" column="0">
         <widget class="QPushButton" name="button_AlreadyLaunched">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">background: white;</string>
          </property>
