@@ -11,6 +11,8 @@ from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
+from PIL import Image, ImageEnhance
+
 from worker import Worker
 from utils import PredictionResults, predictVilt, predictLxmert
 
@@ -93,14 +95,20 @@ class VQAInteractionScreen(QWidget):
         """
         # Get Feed From AirSim
         response_image = self.controller.getCurrentDroneImage()
+
+        
+
+
         np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
         frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        self.currentImage = frame
 
         # TODO: Add in the camera effects...
-
-
+        if (self.ui.radioButton_BlackScreen.isChecked()):
+            frame[frame != 0] = 0;
+            
+        self.currentImage = frame
+        
         # Resize Image for Display
         dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
         frame = cv2.resize(frame, dim)
