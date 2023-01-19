@@ -12,6 +12,8 @@ from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
 from PIL import Image, ImageEnhance
+from skimage import filters
+import matplotlib.pyplot as plt
 
 from worker import Worker
 from utils import PredictionResults, predictVilt, predictLxmert
@@ -106,6 +108,10 @@ class VQAInteractionScreen(QWidget):
         # TODO: Add in the camera effects...
         if (self.ui.radioButton_BlackScreen.isChecked()):
             frame[frame != 0] = 0;
+        
+        if (self.ui.radioButton_LensBlur.isChecked()):
+            frame = cv2.GaussianBlur(frame, (5,5), 10.0)
+
             
         self.currentImage = frame
         
