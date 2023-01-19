@@ -14,6 +14,7 @@ from PySide6.QtUiTools import QUiLoader
 from PIL import Image, ImageEnhance
 from skimage import filters
 import matplotlib.pyplot as plt
+import random
 
 from worker import Worker
 from utils import PredictionResults, predictVilt, predictLxmert
@@ -112,6 +113,10 @@ class VQAInteractionScreen(QWidget):
         if (self.ui.radioButton_LensBlur.isChecked()):
             frame = cv2.GaussianBlur(frame, (5,5), 10.0)
 
+        if (self.ui.radioButton_PixelCorruption.isChecked()):
+            frame_dim = frame.shape
+            for i in range(1000):
+                frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
             
         self.currentImage = frame
         
