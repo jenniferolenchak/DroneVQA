@@ -6,7 +6,7 @@ import airsim
 import cv2
 import numpy as np
 
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QRadioButton, QLabel
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
@@ -173,17 +173,40 @@ class VQAInteractionScreen(QWidget):
             details.append(f"{prediction}\t{prob:.5f}\n")
         detailsBox.setText("".join(details))
 
-        # Show the first visualization on screen
-        if len(results.visualizations):
+        # Clear the old visualization buttons
+        # https://ymt-lab.com/en/post/2021/pyqt5-delete-widget-test/
+        def deleteVisualizationButtons(layout):
+            for index in reversed(range(layout.count())):
+                if type(layout.itemAt(index) == QRadioButton):
+                    widget = layout.itemAt(index).widget()
+                    layout.removeWidget(widget)
+                    widget.deleteLater()
 
-            # Set visualization radio box
-            self.ui.radioButton_Visualization1.click()
+        self.ui.label_ResultVisualization.hide()
+        layout = self.ui.horizontalLayout_Visualizations
+        deleteVisualizationButtons(layout)
 
-            # Resize Image for Display
-            dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
-            frame = cv2.resize(results.visualizations[0], dim)
+        # Show the new visualization buttons
+        numVisuals = len(results.visualizations)
+        if numVisuals:
 
-            # Display Image
-            image = QImage(frame, frame.shape[1], frame.shape[0], 
-                        frame.strides[0], QImage.Format_RGB888)
-            self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
+            # Create each button
+            for i in range(numVisuals):
+                button = QRadioButton(f"radioButton_Visualization{i+1}")
+                button.setText(f"Visualization {i+1}")
+
+                # Set button action for each visual
+                def showVisual(image):
+                    # Resize Image for Display
+                    dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
+                    frame = cv2.resize(image, dim)
+
+                    # Display Image
+                    image = QImage(frame, frame.shape[1], frame.shape[0], 
+                                frame.strides[0], QImage.Format_RGB888)
+                    self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
+                    self.ui.label_ResultVisualization.hide()
+                    self.ui.label_ResultVisualization.show()
+
+                button.clicked.connect(lambda : showVisual(results.visualizations[i]))
+                layout.addWidget(button)
