@@ -11,9 +11,6 @@ from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
-from PIL import Image, ImageEnhance
-from skimage import filters
-import matplotlib.pyplot as plt
 import random
 
 from worker import Worker
