@@ -138,13 +138,13 @@ class VQAInteractionScreen(QWidget):
         image = self.currentImage.copy()
 
         model_index = 0
-        # ViLT Model
-        if self.ui.radioButton_Model1.isChecked():
+        # ViLT (Base) Model
+        if self.ui.radioButton_ViltBase.isChecked():
             model_index = 0
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
-        # LXMERT
-        elif self.ui.radioButton_Model2.isChecked():
+        # LXMERT (Base) Model
+        elif self.ui.radioButton_LxmertBase.isChecked():
             model_index = 1
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
