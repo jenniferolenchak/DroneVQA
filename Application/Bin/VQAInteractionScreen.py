@@ -109,7 +109,7 @@ class VQAInteractionScreen(QWidget):
         # TODO: Add in the camera effects...
         if (self.ui.radioButton_BlackScreen.isChecked()):
             frame[frame != 0] = 0;
-        
+
         if (self.ui.radioButton_LensBlur.isChecked()):
             frame = cv2.GaussianBlur(frame, (5,5), 10.0)
 
@@ -148,10 +148,6 @@ class VQAInteractionScreen(QWidget):
             model_index = 1
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
-        elif self.ui.radioButton_Model3.isChecked():
-            model_index = 2
-        elif self.ui.radioButton_Model4.isChecked():
-            model_index = 3
 
         def completed():
             print(f"Completed Prediction")
