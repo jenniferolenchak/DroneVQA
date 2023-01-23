@@ -6,14 +6,11 @@ import airsim
 import cv2
 import numpy as np
 
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QRadioButton, QLabel
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
-from PIL import Image, ImageEnhance
-from skimage import filters
-import matplotlib.pyplot as plt
 import random
 
 from worker import Worker
@@ -112,7 +109,7 @@ class VQAInteractionScreen(QWidget):
         # TODO: Add in the camera effects...
         if (self.ui.radioButton_BlackScreen.isChecked()):
             frame[frame != 0] = 0;
-        
+
         if (self.ui.radioButton_LensBlur.isChecked()):
             frame = cv2.GaussianBlur(frame, (5,5), 10.0)
 
@@ -141,20 +138,16 @@ class VQAInteractionScreen(QWidget):
         image = self.currentImage.copy()
 
         model_index = 0
-        # ViLT Model
-        if self.ui.radioButton_Model1.isChecked():
+        # ViLT (Base) Model
+        if self.ui.radioButton_ViltBase.isChecked():
             model_index = 0
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
-        # LXMERT
-        elif self.ui.radioButton_Model2.isChecked():
+        # LXMERT (Base) Model
+        elif self.ui.radioButton_LxmertBase.isChecked():
             model_index = 1
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
-        elif self.ui.radioButton_Model3.isChecked():
-            model_index = 2
-        elif self.ui.radioButton_Model4.isChecked():
-            model_index = 3
 
         def completed():
             print(f"Completed Prediction")
@@ -180,17 +173,40 @@ class VQAInteractionScreen(QWidget):
             details.append(f"{prediction}\t{prob:.5f}\n")
         detailsBox.setText("".join(details))
 
-        # Show the first visualization on screen
-        if len(results.visualizations):
+        # Clear the old visualization buttons
+        # https://ymt-lab.com/en/post/2021/pyqt5-delete-widget-test/
+        def deleteVisualizationButtons(layout):
+            for index in reversed(range(layout.count())):
+                if type(layout.itemAt(index) == QRadioButton):
+                    widget = layout.itemAt(index).widget()
+                    layout.removeWidget(widget)
+                    widget.deleteLater()
 
-            # Set visualization radio box
-            self.ui.radioButton_Visualization1.click()
+        self.ui.label_ResultVisualization.hide()
+        layout = self.ui.horizontalLayout_Visualizations
+        deleteVisualizationButtons(layout)
 
-            # Resize Image for Display
-            dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
-            frame = cv2.resize(results.visualizations[0], dim)
+        # Show the new visualization buttons
+        numVisuals = len(results.visualizations)
+        if numVisuals:
 
-            # Display Image
-            image = QImage(frame, frame.shape[1], frame.shape[0], 
-                        frame.strides[0], QImage.Format_RGB888)
-            self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
+            # Create each button
+            for i in range(numVisuals):
+                button = QRadioButton(f"radioButton_Visualization{i+1}")
+                button.setText(f"Visualization {i+1}")
+
+                # Set button action for each visual
+                def showVisual(image):
+                    # Resize Image for Display
+                    dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
+                    frame = cv2.resize(image, dim)
+
+                    # Display Image
+                    image = QImage(frame, frame.shape[1], frame.shape[0], 
+                                frame.strides[0], QImage.Format_RGB888)
+                    self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
+                    self.ui.label_ResultVisualization.hide()
+                    self.ui.label_ResultVisualization.show()
+
+                button.clicked.connect(lambda : showVisual(results.visualizations[i]))
+                layout.addWidget(button)
