@@ -41,9 +41,11 @@ if __name__ == "__main__":
 
     # Setup Models 
     # TODO: setup models in separate threads/processes for startup performance
+    print("Initializing Models")
     models = []
     models.append((setupViltTransformer()))
     models.append((setupLxmertTransformer()))
+    print("Model's Initialized")
 
     VQAScreen = VQAInteractionScreen(threadManager, controller, models)
     launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)

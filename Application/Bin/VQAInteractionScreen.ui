@@ -962,7 +962,7 @@ padding: 4px 0;
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_CameraEffects" stretch="0,0">
      <property name="spacing">
-      <number>-1</number>
+      <number>7</number>
      </property>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1182,32 +1182,20 @@ padding: 4px 0;
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout_Models">
-      <item row="0" column="2">
-       <widget class="QRadioButton" name="radioButton_Model3">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
-        </property>
-        <property name="text">
-         <string>Model 3</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
-       <widget class="QRadioButton" name="radioButton_Model2">
+       <widget class="QRadioButton" name="radioButton_LxmertBase">
         <property name="font">
          <font>
           <family>Arial</family>
          </font>
         </property>
         <property name="text">
-         <string>Model 2</string>
+         <string>LXMERT (Base)</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QRadioButton" name="radioButton_Model1">
+       <widget class="QRadioButton" name="radioButton_ViltBase">
         <property name="font">
          <font>
           <family>Arial</family>
@@ -1217,22 +1205,10 @@ padding: 4px 0;
          <string notr="true">color: black;</string>
         </property>
         <property name="text">
-         <string>Model 1</string>
+         <string>ViLT (Base)</string>
         </property>
         <property name="checked">
          <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QRadioButton" name="radioButton_Model4">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
-        </property>
-        <property name="text">
-         <string>Model 4</string>
         </property>
        </widget>
       </item>
@@ -1331,35 +1307,7 @@ padding: 4px 0;
       <height>26</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QRadioButton" name="radioButton_Visualization1">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="text">
-        <string>Visualization 1</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_Visualization2">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="text">
-        <string>Visualization 2</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <layout class="QHBoxLayout" name="horizontalLayout_Visualizations"/>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
