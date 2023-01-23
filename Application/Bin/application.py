@@ -18,8 +18,8 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     stackedWidget = QStackedWidget()
-    stackedWidget.setMinimumHeight(625)
-    stackedWidget.setMinimumWidth(500)
+    #stackedWidget.setMinimumHeight(625)
+    #stackedWidget.setMinimumWidth(500)
     stackedWidget.setWindowTitle("DroneVQA")
     stackedWidget.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
 
