@@ -26,16 +26,12 @@ class LaunchScreen(QWidget):
         ui_file.open(QFile.ReadOnly)
         self.ui = loader.load(ui_file, self)
         ui_file.close()
-
-
-        self.stackedWidget.setMinimumHeight(625)
-        self.stackedWidget.setMinimumWidth(500)
+        self.resize(500, 625)
 
         # Connect button actions to methods
         self.ui.button_AlreadyLaunched.clicked.connect(self.showFurtherInstructions)
         self.ui.button_InitializeClient.clicked.connect(self.startVQA)
         self.ui.button_LaunchCityMap.clicked.connect(lambda: self.launchAirSimEnv("..\\CityEnvironment\\CityEnviron.exe"))
-        #self.ui.button_LaunchTestMap.clicked.connect(lambda: self.launchAirSimEnv("..\\TestEnvironment\\TestEnviron.exe"))
 
         # Initially hide further user instructions
         self.ui.button_InitializeClient.hide()
@@ -55,10 +51,10 @@ class LaunchScreen(QWidget):
 
     def navToVQAScreen(self):
         '''Initialize VQA interaction screen and set at the active stacked frame'''
+        self.stackedWidget.hide()
         self.stackedWidget.setCurrentWidget(self.VQAScreen)
-
-        # Set size
         self.stackedWidget.resize(1184, 659)
+        self.stackedWidget.show()
 
         # Set window position
         center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
@@ -69,8 +65,8 @@ class LaunchScreen(QWidget):
 
     @Slot()
     def startVQA(self):
-        '''Initialize AirSim client and change window display to VQA Interaction Window'''
+        '''Initialize AirSim client, setup camera feed, and change window display to VQA Interaction Window'''
+        self.controller.initializeAirSimClient()
+        self.VQAScreen.setupCamera()
         self.navToVQAScreen()
-        self.threadManager.start(self.controller.initializeAirSimClient)
-
 
