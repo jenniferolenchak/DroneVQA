@@ -39,17 +39,17 @@
   <widget class="QLabel" name="label_Logo">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>70</y>
-     <width>481</width>
-     <height>250</height>
+     <x>0</x>
+     <y>-20</y>
+     <width>501</width>
+     <height>481</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>Images/Logos/Logo_DroneOnly_ScaledDown.png</pixmap>
+    <pixmap>Images/Logos/logo_drone_only.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -59,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>370</y>
+     <y>380</y>
      <width>441</width>
      <height>31</height>
     </rect>
@@ -77,27 +77,11 @@
     <enum>QProgressBar::TopToBottom</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_Title">
-   <property name="geometry">
-    <rect>
-     <x>7</x>
-     <y>7</y>
-     <width>481</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#1315a6;&quot;&gt;Loading...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_StatusText">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>420</y>
+     <y>440</y>
      <width>441</width>
      <height>51</height>
     </rect>

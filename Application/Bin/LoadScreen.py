@@ -25,5 +25,6 @@ class LoadScreen(QWidget):
         ui_file.close()
 
     def updateLoadStatus(self, percentComplete, statusText):
+        '''Update the progress bar and status message of the loading page'''
         self.ui.progressBar.setValue(percentComplete)
         self.ui.label_StatusText.setText(statusText)
