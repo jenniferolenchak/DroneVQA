@@ -1,52 +1,84 @@
 # This Python file uses the following encoding: utf-8
 from pathlib import Path
 import sys
-
-import airsim
+import os
 
 from PySide6.QtWidgets import QApplication, QStackedWidget
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import QThreadPool
-
-from LaunchScreen import LaunchScreen
-from VQAInteractionScreen import VQAInteractionScreen
-from AirSimControl import AirSimControl
 from LoadScreen import LoadScreen
-from utils import setupViltTransformer, setupLxmertTransformer
+
+def ImportGlobalModules(loadScreen):
+    loadScreen.updateLoadStatus(percentComplete=5, statusText="Importing AirSim")
+    global airsim
+    import airsim
+
+    loadScreen.updateLoadStatus(percentComplete=10, statusText="Importing QThreadPool")
+    from PySide6.QtCore import QThreadPool
+    global QThreadPool
+
+    loadScreen.updateLoadStatus(percentComplete=15, statusText="Importing LaunchScreen")
+    from LaunchScreen import LaunchScreen
+    global LaunchScreen
+
+    loadScreen.updateLoadStatus(percentComplete=20, statusText="Importing VQAInteractionScreen")
+    from VQAInteractionScreen import VQAInteractionScreen
+    global VQAInteractionScreen
+
+    loadScreen.updateLoadStatus(percentComplete=30, statusText="Importing AirSimControl")
+    from AirSimControl import AirSimControl
+    global AirSimControl
+
+    loadScreen.updateLoadStatus(percentComplete=40, statusText="Importing setupViltTransformer")
+    global setupViltTransformer
+    from utils import setupViltTransformer
+
+    loadScreen.updateLoadStatus(percentComplete=50, statusText="Importing setupLxmertTransformer")
+    global setupLxmertTransformer
+    from utils import setupLxmertTransformer
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     stackedWidget = QStackedWidget()
-    #stackedWidget.setMinimumHeight(625)
-    #stackedWidget.setMinimumWidth(500)
+    stackedWidget.resize(500, 500)
     stackedWidget.setWindowTitle("DroneVQA")
     stackedWidget.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
 
+
     # Display the load screen until the initialization processes are done
-    loadScreen = LoadScreen()
+    loadScreen = LoadScreen(stackedWidget)
     stackedWidget.addWidget(loadScreen)
     stackedWidget.setCurrentWidget(loadScreen)
     stackedWidget.resize(500,500)
     stackedWidget.show()
 
+    # Import modules while the loading screen  is displaying
+    ImportGlobalModules(loadScreen)
+
+    loadScreen.updateLoadStatus(percentComplete=55, statusText="Initializing AirSimControl")
     controller = AirSimControl()
+
+    loadScreen.updateLoadStatus(percentComplete=60, statusText="Initializing QThreadPool")
     threadManager = QThreadPool()
 
     # Initialize global variables
+    loadScreen.updateLoadStatus(percentComplete=65, statusText="Initializing global camera variables")
     CAMERA_NAME = '0'
     IMAGE_TYPE = airsim.ImageType.Scene
     DECODE_EXTENSION = '.png'
     record = True
 
     # Setup Models 
-    # TODO: setup models in separate threads/processes for startup performance
-    print("Initializing Models")
+    loadScreen.updateLoadStatus(percentComplete=65, statusText="Beginning to set up models...")
     models = []
+    loadScreen.updateLoadStatus(percentComplete=60, statusText="Initializing Vilt model\nThis step will take longer the first time this application loads.")
     models.append((setupViltTransformer()))
+    loadScreen.updateLoadStatus(percentComplete=80, statusText="Initializing LxMERT model\nThis step will take longer the first time this application loads.")
     models.append((setupLxmertTransformer()))
-    print("Model's Initialized")
+    loadScreen.updateLoadStatus(percentComplete=95, statusText="Switching to launch screen...")
 
+    # Switch to the launch screen
     VQAScreen = VQAInteractionScreen(threadManager, controller, models)
     launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)
     stackedWidget.addWidget(launchScreen)
@@ -55,3 +87,4 @@ if __name__ == "__main__":
     stackedWidget.setCurrentWidget(launchScreen)
 
     sys.exit(app.exec())
+
