@@ -36,14 +36,7 @@ def predictVilt(model, processor, question, image):
     idx = torch.sigmoid(logits).argmax(-1).item()
 
     # Get Top Answers
-    sm = torch.nn.Softmax(dim=0)
-    probabilities = sm(logits[0])
-    top_answer_ids = list(probabilities.argsort()[-5:])
-    top_predictions = []
-    for id in top_answer_ids:
-        answer : str = model.config.id2label[id.item()]
-        prob : float = probabilities[id.item()]
-        top_predictions.append((answer, prob))
+    top_predictions = getTopPredictions(logits[0], model.config.id2label)
 
     results = PredictionResults(question=question, image=image, 
                                 prediction=model.config.id2label[idx],
@@ -150,14 +143,34 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
         token_type_ids=inputs.token_type_ids,
         output_attentions=False,
     )
-    # get prediction
+
+    # Get top predicted answer index
     pred_vqa = output_vqa["question_answering_score"].argmax(-1)
-    print("Question:", question)
-    print("prediction from LXMERT VQA:", vqa_answers[pred_vqa])
 
-    # TODO: Obtain top 5 predictions and probabilities
-
+    # Get Top Answers
+    top_predictions = getTopPredictions(output_vqa["question_answering_score"][0], vqa_answers)
+    
     results = PredictionResults(question=question[0], image=image, prediction=vqa_answers[pred_vqa], 
-                                visualizations=[visualization])
+                                top_predictions=top_predictions, visualizations=[visualization])
 
     return results
+
+def getTopPredictions(vqa_raw_scores, vocab_dictionary):
+    '''
+    vqa_raw_scores is a Tensor containing the final classification scores of the model
+
+    vocab_dictionary is a dictionary mapping the model output indicies to the corresponding words
+
+    Returns a list of tuples with a word and corresponding score
+    '''
+    sm = torch.nn.Softmax(dim=0)
+    probabilities = sm(vqa_raw_scores)
+    top_answer_ids = probabilities.argsort()[-5:]
+    top_predictions = []
+    for id in top_answer_ids:
+        id = int(id) # Type conversion to ensure we are working with ints and not tensors
+        answer : str = vocab_dictionary[id]
+        prob : float = probabilities[id]
+        top_predictions.append((answer, prob))
+    
+    return top_predictions
