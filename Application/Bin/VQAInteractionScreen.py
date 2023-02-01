@@ -25,7 +25,10 @@ class VQAInteractionScreen(QWidget):
         self.controller = controller
         self.models = models
         self.currentImage = None
+        self.currentQuestion = ""
+        self.currentModelImage = None
         self.predictionResult = None
+        self.visuals = []
         self.load_ui()
       
     def load_ui(self):
@@ -169,7 +172,9 @@ class VQAInteractionScreen(QWidget):
     def askQuestion(self):
         # Obtain the desired model for prediction
         question = self.ui.lineEdit_Question.text()
+        self.currentQuestion = question
         image = self.currentImage.copy()
+        self.currentModelImage = image
 
         model_index = 0
         # ViLT (Base) Model
@@ -220,10 +225,15 @@ class VQAInteractionScreen(QWidget):
         layout = self.ui.horizontalLayout_Visualizations
         deleteVisualizationButtons(layout)
 
+        if (self.ui.checkBox_ExportResults.isChecked()):
+            print("exported -- question + answer")
+            print(self.currentQuestion)
+            print(self.predictionResult.prediction)
+
         # Show the new visualization buttons
         numVisuals = len(results.visualizations)
         if numVisuals:
-
+            
             # Create each button
             for i in range(numVisuals):
                 button = QRadioButton(f"radioButton_Visualization{i+1}")
@@ -235,6 +245,14 @@ class VQAInteractionScreen(QWidget):
                     dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
                     frame = cv2.resize(image, dim)
 
+                    if (self.ui.checkBox_ExportResults.isChecked()):
+                        print("export -- visual")
+                        print(frame)
+                        filename = f"Visualization_{i+1}.png"
+                        print(filename)
+                        cv2.imwrite("base_image.png", cv2.cvtColor(self.currentModelImage, cv2.COLOR_RGB2BGR))
+                        cv2.imwrite(filename, cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+
                     # Display Image
                     image = QImage(frame, frame.shape[1], frame.shape[0], 
                                 frame.strides[0], QImage.Format_RGB888)
@@ -244,3 +262,5 @@ class VQAInteractionScreen(QWidget):
 
                 button.clicked.connect(lambda : showVisual(results.visualizations[i]))
                 layout.addWidget(button)
+        
+
