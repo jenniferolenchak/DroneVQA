@@ -10,8 +10,8 @@ Deep learning for visual inspection performed by simulated drones
 
 ## Members and Roles
 - Samuel Hearn
-- Jennifer Olenchak - Project Manager
-- Marco Peric - Dataset Creation & Training Lead
-- Robin Perlman - Model Research & Deployment Lead
+- Jennifer Olenchak, _Project Manager_
+- Marco Peric, _Dataset Creation & Training Lead_
+- Robin Perlman, _Model Research & Deployment Lead_
 - Ayden Rebhan
 - Brandon Spangler
