@@ -31,7 +31,7 @@ class LaunchScreen(QWidget):
         # Connect button actions to methods
         self.ui.button_AlreadyLaunched.clicked.connect(self.showFurtherInstructions)
         self.ui.button_InitializeClient.clicked.connect(self.startVQA)
-        self.ui.button_LaunchCityMap.clicked.connect(lambda: self.launchAirSimEnv("..\\CityEnvironment\\CityEnviron.exe"))
+        self.ui.button_LaunchCityMap.clicked.connect(lambda: self.launchAirSimEnv("..\\Environments\\CityEnvironment\\CityEnviron.exe"))
 
         # Initially hide further user instructions
         self.ui.button_InitializeClient.hide()
@@ -53,7 +53,7 @@ class LaunchScreen(QWidget):
         '''Initialize VQA interaction screen and set at the active stacked frame'''
         self.stackedWidget.hide()
         self.stackedWidget.setCurrentWidget(self.VQAScreen)
-        self.stackedWidget.resize(1184, 659)
+        self.stackedWidget.resize(1500, 850)
         self.stackedWidget.show()
 
         # Set window position
