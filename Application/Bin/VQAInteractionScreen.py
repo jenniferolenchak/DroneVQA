@@ -11,6 +11,9 @@ from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
 import random
+import time
+import os
+from threading import Timer
 
 from worker import Worker
 from utils import PredictionResults, predictVilt, predictLxmert
@@ -70,6 +73,9 @@ class VQAInteractionScreen(QWidget):
 
         # Freeze Frame Button Clicked
         self.ui.pushButton_FreezeUnfreezeFrame.clicked.connect(self.freezeUnfreezeCamera)
+
+        # Take a Snapshot Button Clicked
+        self.ui.pushButton_TakeASnapshot.clicked.connect(self.takeSnapshot)
 
         # Ask Question Button
         self.ui.pushButton_Ask.clicked.connect(self.askQuestion)
@@ -135,6 +141,29 @@ class VQAInteractionScreen(QWidget):
         else:
             self.timer.start(100)
             self.ui.pushButton_FreezeUnfreezeFrame.setText("Freeze Frame")
+    
+    def takeSnapshot(self):
+        self.ui.pushButton_TakeASnapshot.setText("Capturing")
+        self.ui.pushButton_TakeASnapshot.setEnabled(False)
+
+        current_time = time.localtime()
+        formatted_time = time.strftime("%b-%d-%H-%M-%S", current_time)
+        filename = formatted_time + ".png"
+        snapshot_dir = "snapshot_images/"
+
+        if (not os.path.exists(snapshot_dir)):
+            os.mkdir(snapshot_dir)
+
+        cv2.imwrite(snapshot_dir + filename, cv2.cvtColor(self.currentImage, cv2.COLOR_RGB2BGR))
+        print("Snapshot saved to: " + snapshot_dir + filename)
+
+        self.ui.pushButton_TakeASnapshot.setText("Captured")
+        Timer(2, self.resetTakeSnapshot).start()
+        
+    
+    def resetTakeSnapshot(self):
+        self.ui.pushButton_TakeASnapshot.setText("Take a Snapshot")
+        self.ui.pushButton_TakeASnapshot.setEnabled(True)
 
 
     def askQuestion(self):
