@@ -1,4 +1,3 @@
 # Ignore Microsoft AirSim Simulation Folders.
 CityEnvironment/
 CityEnvironmentV5/
-snapshot_images/

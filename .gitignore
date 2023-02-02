@@ -1,3 +1,5 @@
 # Ignore Python Virtual Environment Folders. Note: you will need to run the setup script to download the appropriate dependencies
-/venv 
-**/__pycache__/
+venv/
+SD1_Venv/
+Testing_Venv/ 
+__pycache__/
