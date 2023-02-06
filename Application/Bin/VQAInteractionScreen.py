@@ -287,6 +287,9 @@ class VQAInteractionScreen(QWidget):
         if (self.ui.checkBox_ExportResults.isChecked()):
             self.exportResults()
 
+    def resetExportText(self):
+        self.ui.checkBox_ExportResults.setText("Export Results")
+
     def exportResults(self):
 
             if (not self.checkExportDir()):
@@ -301,7 +304,7 @@ class VQAInteractionScreen(QWidget):
 
                 os.mkdir(result_dir)
 
-                self.current_doc_name = self.model_dir + formatted_time + "/result.docx"
+                self.current_doc_name = self.model_dir + formatted_time + "/Results_" + formatted_time + ".docx"
 
                 document.add_heading("Question and Model Prediction")
 
@@ -336,7 +339,7 @@ class VQAInteractionScreen(QWidget):
 
                 document.add_heading("Base Image")
                 cv2.imwrite(result_dir + "base_image.png", cv2.cvtColor(self.currentModelImage, cv2.COLOR_RGB2BGR))
-                document.add_picture(result_dir + "base_image.png")
+                document.add_picture(result_dir + "base_image.png", width=Inches(6.0))
 
                 numVisuals = len(self.predictionResult.visualizations)
                 if numVisuals:
@@ -356,6 +359,11 @@ class VQAInteractionScreen(QWidget):
 
                 document.save(self.current_doc_name)
                 print("results exported to: " + self.current_doc_name)
+
+                self.ui.checkBox_ExportResults.setText("Exported")
+                Timer(2, self.resetExportText).start()
             except:
                 print("Could not export results")
+                self.ui.checkBox_ExportResults.setText("Could Not Export")
+                Timer(2, self.resetExportText).start()
 
