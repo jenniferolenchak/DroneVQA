@@ -31,9 +31,9 @@ class VQAInteractionScreen(QWidget):
         self.currentQuestion = ""
         self.currentModelImage = None
         self.predictionResult = None
-        self.exported_dir = "exported_results/"
-        self.snapshot_dir = "exported_results/snapshot_images/"
-        self.model_dir = "exported_results/model_results/"
+        self.exported_dir = "Exports and Snapshots/"
+        self.snapshot_dir = "Exports and Snapshots/Snapshots/"
+        self.model_dir = "Exports and Snapshots/Model Results/"
         self.current_doc_name = ""
         self.current_model_details = ""
         self.visuals = []
