@@ -56,7 +56,7 @@ background-color: white;
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">paddingTop: 4px;</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; font-weight:700; color:#0021b6;&quot;&gt;DroneVQA: AirSim Interaction Menu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -516,6 +516,11 @@ border-radius: 2px;
      <layout class="QGridLayout" name="gridLayout_WeatherAndEnvironment">
       <item row="4" column="2">
        <widget class="QLabel" name="label_RoadWetnessVal">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>3</number>
         </property>
@@ -598,6 +603,11 @@ border-radius: 2px;
       </item>
       <item row="2" column="2">
        <widget class="QLabel" name="label_DustVal">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>3</number>
         </property>
@@ -632,6 +642,11 @@ border-radius: 2px;
       </item>
       <item row="6" column="2">
        <widget class="QLabel" name="label_MapleLeavesVal">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>3</number>
         </property>
@@ -665,6 +680,11 @@ border-radius: 2px;
           <width>25</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
         </property>
         <property name="lineWidth">
          <number>3</number>
@@ -706,6 +726,11 @@ border-radius: 2px;
       </item>
       <item row="5" column="2">
        <widget class="QLabel" name="label_RoadSnowVal">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>3</number>
         </property>
@@ -764,6 +789,11 @@ border-radius: 2px;
       </item>
       <item row="1" column="2">
        <widget class="QLabel" name="label_SnowVal">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>3</number>
         </property>
@@ -813,6 +843,11 @@ border-radius: 2px;
       </item>
       <item row="3" column="2">
        <widget class="QLabel" name="label_FogVal">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>3</number>
         </property>

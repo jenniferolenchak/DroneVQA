@@ -15,6 +15,9 @@ import time
 import os
 from threading import Timer
 
+from docx import Document
+from docx.shared import Inches, Pt
+
 from worker import Worker
 from utils import PredictionResults, predictVilt, predictLxmert
 
@@ -25,7 +28,15 @@ class VQAInteractionScreen(QWidget):
         self.controller = controller
         self.models = models
         self.currentImage = None
+        self.currentQuestion = ""
+        self.currentModelImage = None
         self.predictionResult = None
+        self.exported_dir = "Exports and Snapshots/"
+        self.snapshot_dir = "Exports and Snapshots/Snapshots/"
+        self.model_dir = "Exports and Snapshots/Model Results/"
+        self.current_doc_name = ""
+        self.current_model_details = ""
+        self.visuals = []
         self.load_ui()
       
     def load_ui(self):
@@ -142,23 +153,46 @@ class VQAInteractionScreen(QWidget):
             self.timer.start(100)
             self.ui.pushButton_FreezeUnfreezeFrame.setText("Freeze Frame")
     
+    def getCurrentFormattedTime(self): 
+        current_time = time.localtime()
+        formatted_time = time.strftime("%b-%d-%H-%M-%S", current_time)
+        return formatted_time
+
+    def checkExportDir(self):
+        try:
+            if (not os.path.exists(self.exported_dir)):
+                os.mkdir(self.exported_dir)
+            
+            if (not os.path.exists(self.snapshot_dir)):
+                os.mkdir(self.snapshot_dir)
+            
+            if (not os.path.exists(self.model_dir)):
+                os.mkdir(self.model_dir)
+            
+            return True
+        except:
+            return False
+
+
     def takeSnapshot(self):
         self.ui.pushButton_TakeASnapshot.setText("Capturing")
         self.ui.pushButton_TakeASnapshot.setEnabled(False)
 
-        current_time = time.localtime()
-        formatted_time = time.strftime("%b-%d-%H-%M-%S", current_time)
+        formatted_time = self.getCurrentFormattedTime()
         filename = formatted_time + ".png"
-        snapshot_dir = "snapshot_images/"
+        
+        if (not self.checkExportDir()):
+            print("Could not save snapshot")
+            return
+        
+        try: 
+            cv2.imwrite(self.snapshot_dir + filename, cv2.cvtColor(self.currentImage, cv2.COLOR_RGB2BGR))
+            print("Snapshot saved to: " + self.snapshot_dir + filename)
 
-        if (not os.path.exists(snapshot_dir)):
-            os.mkdir(snapshot_dir)
-
-        cv2.imwrite(snapshot_dir + filename, cv2.cvtColor(self.currentImage, cv2.COLOR_RGB2BGR))
-        print("Snapshot saved to: " + snapshot_dir + filename)
-
-        self.ui.pushButton_TakeASnapshot.setText("Captured")
-        Timer(2, self.resetTakeSnapshot).start()
+            self.ui.pushButton_TakeASnapshot.setText("Captured")
+            Timer(2, self.resetTakeSnapshot).start()
+        except:
+            print("Could not save snapshot")
         
     
     def resetTakeSnapshot(self):
@@ -169,7 +203,9 @@ class VQAInteractionScreen(QWidget):
     def askQuestion(self):
         # Obtain the desired model for prediction
         question = self.ui.lineEdit_Question.text()
+        self.currentQuestion = question
         image = self.currentImage.copy()
+        self.currentModelImage = image
 
         model_index = 0
         # ViLT (Base) Model
@@ -203,9 +239,11 @@ class VQAInteractionScreen(QWidget):
         detailsBox = self.ui.textEdit_Details
         detailsBox.clear()
         details = []
+        self.current_model_details = ""
         for prediction, prob in results.top_predictions:
             details.append(f"{prediction}\t{prob:.5f}\n")
-        detailsBox.setText("".join(details))
+        self.current_model_details = "".join(details)
+        detailsBox.setText(self.current_model_details)
 
         # Clear the old visualization buttons
         # https://ymt-lab.com/en/post/2021/pyqt5-delete-widget-test/
@@ -220,10 +258,11 @@ class VQAInteractionScreen(QWidget):
         layout = self.ui.horizontalLayout_Visualizations
         deleteVisualizationButtons(layout)
 
+
         # Show the new visualization buttons
         numVisuals = len(results.visualizations)
         if numVisuals:
-
+            
             # Create each button
             for i in range(numVisuals):
                 button = QRadioButton(f"radioButton_Visualization{i+1}")
@@ -244,3 +283,87 @@ class VQAInteractionScreen(QWidget):
 
                 button.clicked.connect(lambda : showVisual(results.visualizations[i]))
                 layout.addWidget(button)
+        
+        if (self.ui.checkBox_ExportResults.isChecked()):
+            self.exportResults()
+
+    def resetExportText(self):
+        self.ui.checkBox_ExportResults.setText("Export Results")
+
+    def exportResults(self):
+
+            if (not self.checkExportDir()):
+                print("Could not save snapshot")
+                return
+
+            try: 
+                document = Document()
+                formatted_time = self.getCurrentFormattedTime()
+
+                result_dir = self.model_dir + formatted_time + "/"
+
+                os.mkdir(result_dir)
+
+                self.current_doc_name = self.model_dir + formatted_time + "/Results_" + formatted_time + ".docx"
+
+                document.add_heading("Question and Model Prediction")
+
+                question_paragraph = document.add_paragraph()
+                question_format = question_paragraph.paragraph_format
+                question_format.left_indent = Inches(0.5)
+
+                question_run = question_paragraph.add_run("Question Asked: " + self.currentQuestion)
+                question_font = question_run.font
+                question_font.name = 'Calibri'
+                question_font.size = Pt(12)
+
+                answer_paragraph = document.add_paragraph()
+                answer_format = answer_paragraph.paragraph_format
+                answer_format.left_indent = Inches(0.5)
+
+                answer_run = answer_paragraph.add_run("Prediction: " + self.predictionResult.prediction)
+                answer_font = answer_run.font
+                answer_font.name = 'Calibri'
+                answer_font.size = Pt(12)
+
+                if (self.current_model_details != ""):
+                    document.add_heading("Prediction Details")
+                    details_paragraph = document.add_paragraph()
+                    details_format = details_paragraph.paragraph_format
+                    details_format.left_indent = Inches(0.5)
+
+                    details_run = details_paragraph.add_run(self.current_model_details)
+                    details_font = details_run.font
+                    details_font.name = 'Calibri'
+                    details_font.size = Pt(12)
+
+                document.add_heading("Base Image")
+                cv2.imwrite(result_dir + "base_image.png", cv2.cvtColor(self.currentModelImage, cv2.COLOR_RGB2BGR))
+                document.add_picture(result_dir + "base_image.png", width=Inches(6.0))
+
+                numVisuals = len(self.predictionResult.visualizations)
+                if numVisuals:
+                    document.add_heading("Model Visualizations")
+                    # Export each visual
+                    for i in range(numVisuals):
+                        # Resize Image for Export (uses size from GUI)
+                        dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
+                        export_frame = cv2.resize(self.predictionResult.visualizations[i], dim)
+
+                        visual_filename = f"Visualization_{i+1}.png"
+                        cv2.imwrite(result_dir + visual_filename, cv2.cvtColor(export_frame, cv2.COLOR_RGB2BGR))
+                        
+                        document.add_heading(f"Visualization_{i+1}.png", level=2)
+                        document.add_picture(result_dir + visual_filename, width=Inches(6.0))
+                
+
+                document.save(self.current_doc_name)
+                print("results exported to: " + self.current_doc_name)
+
+                self.ui.checkBox_ExportResults.setText("Exported")
+                Timer(2, self.resetExportText).start()
+            except:
+                print("Could not export results")
+                self.ui.checkBox_ExportResults.setText("Could Not Export")
+                Timer(2, self.resetExportText).start()
+
