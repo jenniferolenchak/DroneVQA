@@ -1,6 +1,7 @@
 import os
 from transformers import ViltForQuestionAnswering, ViltProcessor 
 import torch
+import numpy as np
 
 from dataclasses import dataclass, field
 
@@ -11,7 +12,9 @@ from frcnn.utils import Config, get_data
 from frcnn.modeling_frcnn import GeneralizedRCNN
 from frcnn.processing_image import Preprocess
 from frcnn.visualizing_image import SingleImageViz
+from ModelVisualizations.vilt_visualization import get_visualization_for_token, combine_images, rgba2rgb
 
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 # class to store relevant prediction information
 @dataclass
@@ -25,11 +28,15 @@ class PredictionResults:
 
     # Extra Visualization Data. These are optional
     top_predictions: list[tuple[str, float]] = field(default_factory=list[tuple[str, float]])
-    visualizations: list = field(default_factory=list)
+    visualizations: list = field(default_factory=list[np.ndarray]) # This is a list of RGB images (CV2 images)
+
+    # Token information:
+    encoded_tokens: list = field(default_factory=list)
+    decoded_tokens: list = field(default_factory=list)
 
 # ViLT Model
 def predictVilt(model, processor, question, image):
-    encoding = processor(image, question, return_tensors="pt")
+    encoding = processor(image, question, return_tensors="pt").to(device)
 
     outputs = model(**encoding)
     logits = outputs.logits
@@ -38,15 +45,30 @@ def predictVilt(model, processor, question, image):
     # Get Top Answers
     top_predictions = getTopPredictions(logits[0], model.config.id2label)
 
+    # Obtain the tokens used as input
+    encoded_tokens = encoding['input_ids'].tolist()[0]
+    decoded_tokens = processor.batch_decode(encoding['input_ids'])
+
+    # Visualizations
+    _, visuals = get_visualization_for_token(model, encoding, image)
+    visualizations = []
+    visualizations.append(combine_images(visuals))
+    visualizations.extend(visuals)
+    visualizations = [rgba2rgb(np.array(visual)) for visual in visualizations]
+
     results = PredictionResults(question=question, image=image, 
                                 prediction=model.config.id2label[idx],
-                                top_predictions=top_predictions)
+                                top_predictions=top_predictions,
+                                encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens,
+                                visualizations=visualizations
+                                )
 
     return results
 
 def setupViltTransformer():
     processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
     model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+    model.to(device)
 
     return model, processor
 
