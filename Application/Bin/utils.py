@@ -53,8 +53,7 @@ def predictVilt(model, processor, question, image):
     _, visuals = get_visualization_for_token(model, encoding, image)
     visualizations = []
     visualizations.append(combine_images(visuals))
-    # TODO: Display all the attention images
-    # visualizations.extend(visuals)
+    visualizations.extend(visuals)
     visualizations = [rgba2rgb(np.array(visual)) for visual in visualizations]
 
     results = PredictionResults(question=question, image=image, 

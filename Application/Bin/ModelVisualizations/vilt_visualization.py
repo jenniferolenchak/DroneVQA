@@ -202,7 +202,7 @@ def combine_images(results : list):
     '''
     Combine the attention patches for each token into a single image with the overall attention.
     '''
-    combined_image = results[0]
+    combined_image = results[0].copy()
 
     for im in results[1:]:
         combined_image.paste(im, (0,0), im)
