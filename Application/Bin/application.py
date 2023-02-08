@@ -5,6 +5,7 @@ import os
 
 from PySide6.QtWidgets import QApplication, QStackedWidget
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import QThreadPool
 from LoadScreen import LoadScreen
 
 def ImportGlobalModules(loadScreen):
@@ -12,21 +13,17 @@ def ImportGlobalModules(loadScreen):
     global airsim
     import airsim
 
-    loadScreen.updateLoadStatus(percentComplete=10, statusText="Importing QThreadPool")
-    from PySide6.QtCore import QThreadPool
-    global QThreadPool
-
     loadScreen.updateLoadStatus(percentComplete=15, statusText="Importing LaunchScreen")
-    from LaunchScreen import LaunchScreen
     global LaunchScreen
+    from LaunchScreen import LaunchScreen
 
     loadScreen.updateLoadStatus(percentComplete=20, statusText="Importing VQAInteractionScreen")
-    from VQAInteractionScreen import VQAInteractionScreen
     global VQAInteractionScreen
+    from VQAInteractionScreen import VQAInteractionScreen
 
     loadScreen.updateLoadStatus(percentComplete=30, statusText="Importing AirSimControl")
-    from AirSimControl import AirSimControl
     global AirSimControl
+    from AirSimControl import AirSimControl
 
     loadScreen.updateLoadStatus(percentComplete=40, statusText="Importing setupViltTransformer")
     global setupViltTransformer
