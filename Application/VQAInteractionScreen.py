@@ -75,6 +75,8 @@ class VQAInteractionScreen(QWidget):
 
         self.ui.comboBox_Visualizations.currentTextChanged.connect(lambda: self.displayVisualization(self.ui.comboBox_Visualizations.currentIndex()))
 
+        self.ui.pushButton_ViewExpandedVisualization.clicked.connect(lambda: self.displayExpandedVisualization(self.ui.comboBox_Visualizations.currentIndex()))
+
         # Re-initialize AirSim client
         self.ui.pushButton_RestartAirSimClient.clicked.connect(self.controller.initializeAirSimClient)
 
@@ -242,6 +244,10 @@ class VQAInteractionScreen(QWidget):
         self.threadManager.start(worker)
 
     def displayVisualization(self, imageIndex):
+        """
+        Sets the visualization image in the 'Model Visualization' area
+        """
+
         # Get visualization based on index
         image = self.predictionResult.visualizations[imageIndex]
 
@@ -255,6 +261,30 @@ class VQAInteractionScreen(QWidget):
         self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
         self.ui.label_ResultVisualization.hide()
         self.ui.label_ResultVisualization.show()
+
+    def displayExpandedVisualization(self, imageIndex):
+        """
+        Launches a separate window with a larger version of the selected visualization
+        """
+
+        # Get visualization based on index
+        image = self.predictionResult.visualizations[imageIndex]
+
+        # Set pixel expansion factor
+        pixelExpansion = 600
+
+        # Set the expansion size to the current pixel dimensions + the pixel expansion factor (retains current aspect ratio)
+        dim = (self.ui.label_ResultVisualization.width()+pixelExpansion,self.ui.label_ResultVisualization.height()+pixelExpansion)
+        frame = cv2.resize(image, dim)
+
+        # Display Image
+        self.miniWindow = QLabel("Expanded Visualization")
+        image = QImage(frame, frame.shape[1], frame.shape[0],
+                    frame.strides[0], QImage.Format_RGB888)
+        self.miniWindow.setPixmap(QPixmap.fromImage(image))
+
+        self.miniWindow.show()
+
 
 
     def showResults(self, results: PredictionResults):

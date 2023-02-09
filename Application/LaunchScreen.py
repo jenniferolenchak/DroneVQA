@@ -31,13 +31,6 @@ class LaunchScreen(QWidget):
         # Connect button action to method
         self.ui.button_InitializeClient.clicked.connect(self.startVQA)
 
-    def launchAirSimEnv(self, relativePath):
-        '''Launch AirSim environment executable and display further instructions to user'''
-        projectPath = os.path.dirname(__file__)
-        mapPath = os.path.join(projectPath, relativePath)
-        self.runningSimulation = os.startfile(mapPath)
-        self.showFurtherInstructions()
-
     def navToVQAScreen(self):
         '''Initialize VQA interaction screen and set at the active stacked frame'''
         self.stackedWidget.hide()
@@ -52,10 +45,16 @@ class LaunchScreen(QWidget):
         self.stackedWidget.move(geo.topLeft())
         #stackedWidget.setWindowState(Qt.WindowStates.WindowMaximized)
 
-    @Slot()
+        # Start Camera
+        self.VQAScreen.setupCamera()
+
+
     def startVQA(self):
         '''Initialize AirSim client, setup camera feed, and change window display to VQA Interaction Window'''
+        self.ui.button_InitializeClient.setText("Initializing Client...")
+        #TODO - Add logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
         self.controller.initializeAirSimClient()
-        self.VQAScreen.setupCamera()
         self.navToVQAScreen()
+
+
 

@@ -1069,7 +1069,7 @@ padding: 4px 0;
       <x>10</x>
       <y>460</y>
       <width>701</width>
-      <height>21</height>
+      <height>28</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1578,27 +1578,53 @@ padding: 4px 0;
      <string/>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_Visualizations">
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>460</y>
+      <y>459</y>
       <width>721</width>
-      <height>19</height>
+      <height>31</height>
      </rect>
     </property>
-    <property name="currentText">
-     <string/>
-    </property>
-    <property name="currentIndex">
-     <number>-1</number>
-    </property>
-    <property name="maxVisibleItems">
-     <number>10</number>
-    </property>
-    <property name="placeholderText">
-     <string>Select a Visualization To Display...</string>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QComboBox" name="comboBox_Visualizations">
+       <property name="currentText">
+        <string/>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+       <property name="maxVisibleItems">
+        <number>10</number>
+       </property>
+       <property name="placeholderText">
+        <string>Select a Visualization To Display...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_ViewExpandedVisualization">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">* { background-color: lightgrey; color: black; }
+
+QPushButton {
+border-radius: 4px;
+padding: 4px 0;
+}</string>
+       </property>
+       <property name="text">
+        <string>View Expanded Visualization</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
