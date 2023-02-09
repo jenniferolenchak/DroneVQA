@@ -1581,6 +1581,9 @@ padding: 4px 0;
        <property name="currentText">
         <string/>
        </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
        <property name="maxVisibleItems">
         <number>10</number>
        </property>
