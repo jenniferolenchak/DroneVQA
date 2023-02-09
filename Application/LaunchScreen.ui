@@ -115,9 +115,12 @@ color: black;</string>
        </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;1.&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; Launch an Unreal Engine environment with the Microsoft Air Simulator (AirSim) Plugin enabled.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;1.&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; Launch an Unreal Engine environment with the Microsoft AirSim Plugin enabled. Downloads are available &lt;/span&gt;&lt;a href=&quot;https://github.com/microsoft/AirSim/releases&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="openExternalLinks">
        <bool>true</bool>
       </property>
      </widget>
