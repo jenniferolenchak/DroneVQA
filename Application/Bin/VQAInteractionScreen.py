@@ -203,6 +203,14 @@ class VQAInteractionScreen(QWidget):
 
 
     def askQuestion(self):
+        # Hide any existing displayed visualization
+        self.ui.label_ResultVisualization.hide()
+
+        # Set ask button inactive and change text/color to loading while the model is running
+        self.ui.pushButton_Ask.setEnabled(False)
+        self.ui.pushButton_Ask.setText("Loading...")
+        self.ui.pushButton_Ask.setStyleSheet("* { background-color: DarkSalmon; color: black; }\n\nQPushButton {\nborder-radius: 4px;\npadding: 4px 0;\n}")
+
         # Obtain the desired model for prediction
         question = self.ui.lineEdit_Question.text()
         self.currentQuestion = question
@@ -222,7 +230,10 @@ class VQAInteractionScreen(QWidget):
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
 
         def completed():
-            print(f"Completed Prediction")
+            # Set ask button active and change text/color back to user ask prompt
+            self.ui.pushButton_Ask.setEnabled(True)
+            self.ui.pushButton_Ask.setText("Ask")
+            self.ui.pushButton_Ask.setStyleSheet("* { background-color: lightgrey; color: black; }\n\nQPushButton {\nborder-radius: 4px;\npadding: 4px 0;\n}")
 
         worker.signals.result.connect(self.showResults)
         worker.signals.finished.connect(completed)
@@ -272,6 +283,11 @@ class VQAInteractionScreen(QWidget):
         if numVisuals:
             for i in range(numVisuals):
                 self.ui.comboBox_Visualizations.addItem(f"Visualization {i+1}")
+
+            # Show the 1st vizualization as a default
+            defaultImageIndex = 0
+            self.ui.comboBox_Visualizations.setCurrentIndex(defaultImageIndex);
+            self.displayVisualization(defaultImageIndex)
         
         if (self.ui.checkBox_ExportResults.isChecked()):
             self.exportResults()
