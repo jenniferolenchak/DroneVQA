@@ -195,4 +195,4 @@ def getTopPredictions(vqa_raw_scores, vocab_dictionary):
         prob : float = probabilities[id]
         top_predictions.append((answer, prob))
     
-    return top_predictions
+    return top_predictions[::-1] # Reverse so we show results in descending order
