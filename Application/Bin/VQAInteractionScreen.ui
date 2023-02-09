@@ -1575,7 +1575,21 @@ padding: 4px 0;
       <height>26</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_Visualizations"/>
+    <layout class="QHBoxLayout" name="horizontalLayout_Visualizations">
+     <item>
+      <widget class="QComboBox" name="comboBox_Visualizations">
+       <property name="currentText">
+        <string/>
+       </property>
+       <property name="maxVisibleItems">
+        <number>10</number>
+       </property>
+       <property name="placeholderText">
+        <string>Select a Visualization To Display...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

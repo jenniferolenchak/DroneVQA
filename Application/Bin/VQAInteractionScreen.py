@@ -73,6 +73,8 @@ class VQAInteractionScreen(QWidget):
 
         self.ui.horizontalSlider_MovementVelocity.valueChanged.connect(self.changeMovementVelocity)
 
+        self.ui.comboBox_Visualizations.currentTextChanged.connect(lambda: self.displayVisualization(self.ui.comboBox_Visualizations.currentIndex()))
+
         # Re-initialize AirSim client
         self.ui.pushButton_RestartAirSimClient.clicked.connect(self.controller.initializeAirSimClient)
 
@@ -228,6 +230,22 @@ class VQAInteractionScreen(QWidget):
 
         self.threadManager.start(worker)
 
+    def displayVisualization(self, imageIndex):
+        # Get visualization based on index
+        image = self.predictionResult.visualizations[imageIndex]
+
+        # Resize Image for Display
+        dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
+        frame = cv2.resize(image, dim)
+
+        # Display Image
+        image = QImage(frame, frame.shape[1], frame.shape[0],
+                    frame.strides[0], QImage.Format_RGB888)
+        self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
+        self.ui.label_ResultVisualization.hide()
+        self.ui.label_ResultVisualization.show()
+
+
     def showResults(self, results: PredictionResults):
         # Store prediction results (for showing more visualization images later)
         self.predictionResult = results
@@ -245,44 +263,15 @@ class VQAInteractionScreen(QWidget):
         self.current_model_details = "".join(details)
         detailsBox.setText(self.current_model_details)
 
-        # Clear the old visualization buttons
-        # https://ymt-lab.com/en/post/2021/pyqt5-delete-widget-test/
-        def deleteVisualizationButtons(layout):
-            for index in reversed(range(layout.count())):
-                if type(layout.itemAt(index) == QRadioButton):
-                    widget = layout.itemAt(index).widget()
-                    layout.removeWidget(widget)
-                    widget.deleteLater()
+        # Clear the old visualization dropdown options
+        self.ui.comboBox_Visualizations.clear()
 
-        self.ui.label_ResultVisualization.hide()
-        layout = self.ui.horizontalLayout_Visualizations
-        deleteVisualizationButtons(layout)
+        # Show the new visualization options in the dropdown box
+        numVisuals = len(self.predictionResult.visualizations)
 
-
-        # Show the new visualization buttons
-        numVisuals = len(results.visualizations)
         if numVisuals:
-            
-            # Create each button
             for i in range(numVisuals):
-                button = QRadioButton(f"radioButton_Visualization{i+1}")
-                button.setText(f"Visualization {i+1}")
-
-                # Set button action for each visual
-                def showVisual(image):
-                    # Resize Image for Display
-                    dim = (self.ui.label_ResultVisualization.width(),self.ui.label_ResultVisualization.height())
-                    frame = cv2.resize(image, dim)
-
-                    # Display Image
-                    image = QImage(frame, frame.shape[1], frame.shape[0], 
-                                frame.strides[0], QImage.Format_RGB888)
-                    self.ui.label_ResultVisualization.setPixmap(QPixmap.fromImage(image))
-                    self.ui.label_ResultVisualization.hide()
-                    self.ui.label_ResultVisualization.show()
-
-                button.clicked.connect(lambda : showVisual(results.visualizations[i]))
-                layout.addWidget(button)
+                self.ui.comboBox_Visualizations.addItem(f"Visualization {i+1}")
         
         if (self.ui.checkBox_ExportResults.isChecked()):
             self.exportResults()
