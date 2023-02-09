@@ -47,7 +47,7 @@ def predictVilt(model, processor, question, image):
 
     # Obtain the tokens used as input
     encoded_tokens = encoding['input_ids'].tolist()[0]
-    decoded_tokens = processor.batch_decode(encoding['input_ids'])
+    decoded_tokens = [processor.tokenizer.convert_ids_to_tokens(token) for token in encoded_tokens]
 
     # Visualizations
     _, visuals = get_visualization_for_token(model, encoding, image)
@@ -172,8 +172,13 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
     # Get Top Answers
     top_predictions = getTopPredictions(output_vqa["question_answering_score"][0], vqa_answers)
     
+    # Obtain the tokens used as input
+    encoded_tokens = inputs['input_ids'].tolist()[0]
+    decoded_tokens = [lxmert_tokenizer.convert_ids_to_tokens(token) for token in encoded_tokens]
+
     results = PredictionResults(question=question[0], image=image, prediction=vqa_answers[pred_vqa], 
-                                top_predictions=top_predictions, visualizations=[visualization])
+                                top_predictions=top_predictions, visualizations=[visualization],
+                                encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens)
 
     return results
 
