@@ -45,7 +45,7 @@ background-color: white;
    <property name="geometry">
     <rect>
      <x>390</x>
-     <y>0</y>
+     <y>-10</y>
      <width>641</width>
      <height>50</height>
     </rect>
@@ -69,9 +69,9 @@ background-color: white;
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>530</y>
-     <width>231</width>
-     <height>301</height>
+     <y>550</y>
+     <width>241</width>
+     <height>291</height>
     </rect>
    </property>
    <property name="font">
@@ -464,7 +464,7 @@ background-color: white;
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>580</y>
+     <y>590</y>
      <width>471</width>
      <height>251</height>
     </rect>
@@ -999,9 +999,9 @@ border-radius: 2px;
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>50</y>
+     <y>40</y>
      <width>721</width>
-     <height>461</height>
+     <height>501</height>
     </rect>
    </property>
    <property name="font">
@@ -1042,7 +1042,7 @@ padding: 4px 0;
       <x>10</x>
       <y>20</y>
       <width>701</width>
-      <height>391</height>
+      <height>431</height>
      </rect>
     </property>
     <property name="font">
@@ -1067,9 +1067,9 @@ padding: 4px 0;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>420</y>
+      <y>460</y>
       <width>701</width>
-      <height>32</height>
+      <height>21</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1215,9 +1215,9 @@ padding: 5px;
   <widget class="QGroupBox" name="groupBox_AskAQuestion">
    <property name="geometry">
     <rect>
-     <x>750</x>
-     <y>530</y>
-     <width>721</width>
+     <x>740</x>
+     <y>550</y>
+     <width>741</width>
      <height>121</height>
     </rect>
    </property>
@@ -1340,9 +1340,9 @@ padding: 4px 0;
   <widget class="QGroupBox" name="groupBox_Results">
    <property name="geometry">
     <rect>
-     <x>750</x>
-     <y>670</y>
-     <width>721</width>
+     <x>740</x>
+     <y>680</y>
+     <width>741</width>
      <height>161</height>
     </rect>
    </property>
@@ -1362,74 +1362,86 @@ padding: 4px 0;
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>691</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout_Details">
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_Answer">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_Answer">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
+      <property name="text">
+       <string>Best Answer: </string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_Answer">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_Details">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternate Answers:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>612</width>
+         <height>96</height>
+        </rect>
        </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QTextEdit" name="textEdit_Details">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+           </font>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_Details">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="text">
-        <string>Details:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QTextEdit" name="textEdit_Details">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_Answer">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="text">
-        <string>Answer: </string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget_3">
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>530</y>
+     <y>550</y>
      <width>471</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -1510,10 +1522,10 @@ padding: 4px 0;
   <widget class="QGroupBox" name="groupBox_DroneCameraFeed_2">
    <property name="geometry">
     <rect>
-     <x>750</x>
-     <y>50</y>
-     <width>725</width>
-     <height>461</height>
+     <x>740</x>
+     <y>40</y>
+     <width>741</width>
+     <height>501</height>
     </rect>
    </property>
    <property name="font">
@@ -1552,9 +1564,9 @@ padding: 4px 0;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
-      <width>701</width>
-      <height>391</height>
+      <y>20</y>
+      <width>721</width>
+      <height>431</height>
      </rect>
     </property>
     <property name="font">
@@ -1566,33 +1578,27 @@ padding: 4px 0;
      <string/>
     </property>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
+   <widget class="QComboBox" name="comboBox_Visualizations">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>430</y>
-      <width>701</width>
-      <height>26</height>
+      <y>460</y>
+      <width>721</width>
+      <height>19</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_Visualizations">
-     <item>
-      <widget class="QComboBox" name="comboBox_Visualizations">
-       <property name="currentText">
-        <string/>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <property name="maxVisibleItems">
-        <number>10</number>
-       </property>
-       <property name="placeholderText">
-        <string>Select a Visualization To Display...</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="currentText">
+     <string/>
+    </property>
+    <property name="currentIndex">
+     <number>-1</number>
+    </property>
+    <property name="maxVisibleItems">
+     <number>10</number>
+    </property>
+    <property name="placeholderText">
+     <string>Select a Visualization To Display...</string>
+    </property>
    </widget>
   </widget>
  </widget>
