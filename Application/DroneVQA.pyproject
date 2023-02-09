@@ -1,0 +1,3 @@
+{
+    "files": ["LaunchScreen.py","LoadScreen.ui","VQAInteractionScreen.ui","resources.qrc","logo.png","VQAInteractionScreen.py","LaunchScreen.ui","application.py","LoadScreen.py","AirSimControl.py","logo_drone_only.png","utils.py"]
+}
