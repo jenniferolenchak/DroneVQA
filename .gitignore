@@ -1,4 +1,15 @@
-# Ignore Python Virtual Environment Folders. Note: you will need to run the setup script to download the appropriate dependencies
+# Ignore Microsoft AirSim Simulation Folders.
+CityEnvironment/
+CityEnvironmentV5/
+
+# Ignore user-specific folders
+*.user*
+
+# Ignore user-generated content
+Exports and Snapshots/
+
+# Ignore Python Virtual Environment Folders.
+# Note: Users will need to run the setup script to download the appropriate dependencies
 venv/
 SD1_Venv/
 Testing_Venv/ 
