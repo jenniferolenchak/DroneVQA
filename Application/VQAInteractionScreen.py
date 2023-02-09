@@ -37,6 +37,17 @@ class VQAInteractionScreen(QWidget):
         self.current_doc_name = ""
         self.current_model_details = ""
         self.visuals = []
+        self.cameraEffect = "None"
+        # Position in array corresponds to airsim command value
+        # Rain: 0, Road Wetness: 1, Snow: 2, Road Snow: 3
+        # Maple Leaves: 4, Road Leaves (Unused): 5,
+        # Dust: 6, Fog: 7
+        self.weatherEffects = [ ["Rain", 0.0], ["Road Wetness", 0.0],
+                                ["Snow", 0.0], ["Road Snow", 0.0], 
+                                ["Maple Leaves", 0.0], ["Road Leaves", 0.0], 
+                                ["Dust", 0.0], ["Fog", 0.0]
+                            ]
+        self.model_used = ""
         self.load_ui()
       
     def load_ui(self):
@@ -99,6 +110,8 @@ class VQAInteractionScreen(QWidget):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
         valLabel.setText(str(sliderVal))
 
+        self.weatherEffects[command][1] = sliderVal
+        
         # Convert slider value from [0-100] to [0.00-1.00] range equivalent & pass to AirSim controller
         decSliderVal = sliderVal / 100
         self.controller.updateAirSimWeather(command, decSliderVal)
@@ -126,17 +139,22 @@ class VQAInteractionScreen(QWidget):
         frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
+        self.cameraEffect = "None"
+
         # TODO: Add in the camera effects...
         if (self.ui.radioButton_BlackScreen.isChecked()):
             frame[frame != 0] = 0;
+            self.cameraEffect = "Black Screen"
 
         if (self.ui.radioButton_LensBlur.isChecked()):
             frame = cv2.GaussianBlur(frame, (5,5), 10.0)
+            self.cameraEffect = "Lens Blur"
 
         if (self.ui.radioButton_PixelCorruption.isChecked()):
             frame_dim = frame.shape
             for i in range(1000):
                 frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
+            self.cameraEffect = "Pixel Corruption"
             
         self.currentImage = frame
         
@@ -220,14 +238,17 @@ class VQAInteractionScreen(QWidget):
         self.currentModelImage = image
 
         model_index = 0
+        self.model_used = ""
         # ViLT (Base) Model
         if self.ui.radioButton_ViltBase.isChecked():
             model_index = 0
+            self.model_used = "ViLT"
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
         # LXMERT (Base) Model
         elif self.ui.radioButton_LxmertBase.isChecked():
             model_index = 1
+            self.model_used = "LXMERT"
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
 
@@ -328,7 +349,7 @@ class VQAInteractionScreen(QWidget):
     def exportResults(self):
 
             if (not self.checkExportDir()):
-                print("Could not save snapshot")
+                print("Could Not Export")
                 return
 
             try: 
@@ -343,20 +364,21 @@ class VQAInteractionScreen(QWidget):
 
                 document.add_heading("Question and Model Prediction")
 
-                question_paragraph = document.add_paragraph()
-                question_format = question_paragraph.paragraph_format
-                question_format.left_indent = Inches(0.5)
-
-                question_run = question_paragraph.add_run("Question Asked: " + self.currentQuestion)
-                question_font = question_run.font
-                question_font.name = 'Calibri'
-                question_font.size = Pt(12)
-
                 answer_paragraph = document.add_paragraph()
                 answer_format = answer_paragraph.paragraph_format
                 answer_format.left_indent = Inches(0.5)
 
-                answer_run = answer_paragraph.add_run("Prediction: " + self.predictionResult.prediction)
+                modelUsed_run = answer_paragraph.add_run("Model Used: " + self.model_used)
+                modelUsed_font = modelUsed_run.font
+                modelUsed_font.name = 'Calibri'
+                modelUsed_font.size = Pt(12)
+
+                question_run = answer_paragraph.add_run("\nQuestion Asked: " + self.currentQuestion)
+                question_font = question_run.font
+                question_font.name = 'Calibri'
+                question_font.size = Pt(12)
+
+                answer_run = answer_paragraph.add_run("\nPrediction: " + self.predictionResult.prediction)
                 answer_font = answer_run.font
                 answer_font.name = 'Calibri'
                 answer_font.size = Pt(12)
@@ -371,6 +393,24 @@ class VQAInteractionScreen(QWidget):
                     details_font = details_run.font
                     details_font.name = 'Calibri'
                     details_font.size = Pt(12)
+
+                document.add_heading("User Settings")
+                settings_paragraph = document.add_paragraph()
+                settings_format = settings_paragraph.paragraph_format
+                settings_format.left_indent = Inches(0.5)
+
+                cameraEffect_run = settings_paragraph.add_run("Camera Effect: " + self.cameraEffect)
+                cameraEffect_font = cameraEffect_run.font
+                cameraEffect_font.name = 'Calibri'
+                cameraEffect_font.size = Pt(12)
+
+                for weather_condition in self.weatherEffects: 
+                    print(weather_condition[0], weather_condition[1])
+                    if (weather_condition[1] > 0.0):
+                        weather_run = settings_paragraph.add_run("\n" + weather_condition[0] + ": " + str(weather_condition[1]) + "%")
+                        weather_font = weather_run.font
+                        weather_font.name = 'Calibri'
+                        weather_font.size = Pt(12)
 
                 document.add_heading("Base Image")
                 cv2.imwrite(result_dir + "base_image.png", cv2.cvtColor(self.currentModelImage, cv2.COLOR_RGB2BGR))
