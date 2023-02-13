@@ -44,11 +44,14 @@ if __name__ == "__main__":
 
 
     # Display the load screen until the initialization processes are done
-    loadScreen = LoadScreen(stackedWidget)
+    loadScreen = LoadScreen(app, stackedWidget)
     stackedWidget.addWidget(loadScreen)
     stackedWidget.setCurrentWidget(loadScreen)
     stackedWidget.resize(500,500)
     stackedWidget.show()
+
+    # Update App Events
+    app.processEvents()
 
     # Import modules while the loading screen  is displaying
     ImportGlobalModules(loadScreen)
