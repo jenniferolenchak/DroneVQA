@@ -23,6 +23,9 @@ class PredictionResults:
     question: str
     image: any
 
+    # Model Used
+    model_used: str
+
     # Prediction
     prediction: str
 
@@ -56,7 +59,8 @@ def predictVilt(model, processor, question, image):
     visualizations.extend(visuals)
     visualizations = [rgba2rgb(np.array(visual)) for visual in visualizations]
 
-    results = PredictionResults(question=question, image=image, 
+    results = PredictionResults(question=question, image=image,
+                                model_used='ViLT', 
                                 prediction=model.config.id2label[idx],
                                 top_predictions=top_predictions,
                                 encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens,
@@ -176,7 +180,9 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
     encoded_tokens = inputs['input_ids'].tolist()[0]
     decoded_tokens = [lxmert_tokenizer.convert_ids_to_tokens(token) for token in encoded_tokens]
 
-    results = PredictionResults(question=question[0], image=image, prediction=vqa_answers[pred_vqa], 
+    results = PredictionResults(question=question, image=image, 
+                                model_used='LXMERT', 
+                                prediction=vqa_answers[pred_vqa], 
                                 top_predictions=top_predictions, visualizations=[visualization],
                                 encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens)
 
