@@ -25,7 +25,7 @@ VQA is a computer vision task where a model is given a text question about an im
 
 ## Multimodal Transformers
 
-![transformer architecture](https://d2l.ai/_images/transformer.svg)
+![transformer architecture](https://d2l.ai/_images/transformer.svg)   
 *Source: Attention is All You Need (2017)*
 
 * Transformer models utilize "self-attention" to weigh significant aspects of an input
@@ -42,7 +42,7 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 
 * ### VILT (Vision and Language Transformer)
 
-![ViLT model architecture](https://production-media.paperswithcode.com/methods/e99bcb9b-eecf-4a7e-acb6-8e03c70e8261.png)
+![ViLT model architecture](https://production-media.paperswithcode.com/methods/e99bcb9b-eecf-4a7e-acb6-8e03c70e8261.png)   
 *Source: ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision (2021)*
 
 * ViLT is a simplified architecture which encodeds the text and image input together. This makes is very fast and it still have comparable results to state of the art models.
@@ -50,7 +50,7 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 
 * ### LXMERT (Learn Cross-Modality Encoder Representations from Transformers)
 
-![LXMERT model architecture](https://miro.medium.com/max/1031/1*6-2JubfCcKzaKs0jIgg52w.png)
+![LXMERT model architecture](https://miro.medium.com/max/1031/1*6-2JubfCcKzaKs0jIgg52w.png)   
 *Source: LXMERT: Learning Cross-Modality Encoder Representations from Transformers (2019)*
 
 * LXMERT relies on a Faster RCNN backbone to obtain 36 object detections which are passed as input into the model. This backbone model requires more time for computation and slows down the results, but LXMERT can be useful for visual grounding purposes.
