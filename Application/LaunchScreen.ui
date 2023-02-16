@@ -94,8 +94,13 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background: white;
-color: black;</string>
+    <string notr="true">* {
+background: white;
+color: black;
+}
+QGroupBox {
+border: 1px solid lightgrey;
+}</string>
    </property>
    <property name="title">
     <string>Instructions</string>
@@ -133,7 +138,7 @@ color: black;</string>
        </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;2.&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; Once the AirSim quadrotor drone has loaded, select the button below to initialize the AirSim client.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;2.&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; Once the AirSim quadrotor drone has loaded, click the button below to initialize the AirSim client.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -160,6 +165,9 @@ color: black;</string>
      <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">* {

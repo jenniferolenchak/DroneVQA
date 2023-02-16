@@ -51,10 +51,13 @@ class LaunchScreen(QWidget):
 
     def startVQA(self):
         '''Initialize AirSim client, setup camera feed, and change window display to VQA Interaction Window'''
-        self.ui.button_InitializeClient.setText("Initializing Client...")
-        #TODO - Add logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
-        self.controller.initializeAirSimClient()
-        self.navToVQAScreen()
+        # Logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
+        try: 
+            self.ui.button_InitializeClient.setText("Initializing Client...")
+            self.controller.initializeAirSimClient()
+            self.navToVQAScreen()
+        except:
+            self.ui.button_InitializeClient.setText("Failed to Start. Follow the above instructions.")
 
 
 
