@@ -29,4 +29,5 @@ class LoadScreen(QWidget):
         '''Update the progress bar and status message of the loading page'''
         self.ui.progressBar.setValue(percentComplete)
         self.ui.label_StatusText.setText(statusText)
+        # Process Event to update load screen text and progress
         self.app.processEvents()

@@ -47,10 +47,10 @@ if __name__ == "__main__":
     loadScreen = LoadScreen(app, stackedWidget)
     stackedWidget.addWidget(loadScreen)
     stackedWidget.setCurrentWidget(loadScreen)
-    stackedWidget.resize(500,500)
+    stackedWidget.resize(600,600)
     stackedWidget.show()
 
-    # Update App Events
+    # Update App To Display Loading Screen
     app.processEvents()
 
     # Import modules while the loading screen  is displaying
