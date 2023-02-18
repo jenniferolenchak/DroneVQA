@@ -1,7 +1,6 @@
 # This Python file uses the following encoding: utf-8
 from pathlib import Path
 
-import airsim
 import cv2
 import numpy as np
 
@@ -10,16 +9,14 @@ from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
-import random
 import time
 import os
 from threading import Timer
+import json
 
 from docx import Document
 from docx.shared import Inches, Pt
 
-from worker import Worker
-from utils import PredictionResults, predictVilt, predictLxmert
 
 class ExportUtils:
     def __init__(self, parent=None):
@@ -74,101 +71,142 @@ class ExportUtils:
 
     def resetExportText(self, exportCheckBox):
         exportCheckBox.setText("Export Results")
+    
+    def exportToJSON(self, predictionResult, model_details, cameraEffect):
+        try: 
+            formatted_time = self.getCurrentFormattedTime()
+
+            json_filename = self.model_dir + formatted_time + '/' + 'results-' + formatted_time + '.json'
+            
+            json_model_details = {"alt_answer_0": "None"}
+            try: 
+                if (model_details != ""):
+                    json_model_details = {}
+
+                    temp_details = model_details.split('\n')
+                    temp_details = temp_details[ : -1]
+
+                    for i in range(len(temp_details)):
+                        temp_detail = temp_details[i].split('\t')
+                        key = 'alt_answer_' + str(i+1)
+                        detail = temp_detail[0] + ' ' + temp_detail[1]
+
+                        json_model_details.update({key: detail})
+            except:
+                print("Could not extract model details for JSON")
+                json_model_details = {"alt_answer_0": "Failed to extract"}
+
+
+            json_data = {
+                'model': predictionResult.model_used,
+                'question': predictionResult.question,
+                'answer': predictionResult.prediction,
+                'details': json_model_details,
+                'settings': {
+                    'effect': cameraEffect,
+                }
+            }
+            
+            with open(json_filename, 'w', encoding='utf-8') as outfile: 
+                json.dump(json_data, outfile, ensure_ascii=False, indent=4)
+            print('Exported to JSON')
+        except: 
+            print("Could not export to JSON file")
 
     def exportResults(self, predictionResult, model_details, cameraEffect, weatherEffects, exportCheckBox):
+        print("Exporting...")
 
-            print(predictionResult.question)
+        if (not self.checkExportDir()):
+            print("Failed to make export directories; could not export.")
+            return
 
-            if (not self.checkExportDir()):
-                print("Could Not Export")
-                return
+        try: 
+            document = Document()
+            formatted_time = self.getCurrentFormattedTime()
 
-            try: 
-                document = Document()
-                formatted_time = self.getCurrentFormattedTime()
+            result_dir = self.model_dir + formatted_time + "/"
 
-                result_dir = self.model_dir + formatted_time + "/"
+            os.mkdir(result_dir)
 
-                os.mkdir(result_dir)
+            self.exportToJSON(predictionResult, model_details, cameraEffect)
+            
+            doc_name = self.model_dir + formatted_time + "/Results_" + formatted_time + ".docx"
 
-                doc_name = self.model_dir + formatted_time + "/Results_" + formatted_time + ".docx"
+            document.add_heading("Question and Model Prediction")
 
-                document.add_heading("Question and Model Prediction")
+            answer_paragraph = document.add_paragraph()
+            answer_format = answer_paragraph.paragraph_format
+            answer_format.left_indent = Inches(0.5)
 
-                answer_paragraph = document.add_paragraph()
-                answer_format = answer_paragraph.paragraph_format
-                answer_format.left_indent = Inches(0.5)
+            modelUsed_run = answer_paragraph.add_run("Model Used: " + predictionResult.model_used)
+            modelUsed_font = modelUsed_run.font
+            modelUsed_font.name = 'Calibri'
+            modelUsed_font.size = Pt(12)
 
-                modelUsed_run = answer_paragraph.add_run("Model Used: " + predictionResult.model_used)
-                modelUsed_font = modelUsed_run.font
-                modelUsed_font.name = 'Calibri'
-                modelUsed_font.size = Pt(12)
+            question_run = answer_paragraph.add_run("\nQuestion Asked: " + predictionResult.question)
+            question_font = question_run.font
+            question_font.name = 'Calibri'
+            question_font.size = Pt(12)
 
-                question_run = answer_paragraph.add_run("\nQuestion Asked: " + predictionResult.question)
-                question_font = question_run.font
-                question_font.name = 'Calibri'
-                question_font.size = Pt(12)
+            answer_run = answer_paragraph.add_run("\nPrediction: " + predictionResult.prediction)
+            answer_font = answer_run.font
+            answer_font.name = 'Calibri'
+            answer_font.size = Pt(12)
 
-                answer_run = answer_paragraph.add_run("\nPrediction: " + predictionResult.prediction)
-                answer_font = answer_run.font
-                answer_font.name = 'Calibri'
-                answer_font.size = Pt(12)
+            if (model_details != ""):
+                document.add_heading("Prediction Details")
+                details_paragraph = document.add_paragraph()
+                details_format = details_paragraph.paragraph_format
+                details_format.left_indent = Inches(0.5)
 
-                if (model_details != ""):
-                    document.add_heading("Prediction Details")
-                    details_paragraph = document.add_paragraph()
-                    details_format = details_paragraph.paragraph_format
-                    details_format.left_indent = Inches(0.5)
+                details_run = details_paragraph.add_run(model_details)
+                details_font = details_run.font
+                details_font.name = 'Calibri'
+                details_font.size = Pt(12)
 
-                    details_run = details_paragraph.add_run(model_details)
-                    details_font = details_run.font
-                    details_font.name = 'Calibri'
-                    details_font.size = Pt(12)
+            document.add_heading("User Settings")
+            settings_paragraph = document.add_paragraph()
+            settings_format = settings_paragraph.paragraph_format
+            settings_format.left_indent = Inches(0.5)
 
-                document.add_heading("User Settings")
-                settings_paragraph = document.add_paragraph()
-                settings_format = settings_paragraph.paragraph_format
-                settings_format.left_indent = Inches(0.5)
+            cameraEffect_run = settings_paragraph.add_run("Camera Effect: " + cameraEffect)
+            cameraEffect_font = cameraEffect_run.font
+            cameraEffect_font.name = 'Calibri'
+            cameraEffect_font.size = Pt(12)
 
-                cameraEffect_run = settings_paragraph.add_run("Camera Effect: " + cameraEffect)
-                cameraEffect_font = cameraEffect_run.font
-                cameraEffect_font.name = 'Calibri'
-                cameraEffect_font.size = Pt(12)
+            for weather_condition in weatherEffects: 
+                if (weather_condition[1] > 0.0):
+                    weather_run = settings_paragraph.add_run("\n" + weather_condition[0] + ": " + str(weather_condition[1]) + "%")
+                    weather_font = weather_run.font
+                    weather_font.name = 'Calibri'
+                    weather_font.size = Pt(12)
 
-                for weather_condition in weatherEffects: 
-                    print(weather_condition[0], weather_condition[1])
-                    if (weather_condition[1] > 0.0):
-                        weather_run = settings_paragraph.add_run("\n" + weather_condition[0] + ": " + str(weather_condition[1]) + "%")
-                        weather_font = weather_run.font
-                        weather_font.name = 'Calibri'
-                        weather_font.size = Pt(12)
+            document.add_heading("Base Image")
+            cv2.imwrite(result_dir + "base_image.png", cv2.cvtColor(predictionResult.image, cv2.COLOR_RGB2BGR))
+            document.add_picture(result_dir + "base_image.png", width=Inches(6.0))
 
-                document.add_heading("Base Image")
-                cv2.imwrite(result_dir + "base_image.png", cv2.cvtColor(predictionResult.image, cv2.COLOR_RGB2BGR))
-                document.add_picture(result_dir + "base_image.png", width=Inches(6.0))
+            numVisuals = len(predictionResult.visualizations)
+            if numVisuals:
+                document.add_heading("Model Visualizations")
+                # Export each visual
+                for i in range(numVisuals):
+                    # Resize Image for Export (720p)
+                    dim = (1280, 720)
+                    export_frame = cv2.resize(predictionResult.visualizations[i], dim)
 
-                numVisuals = len(predictionResult.visualizations)
-                if numVisuals:
-                    document.add_heading("Model Visualizations")
-                    # Export each visual
-                    for i in range(numVisuals):
-                        # Resize Image for Export (720p)
-                        dim = (1280, 720)
-                        export_frame = cv2.resize(predictionResult.visualizations[i], dim)
+                    visual_filename = f"Visualization_{i+1}.png"
+                    cv2.imwrite(result_dir + visual_filename, cv2.cvtColor(export_frame, cv2.COLOR_RGB2BGR))
+                    
+                    document.add_heading(f"Visualization_{i+1}.png", level=2)
+                    document.add_picture(result_dir + visual_filename, width=Inches(6.0))
+            
 
-                        visual_filename = f"Visualization_{i+1}.png"
-                        cv2.imwrite(result_dir + visual_filename, cv2.cvtColor(export_frame, cv2.COLOR_RGB2BGR))
-                        
-                        document.add_heading(f"Visualization_{i+1}.png", level=2)
-                        document.add_picture(result_dir + visual_filename, width=Inches(6.0))
-                
+            document.save(doc_name)
+            print("Results exported to: " + result_dir)
 
-                document.save(doc_name)
-                print("results exported to: " + doc_name)
-
-                exportCheckBox.setText("Exported")
-                Timer(2, self.resetExportText, [exportCheckBox]).start()
-            except:
-                print("Could not export results")
-                exportCheckBox.setText("Could Not Export")
-                Timer(2, self.resetExportText, [exportCheckBox]).start()
+            exportCheckBox.setText("Exported")
+            Timer(2, self.resetExportText, [exportCheckBox]).start()
+        except:
+            print("Failed to export")
+            exportCheckBox.setText("Could Not Export")
+            Timer(2, self.resetExportText, [exportCheckBox]).start()
