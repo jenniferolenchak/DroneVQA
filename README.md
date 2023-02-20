@@ -1,4 +1,8 @@
-# Visual Inspection and Deep Learning
+<p align="center">
+    This University of Central Florida senior design project is sponsored by the Lockheed Martin Corporation.
+    <br/><br/>
+    <img src="/Application/Images/Logos/DroneVQALogo.png" />
+</p>
 
 ## Table of Contents
 - [About](#about)
@@ -7,24 +11,33 @@
 - [Multimodal Transformers](#multimodal-transformers)
 - [Models](#models)
 
+<br/><br/>
 ## About
-UCF Senior Design Project, Sponsored by Lockheed Martin \
-Deep learning for visual inspection performed by simulated drones
+**Utilizing Artificial Intelligence to Deploy Visual Question Answering on Simulated Quadrotor Drones for Visual Inspection**
 
+&nbsp;&nbsp;&nbsp;&nbsp;
+This simulation-based proof-of-concept deploys open-source visual question answering (VQA) artificial intelligence models on the camera feed of simulated drones to perform visual inspection of simulated environments. Drones are ideal candidates for performing visual inspection, as they are easily maneuverable, remotely relocatable, able to self-navigate, and allow for dynamic perspectives. The real-world applications of this technology are limitless, enabling autonomous complex surveillance, environmental monitoring, situational-analysis, self-inspection, and maintenance support.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+This project takes a research-based approach to compare the performance of open-source models among one another, as well as before and after they are fine-tuned for drone usage, by comparing key factors including answer accuracy, topic understanding, processing speed, and model training improvement. Using the DroneVQA desktop-based software tool, users can fly a drone around virtual environments and ask questions about what the drone’s camera sees. To demystify the functionality of VQA models, result visualizations displaying the exact image pixels or object-detection results that informed the model’s conclusion are provided along with the top answers. Users may also elect to simulate environmental weather effects such as rain, snow, dust, and fog, as well as camera defects including lens blur, pixel corruption, and disconnection, vital to evaluate self-inspection abilities and real-world model robustness.
+
+<br/><br/>
 ## Members and Roles
-- Samuel Hearn
-- Jennifer Olenchak, _Project Manager_
-- Marco Peric, _Dataset Creation & Training Lead_
-- Robin Perlman, _Model Research & Deployment Lead_
-- Ayden Rebhan
-- Brandon Spangler
+| Name  | GitHub Username | Role |
+| ------------- | ------------- | ------------- |
+| Samuel Hearn | @SADPuppett |
+| Jennifer Olenchak | @jenniferolenchak | _Project Manager_ |
+| Marco Peric | @marcoperic | _Dataset Creation & Training Lead_ |
+| Robin Perlman | @Perl-R |  _Model Research & Deployment Lead_ |
+| Ayden Rebhan | @ayden-rebhan |
+| Brandon Spangler  | @brandonspangler2 |
 
+<br/><br/>
 ## Visual Question Answering
-
 VQA is a computer vision task where a model is given a text question about an image, and the model must infer an answer.
 
+<br/><br/>
 ## Multimodal Transformers
-
 ![transformer architecture](https://d2l.ai/_images/transformer.svg)   
 *Source: Attention is All You Need (2017)*
 
@@ -36,8 +49,8 @@ VQA is a computer vision task where a model is given a text question about an im
 * A multimodal transformer combines two or more different types of input data
     * For us, an image and text are the two inputs
 
+<br/><br/>
 ## Models
-
 The two models selected were ViLT and LXMERT. The goal is to compare these models (both base and fine-tuned versions) to see which would work best for the purposes of real time VQA and explainable AI.
 
 * ### VILT (Vision and Language Transformer)
