@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 import sys
 
+from threading import Timer
+
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QScreen
 from PySide6.QtCore import QFile, Slot
@@ -48,16 +50,19 @@ class LaunchScreen(QWidget):
         # Start Camera
         self.VQAScreen.setupCamera()
 
+    def setText(self):
+        self.ui.button_InitializeClient.setText("Failed to Start. Follow the above instructions.")
 
     def startVQA(self):
         '''Initialize AirSim client, setup camera feed, and change window display to VQA Interaction Window'''
         # Logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
-        try: 
-            self.ui.button_InitializeClient.setText("Initializing Client...")
+        self.ui.button_InitializeClient.setText("Initializing Client...")
+        try:
             self.controller.initializeAirSimClient()
             self.navToVQAScreen()
         except:
-            self.ui.button_InitializeClient.setText("Failed to Start. Follow the above instructions.")
+            Timer(1, self.setText).start()
+            
 
 
 
