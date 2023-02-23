@@ -83,7 +83,10 @@ def setupLxmertTransformer():
 
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
-    # https://huggingface.co/docs/transformers/v4.26.1/en/main_classes/model#transformers.PreTrainedModel.from_pretrained
+
+    # *** OLD MODEL. Load this if no local model is present.
+    # lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
+    
     lxmert_vqa = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='lxmert_best_model.pth', config='config.json')
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
