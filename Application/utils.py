@@ -83,7 +83,7 @@ def setupLxmertTransformer():
 
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
-    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased")
+    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("lxmert_best_model.pth")
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
