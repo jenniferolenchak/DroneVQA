@@ -17,3 +17,4 @@ __pycache__/
 
 # Ignore MacOS DS Store
 .DS_Store
+Application/lxmert_best_model.pth
