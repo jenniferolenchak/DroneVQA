@@ -1,0 +1,27 @@
+{
+    "data": 
+        [
+            
+            {
+                "dir": "dataset/0ba6GMWh07_jpg.rf.a77c73c953dd171e52111e80290c9997.jpg",
+                "questionList": ["is there a taxi", "is this a park", "are there any trucks", "are there any red cars"],
+                "answerList": ["yes", "no", "no", "yes"],
+                "metadata": ""     
+            },
+             
+            {
+                "dir": "dataset/0GTJIjAtE0_jpg.rf.20ce1b28293178a750a6259dba0af7ad.jpg",
+                "questionList": ["is there a taxi", "is there a police car", "are there any people", "are there any red cars"],
+                "answerList": ["yes", "yes", "yes", "yes"],
+                "metadata": ""     
+            },
+
+            {
+                "dir": "dataset/0MqyrqKbhS_jpg.rf.6660cbc56be6358c2a0e9dfdb9789a70.jpg",
+                "questionList": ["is it daytime", "are there any trees", "are there any trucks", "are there any yellow cars"],
+                "answerList": ["yes", "yes", "no", "no"],
+                "metadata": ""     
+            }
+             
+        ]
+    }
