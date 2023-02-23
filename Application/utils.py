@@ -93,7 +93,8 @@ def setupLxmertTransformer():
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
 
-    return lxmert_tokenizer, lxmert_vqa, lxmert_vqa_finetuned, frcnn_cfg, frcnn, image_preprocess
+    # add lxmert_vqa_finetuned to this list. 
+    return lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preprocess
 
 def runFRCNN(image, image_preprocess, frcnn, frcnn_cfg):
     # Save a temporary copy of the image for the model
@@ -173,6 +174,8 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
         output_attentions=False,
     )
 
+    # inference on lxmert fine tuned model
+
     # output_vqa_fine_tuned = lxmert_vqa_finetuned(
     #     input_ids=inputs.input_ids,
     #     attention_mask=inputs.attention_mask,
@@ -184,10 +187,15 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
 
     # Get top predicted answer index
     pred_vqa = output_vqa["question_answering_score"].argmax(-1)
+
     # pred_vqa_finetuned = output_vqa_fine_tuned["question_answering_score"].argmax(-1)
 
     # Get Top Answers
     top_predictions = getTopPredictions(output_vqa["question_answering_score"][0], vqa_answers)
+
+    # top answers for output_vqa_fine_tuned
+    # top_predictions = getTopPredictions(output_vqa_fine_tuned["question_answering_score"][0], vqa_answers)
+
     
     # Obtain the tokens used as input
     encoded_tokens = inputs['input_ids'].tolist()[0]
