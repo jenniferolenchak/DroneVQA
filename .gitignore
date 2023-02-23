@@ -14,3 +14,6 @@ venv/
 SD1_Venv/
 Testing_Venv/ 
 __pycache__/
+
+# Ignore MacOS DS Store
+.DS_Store

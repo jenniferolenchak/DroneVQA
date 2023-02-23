@@ -10,9 +10,10 @@ from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
 
 class LoadScreen(QWidget):
-    def __init__(self, stackedWidget, parent=None):
+    def __init__(self, app, stackedWidget, parent=None):
         super().__init__(parent)
         self.stackedWidget = stackedWidget
+        self.app = app
         self.load_ui()
 
     def load_ui(self):
@@ -28,3 +29,5 @@ class LoadScreen(QWidget):
         '''Update the progress bar and status message of the loading page'''
         self.ui.progressBar.setValue(percentComplete)
         self.ui.label_StatusText.setText(statusText)
+        # Process Event to update load screen text and progress
+        self.app.processEvents()
