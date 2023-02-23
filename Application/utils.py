@@ -84,17 +84,16 @@ def setupLxmertTransformer():
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
 
-    # *** OLD MODEL. Load this if no local model is present.
-    # lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
-    
-    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='lxmert_best_model.pth', config='config.json')
+    # *** Original model
+    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
+    lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='lxmert_best_model.pth', config='config.json')
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
 
-    return lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preprocess
+    return lxmert_tokenizer, lxmert_vqa, lxmert_vqa_finetuned, frcnn_cfg, frcnn, image_preprocess
 
 def runFRCNN(image, image_preprocess, frcnn, frcnn_cfg):
     # Save a temporary copy of the image for the model
@@ -174,8 +173,18 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
         output_attentions=False,
     )
 
+    # output_vqa_fine_tuned = lxmert_vqa_finetuned(
+    #     input_ids=inputs.input_ids,
+    #     attention_mask=inputs.attention_mask,
+    #     visual_feats=features,
+    #     visual_pos=normalized_boxes,
+    #     token_type_ids=inputs.token_type_ids,
+    #     output_attentions=False,
+    # )
+
     # Get top predicted answer index
     pred_vqa = output_vqa["question_answering_score"].argmax(-1)
+    # pred_vqa_finetuned = output_vqa_fine_tuned["question_answering_score"].argmax(-1)
 
     # Get Top Answers
     top_predictions = getTopPredictions(output_vqa["question_answering_score"][0], vqa_answers)
