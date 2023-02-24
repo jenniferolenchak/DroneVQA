@@ -1286,7 +1286,7 @@ padding: 5px;
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QRadioButton" name="LxmertFineTuned">
+       <widget class="QRadioButton" name="radioButton_LxmertFineTuned">
         <property name="text">
          <string>LXMERT (Fine Tuned)</string>
         </property>
@@ -1587,7 +1587,7 @@ padding: 4px 0;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>10</y>
       <width>721</width>
       <height>431</height>
      </rect>
