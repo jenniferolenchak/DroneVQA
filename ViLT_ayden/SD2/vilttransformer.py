@@ -10,7 +10,7 @@ import torch
 from torch.utils.data import DataLoader
 
 #open questions
-f = open("C:/Users/ayden/Documents/GitHub/VisualInspectionDeepLearning/ViLT_ayden/SD2/v2_OpenEnded_mscoco_train2014_questions.json")
+f = open("C:/Users/ayden/Desktop/viltfiles/v2_OpenEnded_mscoco_train2014_questions.json")
 data_questions = json.load(f)
 questions = data_questions['questions']
 
@@ -23,7 +23,7 @@ def id_from_filename(filename: str) -> Optional[int]:
     return int(match.group(1))
 
 #root for folder of images
-root = "C:/Users/ayden/Documents/GitHub/VisualInspectionDeepLearning/ViLT_ayden/SD2/vqatraining/train2014/train2014"
+root = "C:/Users/ayden/Desktop/viltfiles/vqatraining/train2014/train2014"
 
 #begin assigning images to questions
 file_names = [f for f in listdir(root) if isfile(join(root, f))]
@@ -35,7 +35,7 @@ path = id_to_filename[questions[0]['image_id']]
 image = Image.open(path)
 
 #open annotations/answers
-f = open("C:/Users/ayden/Documents/GitHub/VisualInspectionDeepLearning/ViLT_ayden/SD2/v2_mscoco_train2014_annotations.json")
+f = open("C:/Users/ayden/Desktop/viltfiles/v2_mscoco_train2014_annotations.json")
 
 #load annotations
 data_annotations = json.load(f)
@@ -166,4 +166,4 @@ for epoch in range(50):  # loop over the dataset multiple times
         loss.backward()
         optimizer.step()
 
-torch.save(model, "C:/Users/ayden/Documents/GitHub/VisualInspectionDeepLearning/ViLT_ayden/SD2/finetunedvilt.pt")
+torch.save(model, "C:/Users/ayden/Desktop/viltfiles/finetunedvilt.pt")

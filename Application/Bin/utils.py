@@ -57,6 +57,13 @@ def setupViltTransformer():
 
     return model, processor
 
+def setupTunedViltTransformer():
+    processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+    model = ViltForQuestionAnswering.from_pretrained("finetunedvilt.pt")
+    model.to(device)
+
+    return model, processor
+
 # LXMERT Model
 IMAGE_LOCATION = r"./FRCNN_Image.jpg"
 
