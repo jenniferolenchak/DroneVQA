@@ -28,6 +28,10 @@ def ImportGlobalModules(loadScreen):
     loadScreen.updateLoadStatus(percentComplete=40, statusText="Importing setupViltTransformer")
     global setupViltTransformer
     from utils import setupViltTransformer
+    
+    loadScreen.updateLoadStatus(percentComplete=45, statusText="Importing setupViltTransformer")
+    global setupFineViltTransformer
+    from utils import setupFineViltTransformer
 
     loadScreen.updateLoadStatus(percentComplete=50, statusText="Importing setupLxmertTransformer")
     global setupLxmertTransformer
@@ -75,8 +79,10 @@ if __name__ == "__main__":
     # Setup Models 
     loadScreen.updateLoadStatus(percentComplete=65, statusText="Beginning to set up models...")
     models = []
-    loadScreen.updateLoadStatus(percentComplete=60, statusText="Initializing Vilt model\nThis step will take longer the first time this application loads.")
+    loadScreen.updateLoadStatus(percentComplete=70, statusText="Initializing Vilt model\nThis step will take longer the first time this application loads.")
     models.append((setupViltTransformer()))
+    loadScreen.updateLoadStatus(percentComplete=75, statusText="Initializing fine-tuned Vilt model\nThis step will take longer the first time this application loads.")
+    models.append((setupFineViltTransformer()))
     loadScreen.updateLoadStatus(percentComplete=80, statusText="Initializing base LxMERT model\nThis step will take longer the first time this application loads.")
     models.append((setupLxmertTransformer()))
     loadScreen.updateLoadStatus(percentComplete=90, statusText="Initializing fine-tuned LxMERT model\nThis step will take longer the first time this application loads.")

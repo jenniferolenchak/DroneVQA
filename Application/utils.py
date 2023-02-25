@@ -77,12 +77,22 @@ def predictVilt(model, processor, question, image):
 
     return results
 
+#base pre-trained model
 def setupViltTransformer():
     processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
     model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
     model.to(device)
 
     return model, processor
+
+#fine-tuned model
+def setupFineViltTransformer():
+    processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+    model = torch.load("finetunedvilt.pt")
+    model.to(device)
+
+    return model, processor
+
 
 # LXMERT Model
 IMAGE_LOCATION = r"./FRCNN_Image.jpg"
