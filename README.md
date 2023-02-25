@@ -11,6 +11,7 @@
 - [Visual Question Answering](#visual-question-answering)
 - [Multimodal Transformers](#multimodal-transformers)
 - [Models](#models)
+- [Visualization Methods](#visualization-methods)
 
 <br/><br/>
 ## About
@@ -85,7 +86,7 @@ VQA is a computer vision task where a model is given a text question about an im
 ## Models
 The two models selected were ViLT and LXMERT. The goal is to compare these models (both base and fine-tuned versions) to see which would work best for the purposes of real time VQA and explainable AI.
 
-* ### VILT (Vision and Language Transformer)
+### VILT (Vision and Language Transformer)
 
 ![ViLT model architecture](https://production-media.paperswithcode.com/methods/e99bcb9b-eecf-4a7e-acb6-8e03c70e8261.png)   
 *Source: ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision (2021)*
@@ -93,9 +94,31 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 * ViLT is a simplified architecture which encodeds the text and image input together. This makes is very fast and it still have comparable results to state of the art models.
 * ViLT was not designed with visual grounding in mind and thus visual grounding results can be poor.
 
-* ### LXMERT (Learn Cross-Modality Encoder Representations from Transformers)
+### LXMERT (Learn Cross-Modality Encoder Representations from Transformers)
 
 ![LXMERT model architecture](https://miro.medium.com/max/1031/1*6-2JubfCcKzaKs0jIgg52w.png)   
 *Source: LXMERT: Learning Cross-Modality Encoder Representations from Transformers (2019)*
 
 * LXMERT relies on a Faster RCNN backbone to obtain 36 object detections which are passed as input into the model. This backbone model requires more time for computation and slows down the results, but LXMERT can be useful for visual grounding purposes.
+
+## Visualization Methods
+
+### VILT Visualization Methods
+
+* The original paper for VILT proposes generating a heatmap on the image for each input text token. Each tile on the image represents a patch, and its opacity represents how pertinent it was to the text token.
+
+* A technique called Inexact Promixal Point Method of Optimal Transports (IPOT) is used to generate these alignment scores between the textual and visual subsets of the model encoding.
+
+* As a result, there is a visualization for each attention token. There is also a combined visualization which shows the overall attention by combining all of the individual heatmaps.
+
+### LXMERT Visualization Methods
+
+* The faster RCNN object detections are shown a visualization on screen. The faster RCNN model produces up to 36 object detections for the LXMERT model. 
+
+* In the paper: "Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers" (2021) and corresponding repository: https://github.com/hila-chefer/Transformer-MM-Explainability, a method of developing XAI visualizations with multimodal transformers is proposed. 
+
+* The method used in the paper uses model attention layers to "produce relevancy maps for each of the interactions between input modalities in the network". The repository also contains sample visualizations using LXMERT. 
+
+![LXMERT Visualization](https://raw.githubusercontent.com/hila-chefer/Transformer-MM-Explainability/main/LXMERT.PNG)
+*Source: Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers (2021)*
+
