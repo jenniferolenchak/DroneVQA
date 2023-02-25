@@ -287,7 +287,8 @@ class VQAInteractionScreen(QWidget):
 
         if numVisuals:
             for i in range(numVisuals):
-                self.ui.comboBox_Visualizations.addItem(f"Visualization {i+1}")
+                # Note: The visualization names list is the same length as the visualization list
+                self.ui.comboBox_Visualizations.addItem(f"{self.predictionResult.visualization_names[i]}")
 
             # Show the 1st vizualization as a default
             defaultImageIndex = 0
