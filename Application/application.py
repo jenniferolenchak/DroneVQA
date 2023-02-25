@@ -33,6 +33,9 @@ def ImportGlobalModules(loadScreen):
     global setupLxmertTransformer
     from utils import setupLxmertTransformer
 
+    loadScreen.updateLoadStatus(percentComplete=55, statusText="Importing setupLxmertTransformer_finetuned")
+    global setupLxmertTransformer_finetuned
+    from utils import setupLxmertTransformer_finetuned
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -74,8 +77,10 @@ if __name__ == "__main__":
     models = []
     loadScreen.updateLoadStatus(percentComplete=60, statusText="Initializing Vilt model\nThis step will take longer the first time this application loads.")
     models.append((setupViltTransformer()))
-    loadScreen.updateLoadStatus(percentComplete=80, statusText="Initializing LxMERT model\nThis step will take longer the first time this application loads.")
+    loadScreen.updateLoadStatus(percentComplete=80, statusText="Initializing base LxMERT model\nThis step will take longer the first time this application loads.")
     models.append((setupLxmertTransformer()))
+    loadScreen.updateLoadStatus(percentComplete=90, statusText="Initializing fine-tuned LxMERT model\nThis step will take longer the first time this application loads.")
+    models.append((setupLxmertTransformer_finetuned()))
     loadScreen.updateLoadStatus(percentComplete=95, statusText="Switching to launch screen...")
 
     # Switch to the launch screen

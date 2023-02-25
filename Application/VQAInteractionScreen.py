@@ -195,6 +195,10 @@ class VQAInteractionScreen(QWidget):
             model_index = 1
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
+        elif self.ui.radioButton_LxmertFineTuned.isChecked():
+            model_index = 2
+            model = self.models[model_index]
+            worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
 
         def completed():
             # Set ask button active and change text/color back to user ask prompt

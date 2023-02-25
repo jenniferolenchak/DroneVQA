@@ -83,7 +83,7 @@ def setupLxmertTransformer():
 
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
-    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased")
+    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
@@ -91,6 +91,20 @@ def setupLxmertTransformer():
     image_preprocess = Preprocess(frcnn_cfg)
 
     return lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preprocess
+
+def setupLxmertTransformer_finetuned():
+
+    # Define the model
+    lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
+    lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='lxmert_best_model.pth', config='config.json')
+
+    # Setup Faster RCNN Model for visual embeddings (backbone)
+    frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
+    frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
+    image_preprocess = Preprocess(frcnn_cfg)
+
+    # add lxmert_vqa_finetuned to this list. 
+    return lxmert_tokenizer, lxmert_vqa_finetuned, frcnn_cfg, frcnn, image_preprocess
 
 def runFRCNN(image, image_preprocess, frcnn, frcnn_cfg):
     # Save a temporary copy of the image for the model
@@ -175,7 +189,7 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
 
     # Get Top Answers
     top_predictions = getTopPredictions(output_vqa["question_answering_score"][0], vqa_answers)
-    
+
     # Obtain the tokens used as input
     encoded_tokens = inputs['input_ids'].tolist()[0]
     decoded_tokens = [lxmert_tokenizer.convert_ids_to_tokens(token) for token in encoded_tokens]
