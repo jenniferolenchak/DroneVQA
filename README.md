@@ -59,7 +59,7 @@ This project takes a research-based approach to compare the performance of open-
 | Name  | GitHub Username | Role |
 | ------------- | ------------- | ------------- |
 | Samuel Hearn | @SADPuppett |
-| Jennifer Olenchak | @jenniferolenchak | _Project Manager_ |
+| Jennifer Olenchak | @jenniferolenchak | _Project Manager, Application Lead_|
 | Marco Peric | @marcoperic | _Dataset Creation & Training Lead_ |
 | Robin Perlman | @Perl-R |  _Model Research & Deployment Lead_ |
 | Ayden Rebhan | @ayden-rebhan |
