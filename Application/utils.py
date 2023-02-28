@@ -32,6 +32,7 @@ class PredictionResults:
     # Extra Visualization Data. These are optional
     top_predictions: list[tuple[str, float]] = field(default_factory=list[tuple[str, float]])
     visualizations: list = field(default_factory=list[np.ndarray]) # This is a list of RGB images (CV2 images)
+    visualization_names: list[str] = field(default_factory=list[str])    
 
     # Token information:
     encoded_tokens: list = field(default_factory=list)
@@ -59,22 +60,39 @@ def predictVilt(model, processor, question, image):
     visualizations.extend(visuals)
     visualizations = [rgba2rgb(np.array(visual)) for visual in visualizations]
 
+    # Generate Names for Each Visualization
+    # Order: Combined, token 1, token 2, ...., token n
+    visualization_names = ["Combined Attention Patches"]
+    visualization_names.extend(
+        [f"Token {id}: {token}" for id, token in enumerate(decoded_tokens)]
+    )
+   
     results = PredictionResults(question=question, image=image,
                                 model_used='ViLT', 
                                 prediction=model.config.id2label[idx],
                                 top_predictions=top_predictions,
                                 encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens,
-                                visualizations=visualizations
+                                visualizations=visualizations, visualization_names=visualization_names
                                 )
 
     return results
 
+#base pre-trained model
 def setupViltTransformer():
     processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
     model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
     model.to(device)
 
     return model, processor
+
+#fine-tuned model
+def setupFineViltTransformer():
+    processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+    model = torch.load("Fine-Tuned Models/FineTunedVILT.pt")
+    model.to(device)
+
+    return model, processor
+
 
 # LXMERT Model
 IMAGE_LOCATION = r"./FRCNN_Image.jpg"
@@ -83,7 +101,7 @@ def setupLxmertTransformer():
 
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
-    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased")
+    lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
@@ -91,6 +109,20 @@ def setupLxmertTransformer():
     image_preprocess = Preprocess(frcnn_cfg)
 
     return lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preprocess
+
+def setupLxmertTransformer_finetuned():
+
+    # Define the model
+    lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
+    lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='Fine-Tuned Models/FineTunedLXMERT.pth', config='config.json')
+
+    # Setup Faster RCNN Model for visual embeddings (backbone)
+    frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
+    frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
+    image_preprocess = Preprocess(frcnn_cfg)
+
+    # add lxmert_vqa_finetuned to this list. 
+    return lxmert_tokenizer, lxmert_vqa_finetuned, frcnn_cfg, frcnn, image_preprocess
 
 def runFRCNN(image, image_preprocess, frcnn, frcnn_cfg):
     # Save a temporary copy of the image for the model
@@ -175,15 +207,19 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
 
     # Get Top Answers
     top_predictions = getTopPredictions(output_vqa["question_answering_score"][0], vqa_answers)
-    
+
     # Obtain the tokens used as input
     encoded_tokens = inputs['input_ids'].tolist()[0]
     decoded_tokens = [lxmert_tokenizer.convert_ids_to_tokens(token) for token in encoded_tokens]
+
+    # Currently only one visualization from LXMERT model
+    visualization_names = ["Faster RCNN Boxes"]
 
     results = PredictionResults(question=question, image=image, 
                                 model_used='LXMERT', 
                                 prediction=vqa_answers[pred_vqa], 
                                 top_predictions=top_predictions, visualizations=[visualization],
+                                visualization_names=visualization_names,
                                 encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens)
 
     return results

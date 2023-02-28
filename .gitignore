@@ -17,3 +17,11 @@ __pycache__/
 
 # Ignore MacOS DS Store
 .DS_Store
+
+# Ignore large fine-tuned model files
+# Must be downloaded by user from link in "/Fine-Tuned Models" README.md
+*.pth
+*.pt
+
+# Ignore local Visual Studio Code files
+.vs

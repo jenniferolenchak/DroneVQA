@@ -190,9 +190,19 @@ class VQAInteractionScreen(QWidget):
             model_index = 0
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
+       #Fine Tuned ViLT
+        elif self.ui.radioButton_ViltFineTuned.isChecked():
+            model_index = 1
+            model = self.models[model_index]
+            worker = Worker(predictVilt, model[0], model[1], question, image) 
         # LXMERT (Base) Model
         elif self.ui.radioButton_LxmertBase.isChecked():
-            model_index = 1
+            model_index = 2
+            model = self.models[model_index]
+            worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
+        #Fine Tuned LXMERT
+        elif self.ui.radioButton_LxmertFineTuned.isChecked():
+            model_index = 3
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
 
@@ -277,7 +287,8 @@ class VQAInteractionScreen(QWidget):
 
         if numVisuals:
             for i in range(numVisuals):
-                self.ui.comboBox_Visualizations.addItem(f"Visualization {i+1}")
+                # Note: The visualization names list is the same length as the visualization list
+                self.ui.comboBox_Visualizations.addItem(f"{self.predictionResult.visualization_names[i]}")
 
             # Show the 1st vizualization as a default
             defaultImageIndex = 0
