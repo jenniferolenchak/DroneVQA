@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     # Switch to the launch screen
     VQAScreen = VQAInteractionScreen(threadManager, controller, models)
-    launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)
+    launchScreen = LaunchScreen(app, stackedWidget, threadManager, VQAScreen, controller)
     stackedWidget.addWidget(launchScreen)
     stackedWidget.addWidget(VQAScreen)
     stackedWidget.resize(500, 625)

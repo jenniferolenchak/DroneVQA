@@ -4,16 +4,15 @@ import os
 from pathlib import Path
 import sys
 
-from threading import Timer
-
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication, QWidget, QMessageBox
 from PySide6.QtGui import QScreen
 from PySide6.QtCore import QFile, Slot
 from PySide6.QtUiTools import QUiLoader
 
 class LaunchScreen(QWidget):
-    def __init__(self, stackedWidget, threadManager, VQAScreen, controller, parent=None):
+    def __init__(self, app, stackedWidget, threadManager, VQAScreen, controller, parent=None):
         super().__init__(parent)
+        self.app = app
         self.stackedWidget = stackedWidget
         self.threadManager = threadManager
         self.VQAScreen = VQAScreen
@@ -50,18 +49,19 @@ class LaunchScreen(QWidget):
         # Start Camera
         self.VQAScreen.setupCamera()
 
-    def setText(self):
-        self.ui.button_InitializeClient.setText("Failed to Start. Follow the above instructions.")
-
     def startVQA(self):
         '''Initialize AirSim client, setup camera feed, and change window display to VQA Interaction Window'''
         # Logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
         self.ui.button_InitializeClient.setText("Initializing Client...")
+        self.app.processEvents()
         try:
             self.controller.initializeAirSimClient()
             self.navToVQAScreen()
         except:
-            Timer(1, self.setText).start()
+            errorBox = QMessageBox()
+            errorBox.setText("Error initializing. Please follow the instructions.")
+            errorBox.exec()
+            self.ui.button_InitializeClient.setText("Retry Client Initialization")
             
 
 
