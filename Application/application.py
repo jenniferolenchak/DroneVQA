@@ -10,6 +10,7 @@ from PySide6.QtCore import QThreadPool
 from LoadScreen import LoadScreen
 from setup_worker import setup_Worker
 
+# Global Variable Setup
 app = None
 threadManager = None
 controller = None
@@ -28,9 +29,6 @@ def ImportGlobalModules():
 
     global AirSimControl
     from AirSimControl import AirSimControl
-
-
-
 
 def setupModels(progress_callback):
     progress_callback.emit((5, "Importing Model Setup"))
