@@ -88,7 +88,7 @@ def setupViltTransformer():
 #fine-tuned model
 def setupFineViltTransformer():
     processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
-    model = torch.load("finetunedvilt.pt")
+    model = torch.load("Fine-Tuned Models/FineTunedVILT.pt")
     model.to(device)
 
     return model, processor
@@ -114,7 +114,7 @@ def setupLxmertTransformer_finetuned():
 
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
-    lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='lxmert_best_model.pth', config='config.json')
+    lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='Fine-Tuned Models/FineTunedLXMERT.pth', config='config.json')
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
