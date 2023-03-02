@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 
 from PySide6.QtWidgets import QApplication, QWidget, QMessageBox
-from PySide6.QtGui import QScreen
+from PySide6.QtGui import QScreen, QIcon
 from PySide6.QtCore import QFile, Slot
 from PySide6.QtUiTools import QUiLoader
 
@@ -58,11 +58,18 @@ class LaunchScreen(QWidget):
             self.controller.initializeAirSimClient()
             self.navToVQAScreen()
         except:
-            errorBox = QMessageBox()
-            errorBox.setText("Error initializing. Please follow the instructions.")
+            errorBox = QMessageBox(self.ui)
+            errorBox.setText("""<p>Error initializing the client. 
+                Before initializing the client, please ensure that you have launched the AirSim Unreal Engine Environment and that the quadrotor drone is loaded completely. 
+                Select 'Retry Client Initialization' to try again.</p>""")
+            errorBox.setStyleSheet("""* { background: white; color: #0d0f75; font-family: Arial; font-size: 13px; font-weight: 400; } 
+                QPushButton{ background-color: rgb(13, 15, 117); color: white; border-color: blue; border-radius: 5px; padding: 10px 20px; }""")
+            errorBox.setWindowTitle("Error")
+            errorBox.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
+            errorBox.show()
+            errorBox.move(errorBox.pos().x()+10, errorBox.pos().y())
             errorBox.exec()
             self.ui.button_InitializeClient.setText("Retry Client Initialization")
-            
 
 
 
