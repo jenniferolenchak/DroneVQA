@@ -13,7 +13,6 @@ from setup_worker import setup_Worker
 # Global Variable Setup
 app = None
 threadManager = None
-controller = None
 stackedWidget = None
 loadScreen = None
 
@@ -21,17 +20,24 @@ def ImportGlobalModules():
     global airsim
     import airsim
 
+def setupModels(progress_callback):
+    progress_callback.emit((1, "Importing LaunchScreen"))
     global LaunchScreen
     from LaunchScreen import LaunchScreen
 
+    progress_callback.emit((5, "Importing VQAInteractionScreen"))
     global VQAInteractionScreen
     from VQAInteractionScreen import VQAInteractionScreen
+
+    progress_callback.emit((10, "Initializing AirSim Controller"))
+    time.sleep(1)
 
     global AirSimControl
     from AirSimControl import AirSimControl
 
-def setupModels(progress_callback):
-    progress_callback.emit((5, "Importing Model Setup"))
+    airsim_controller = AirSimControl()
+
+    progress_callback.emit((15, "Importing Model Setup"))
     time.sleep(1)
 
     global setupViltTransformer
@@ -61,9 +67,9 @@ def setupModels(progress_callback):
 
     progress_callback.emit((100, "Switching to launch screen..."))
     time.sleep(1)
-    return models
+    return [VQAInteractionScreen, LaunchScreen, airsim_controller, models]
 
-def switchToLaunchScreen(threadManager, controller, final_models, stackedWidget):
+def switchToLaunchScreen(threadManager, stackedWidget, VQAInteractionScreen, LaunchScreen, controller, final_models):
     VQAScreen = VQAInteractionScreen(threadManager, controller, final_models)
     launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)
     stackedWidget.addWidget(launchScreen)
@@ -71,8 +77,8 @@ def switchToLaunchScreen(threadManager, controller, final_models, stackedWidget)
     stackedWidget.resize(500, 625)
     stackedWidget.setCurrentWidget(launchScreen)
 
-def finalizeModels(final_models):
-    switchToLaunchScreen(threadManager, controller, final_models, stackedWidget)
+def finalizeModels(setupResults):
+    switchToLaunchScreen(threadManager, stackedWidget, setupResults[0], setupResults[1], setupResults[2], setupResults[3])
 
 def updateLoadScreenProgress(percentComplete):
     loadScreen.updateLoadStatus(percentComplete=percentComplete[0], statusText=percentComplete[1])
@@ -94,15 +100,12 @@ if __name__ == "__main__":
     stackedWidget.show()
 
     # Start loading screen process and update App
-    loadScreen.updateLoadStatus(percentComplete=1, statusText="Starting Application")
+    loadScreen.updateLoadStatus(percentComplete=0, statusText="Starting Application")
     app.processEvents()
 
     # Import modules while the loading screen is displaying
     ImportGlobalModules()
 
-    # Connect to AirSim controller and update App with airsim controller
-    controller = AirSimControl()
-    app.processEvents()
 
     # Initialize global variables
     CAMERA_NAME = '0'
