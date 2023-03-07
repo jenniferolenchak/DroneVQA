@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 
 import airsim
+from airsim.types import YawMode
 
 from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
 from PySide6.QtGui import QIcon, QPixmap, QScreen
@@ -41,6 +42,9 @@ class AirSimControl(QWidget):
         self.client.takeoffAsync().join()
         self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
+        # Create second AirSim client for image threading
+        self.image_client = airsim.MultirotorClient()
+
         print("AirSim Client Initialized")
 
 
@@ -57,6 +61,10 @@ class AirSimControl(QWidget):
             self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 1)
         elif (command == "backward"):
             self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 1)
+        elif (command == 'rotate_right'):
+            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
+        elif (command == 'rotate_left'):
+            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
 
     def stopDroneMovement(self, command):
         self.client.moveByVelocityAsync(0, 0, 0, 3)
@@ -73,4 +81,4 @@ class AirSimControl(QWidget):
         self.client.simSetWeatherParameter(parameter, value)
 
     def getCurrentDroneImage(self, cameraName = CAMERA_NAME, imageType = IMAGE_TYPE):
-        return self.client.simGetImage(cameraName, imageType)
+        return self.image_client.simGetImage(cameraName, imageType)
