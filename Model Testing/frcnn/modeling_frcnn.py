@@ -1867,6 +1867,16 @@ class GeneralizedRCNN(nn.Module):
         scales_yx=None,
         **kwargs,
     ):
+        '''
+            Run Frcnn inferencing and produce up to 36 detections for LXMERT model to use.    
+        
+            Note: This is a slow process unless it is performed on GPU...
+
+            Backbone can run in 3-4 seconds, 
+            Proposal Generator runs in 1-2 seconds, 
+            ROI Heads runs in 7-8 seconds on CPU.
+        '''
+
         # run images through backbone
         original_sizes = image_shapes * scales_yx
         features = self.backbone(images)
