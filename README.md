@@ -122,3 +122,23 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 ![LXMERT Visualization](https://raw.githubusercontent.com/hila-chefer/Transformer-MM-Explainability/main/LXMERT.PNG)
 *Source: Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers (2021)*
 
+## LXMERT Model Training and Fine-tuning Process
+
+### Setup for Model Training and Procedure
+The LXMERT training and fine-tuning procedure uses the [official LXMERT repository](https://github.com/airsplay/lxmert), and more specifically, the pre-training and VQA fine-tuning sections of the repository. After downloading a pre-trained model, it is possible to fine-tune it by default with the MSCOCO dataset, but we are using our custom Unreal Engine v5 Airsim Dataset, which contains questions and labels for the model to learn from. 
+
+### Training/Fine-tuning Notes
+Fine-tuning is taking place on an NVIDIA RTX 3070 Ti.
+Some specifics include:
+* 9 llayers
+* 5 xlayers
+* 5 rlayers
+* Batch size of 32
+* Learning rate of 5e-5
+
+Furthermore, there were some issues with memory fragmentation, as the 3070 Ti only has 8GB of VRAM available. As such, the following fixes were explored:
+* Reduced batch size
+* Offloaded model to CPU
+* Different optimizers were tried
+* Exclusive CPU training
+* PYTORCH_CUDA_ALLOC_CONF parameter set to 324MB (working solution!)
