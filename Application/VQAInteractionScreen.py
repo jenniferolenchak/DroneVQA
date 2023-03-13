@@ -19,7 +19,7 @@ from docx import Document
 from docx.shared import Inches, Pt
 
 from worker import Worker
-from utils import PredictionResults, predictVilt, predictLxmert
+from ModelPredictionUtils import PredictionResults, predictVilt, predictLxmert
 
 from ExportUtils import ExportUtils
 
