@@ -41,16 +41,16 @@ def setupModels(progress_callback):
     time.sleep(1)
 
     global setupViltTransformer
-    from utils import setupViltTransformer
+    from ModelPredictionUtils import setupViltTransformer
     
     global setupFineViltTransformer
-    from utils import setupFineViltTransformer
+    from ModelPredictionUtils import setupFineViltTransformer
 
     global setupLxmertTransformer
-    from utils import setupLxmertTransformer
+    from ModelPredictionUtils import setupLxmertTransformer
 
     global setupLxmertTransformer_finetuned
-    from utils import setupLxmertTransformer_finetuned
+    from ModelPredictionUtils import setupLxmertTransformer_finetuned
 
     models = []
     progress_callback.emit((25, "Initializing Vilt model\nThis step will take longer the first time this application loads."))
