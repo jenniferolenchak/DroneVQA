@@ -19,7 +19,7 @@ from docx import Document
 from docx.shared import Inches, Pt
 
 from worker import Worker
-from utils import PredictionResults, predictVilt, predictLxmert
+from ModelPredictionUtils import PredictionResults, predictVilt, predictLxmert
 
 from ExportUtils import ExportUtils
 
@@ -44,6 +44,7 @@ class VQAInteractionScreen(QWidget):
                                 ["Dust", 0.0], ["Fog", 0.0]
                             ]
         self.ExportResults = ExportUtils()
+        self.display_video = True
         self.load_ui()
       
     def load_ui(self):
@@ -62,12 +63,17 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_Right.pressed.connect(lambda: self.controller.startDroneMovement("right"))
         self.ui.button_Forward.pressed.connect(lambda: self.controller.startDroneMovement("forward"))
         self.ui.button_Backward.pressed.connect(lambda: self.controller.startDroneMovement("backward"))
+        self.ui.button_rotate_right.pressed.connect(lambda: self.controller.startDroneMovement("rotate_right"))
+        self.ui.button_rotate_left.pressed.connect(lambda: self.controller.startDroneMovement("rotate_left"))
+
         self.ui.button_Up.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_Down.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_Left.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_Right.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_Forward.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_Backward.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_rotate_right.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
 
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.label_RainVal, self.ui.horizontalSlider_Rain.value()))
@@ -91,7 +97,7 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_ResetDrone.clicked.connect(self.controller.resetDrone)
 
         # Reset Camera Button
-        self.ui.pushButton_RestartCamera.clicked.connect(self.setupCamera)
+        self.ui.pushButton_RestartCamera.clicked.connect(self.restartCamera)
 
         # Freeze Frame Button Clicked
         self.ui.pushButton_FreezeUnfreezeFrame.clicked.connect(self.freezeUnfreezeCamera)
@@ -120,11 +126,20 @@ class VQAInteractionScreen(QWidget):
         """
         Initialize camera.
         """
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.display_video_stream)
-        self.timer.start(100)
+        if (self.display_video):
+            self.threadCamera()
 
-    def display_video_stream(self):
+    def threadCamera(self):
+        worker = Worker(self.get_video_stream)
+        worker.signals.result.connect(self.display_video_stream)
+        worker.signals.finished.connect(self.setupCamera)
+        self.threadManager.start(worker)
+
+    def restartCamera(self):
+        if (not self.display_video):
+            self.setupCamera()
+
+    def get_video_stream(self):
         """
         Read frame from camera and repaint QLabel widget.
         """
@@ -158,6 +173,11 @@ class VQAInteractionScreen(QWidget):
         dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
         frame = cv2.resize(frame, dim)
 
+        return frame
+       
+    def display_video_stream(self, frame):
+        self.currentImage = frame
+
         # Display Image
         image = QImage(frame, frame.shape[1], frame.shape[0], 
                        frame.strides[0], QImage.Format_RGB888)
@@ -165,10 +185,11 @@ class VQAInteractionScreen(QWidget):
 
     def freezeUnfreezeCamera(self):
         if self.ui.pushButton_FreezeUnfreezeFrame.isChecked():
-            self.timer.stop()
+            self.display_video = False
             self.ui.pushButton_FreezeUnfreezeFrame.setText("Unfreeze Frame")
         else:
-            self.timer.start(100)
+            self.display_video = True
+            self.setupCamera()
             self.ui.pushButton_FreezeUnfreezeFrame.setText("Freeze Frame")
     
     def askQuestion(self):
