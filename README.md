@@ -12,6 +12,7 @@
 - [Multimodal Transformers](#multimodal-transformers)
 - [Models](#models)
 - [Visualization Methods](#visualization-methods)
+- [LXMERT Model Training and Fine-tuning Process](#lxmert-model-training-and-fine-tuning-process)
 
 <br/><br/>
 ## About
