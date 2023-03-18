@@ -44,7 +44,7 @@ background-color: white;
   <widget class="QLabel" name="label_DroneVQATitle">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>420</x>
      <y>-10</y>
      <width>641</width>
      <height>50</height>
