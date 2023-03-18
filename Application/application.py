@@ -69,7 +69,7 @@ def setupModels(progress_callback):
     time.sleep(1)
     return [VQAInteractionScreen, LaunchScreen, airsim_controller, models]
 
-def switchToLaunchScreen(app, threadManager, stackedWidget, VQAInteractionScreen, LaunchScreen, controller, final_models):
+def switchToLaunchScreen(threadManager, stackedWidget, VQAInteractionScreen, LaunchScreen, controller, final_models):
     VQAScreen = VQAInteractionScreen(threadManager, controller, final_models)
     launchScreen = LaunchScreen(app, stackedWidget, threadManager, VQAScreen, controller)
     stackedWidget.addWidget(launchScreen)
@@ -78,7 +78,7 @@ def switchToLaunchScreen(app, threadManager, stackedWidget, VQAInteractionScreen
     stackedWidget.setCurrentWidget(launchScreen)
 
 def finalizeModels(setupResults):
-    switchToLaunchScreen(app, threadManager, stackedWidget, setupResults[0], setupResults[1], setupResults[2], setupResults[3])
+    switchToLaunchScreen(threadManager, stackedWidget, setupResults[0], setupResults[1], setupResults[2], setupResults[3])
 
 def updateLoadScreenProgress(percentComplete):
     loadScreen.updateLoadStatus(percentComplete=percentComplete[0], statusText=percentComplete[1])
