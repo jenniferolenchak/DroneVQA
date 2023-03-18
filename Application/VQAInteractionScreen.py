@@ -196,7 +196,19 @@ class VQAInteractionScreen(QWidget):
         # Hide any existing displayed visualization
         self.ui.label_ResultVisualization.hide()
 
-        # Set ask button inactive and change text/color to loading while the model is running
+        # Remove previous results
+        self.ui.lineEdit_Answer.setText("")
+        self.ui.textEdit_Details.setText("")
+
+        # Disable question asking options while model is running
+        self.ui.radioButton_ViltFineTuned.setEnabled(False)
+        self.ui.radioButton_ViltBase.setEnabled(False)
+        self.ui.radioButton_LxmertFineTuned.setEnabled(False)
+        self.ui.radioButton_LxmertBase.setEnabled(False)
+        self.ui.lineEdit_Question.setEnabled(False)
+        self.ui.checkBox_ExportResults.setEnabled(False)
+
+        # Change text/color/state of ask button to reflect that a model is running and results are loading
         self.ui.pushButton_Ask.setEnabled(False)
         self.ui.pushButton_Ask.setText("Loading...")
         self.ui.pushButton_Ask.setStyleSheet("* { background-color: DarkSalmon; color: black; }\n\nQPushButton {\nborder-radius: 4px;\npadding: 4px 0;\n}")
@@ -228,6 +240,14 @@ class VQAInteractionScreen(QWidget):
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
 
         def completed():
+            # Enable question asking options now that model is complete
+            self.ui.radioButton_ViltFineTuned.setEnabled(True)
+            self.ui.radioButton_ViltBase.setEnabled(True)
+            self.ui.radioButton_LxmertFineTuned.setEnabled(True)
+            self.ui.radioButton_LxmertBase.setEnabled(True)
+            self.ui.lineEdit_Question.setEnabled(True)
+            self.ui.checkBox_ExportResults.setEnabled(True)
+
             # Set ask button active and change text/color back to user ask prompt
             self.ui.pushButton_Ask.setEnabled(True)
             self.ui.pushButton_Ask.setText("Ask")
