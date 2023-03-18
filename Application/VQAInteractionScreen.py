@@ -136,8 +136,7 @@ class VQAInteractionScreen(QWidget):
         self.threadManager.start(worker)
 
     def restartCamera(self):
-        if (not self.display_video):
-            self.setupCamera()
+        self.setupCamera()
 
     def get_video_stream(self):
         """
