@@ -27,19 +27,19 @@ def ImportGlobalModules(loadScreen):
 
     loadScreen.updateLoadStatus(percentComplete=40, statusText="Importing setupViltTransformer")
     global setupViltTransformer
-    from utils import setupViltTransformer
+    from ModelPredictionUtils import setupViltTransformer
     
     loadScreen.updateLoadStatus(percentComplete=45, statusText="Importing setupViltTransformer")
     global setupFineViltTransformer
-    from utils import setupFineViltTransformer
+    from ModelPredictionUtils import setupFineViltTransformer
 
     loadScreen.updateLoadStatus(percentComplete=50, statusText="Importing setupLxmertTransformer")
     global setupLxmertTransformer
-    from utils import setupLxmertTransformer
+    from ModelPredictionUtils import setupLxmertTransformer
 
     loadScreen.updateLoadStatus(percentComplete=55, statusText="Importing setupLxmertTransformer_finetuned")
     global setupLxmertTransformer_finetuned
-    from utils import setupLxmertTransformer_finetuned
+    from ModelPredictionUtils import setupLxmertTransformer_finetuned
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     # Switch to the launch screen
     VQAScreen = VQAInteractionScreen(threadManager, controller, models)
-    launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)
+    launchScreen = LaunchScreen(app, stackedWidget, threadManager, VQAScreen, controller)
     stackedWidget.addWidget(launchScreen)
     stackedWidget.addWidget(VQAScreen)
     stackedWidget.resize(500, 625)
