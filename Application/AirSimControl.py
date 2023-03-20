@@ -5,7 +5,7 @@ import sys
 from threading import Timer
 
 import airsim
-from airsim.types import YawMode, KinematicsState, Pose
+from airsim.types import YawMode, Pose
 
 from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
 from PySide6.QtGui import QIcon, QPixmap, QScreen
