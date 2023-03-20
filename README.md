@@ -44,9 +44,7 @@ This project takes a research-based approach to compare the performance of open-
     ```
     *If you wish to install the required packages using a different method, the ```requirements.txt``` file has been provided within this repository.
 
-4. (Optional) Running models on GPU
-
-    Note: You should have atleast 8GB of GPU VRAM to run the models on GPU
+4. (Optional) Running Faster RCNN Backbone on GPU for major LXMERT performance improvements
 
     1. Manually create a new virtual environment and activate this new environment.
 
