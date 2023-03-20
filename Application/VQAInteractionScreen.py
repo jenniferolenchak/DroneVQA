@@ -336,6 +336,7 @@ class VQAInteractionScreen(QWidget):
             self.displayVisualization(defaultImageIndex)
         
         if (self.ui.checkBox_ExportResults.isChecked()):
-            self.ExportResults.exportResults(self.predictionResult, self.current_model_details, 
+            exportStatus = self.ExportResults.exportResults(self.ui, self.predictionResult, self.current_model_details, 
                                              self.cameraEffect, self.weatherEffects, 
                                              self.ui.checkBox_ExportResults)
+            print(exportStatus)

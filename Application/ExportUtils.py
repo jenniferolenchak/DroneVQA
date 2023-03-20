@@ -4,10 +4,8 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from PySide6.QtWidgets import QWidget, QRadioButton, QLabel, QToolBar
-from PySide6.QtGui import QPixmap, QImage
-from PySide6.QtCore import QFile, QTimer
-from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QMessageBox
+from PySide6.QtGui import QIcon
 
 import time
 import os
@@ -113,7 +111,7 @@ class ExportUtils:
         except: 
             print("Could not export to JSON file")
 
-    def exportResults(self, predictionResult, model_details, cameraEffect, weatherEffects, exportCheckBox):
+    def exportResults(self, ui, predictionResult, model_details, cameraEffect, weatherEffects, exportCheckBox):
         print("Exporting...")
 
         if (not self.checkExportDir()):
@@ -205,8 +203,31 @@ class ExportUtils:
             print("Results exported to: " + result_dir)
 
             exportCheckBox.setText("Exported")
-            Timer(2, self.resetExportText, [exportCheckBox]).start()
+
+            exportSuccessBox = QMessageBox(ui)
+            exportSuccessBox.setText("<p>Results exported to <b>" + result_dir + "</b></p>")
+            exportSuccessBox.setStyleSheet("""* { background: white; color: #0d0f75; font-family: Arial; font-size: 13px; font-weight: 400; } 
+                QPushButton{ background-color: rgb(13, 15, 117); color: white; border-color: blue; border-radius: 5px; padding: 10px 20px; }""")
+            exportSuccessBox.setWindowTitle("Export Success")
+            exportSuccessBox.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
+            exportSuccessBox.show()
+            exportSuccessBox.move(exportSuccessBox.pos().x()+10, exportSuccessBox.pos().y())
+            exportSuccessBox.exec()
+
+            self.resetExportText(exportCheckBox)
+            # Timer(2, self.resetExportText, [exportCheckBox]).start()
+            return True
         except:
+            exportErrorBox = QMessageBox(ui)
+            exportErrorBox.setText("""<p>Error Exporting Results</p>""")
+            exportErrorBox.setStyleSheet("""* { background: white; color: #0d0f75; font-family: Arial; font-size: 13px; font-weight: 400; } 
+                QPushButton{ background-color: rgb(13, 15, 117); color: white; border-color: blue; border-radius: 5px; padding: 10px 20px; }""")
+            exportErrorBox.setWindowTitle("Export Error")
+            exportErrorBox.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
+            exportErrorBox.show()
+            exportErrorBox.move(exportErrorBox.pos().x()+10, exportErrorBox.pos().y())
+            exportErrorBox.exec()
             print("Failed to export")
             exportCheckBox.setText("Could Not Export")
             Timer(2, self.resetExportText, [exportCheckBox]).start()
+            return False
