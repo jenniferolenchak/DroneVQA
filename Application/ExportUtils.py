@@ -42,7 +42,7 @@ class ExportUtils:
 
     def getCurrentFormattedTime(self): 
         current_time = time.localtime()
-        formatted_time = time.strftime("%b-%d-%H-%M-%S", current_time)
+        formatted_time = time.strftime("%Y-%b-%d-%H.%M.%S", current_time)
         return formatted_time
 
     def resetTakeSnapshot(self, snapshotButton):
@@ -76,7 +76,7 @@ class ExportUtils:
         try: 
             formatted_time = self.getCurrentFormattedTime()
 
-            json_filename = self.model_dir + formatted_time + '/' + 'results-' + formatted_time + '.json'
+            json_filename = self.model_dir + formatted_time + '/' + 'DroneVQA-Results-' + formatted_time + '.json'
             
             json_model_details = {"alt_answer_0": "None"}
             try: 
@@ -130,7 +130,7 @@ class ExportUtils:
 
             self.exportToJSON(predictionResult, model_details, cameraEffect)
             
-            doc_name = self.model_dir + formatted_time + "/Results_" + formatted_time + ".docx"
+            doc_name = self.model_dir + formatted_time + "/DroneVQA-Results-" + formatted_time + ".docx"
 
             document.add_heading("Question and Model Prediction")
 
@@ -181,9 +181,9 @@ class ExportUtils:
                     weather_font.name = 'Calibri'
                     weather_font.size = Pt(12)
 
-            document.add_heading("Base Image")
-            cv2.imwrite(result_dir + "base_image.png", cv2.cvtColor(predictionResult.image, cv2.COLOR_RGB2BGR))
-            document.add_picture(result_dir + "base_image.png", width=Inches(6.0))
+            document.add_heading("Original Image")
+            cv2.imwrite(result_dir + "Original Image.png", cv2.cvtColor(predictionResult.image, cv2.COLOR_RGB2BGR))
+            document.add_picture(result_dir + "Original Image.png", width=Inches(6.0))
 
             numVisuals = len(predictionResult.visualizations)
             if numVisuals:
@@ -194,11 +194,24 @@ class ExportUtils:
                     dim = (1280, 720)
                     export_frame = cv2.resize(predictionResult.visualizations[i], dim)
 
-                    visual_filename = f"Visualization_{i+1}.png"
-                    cv2.imwrite(result_dir + visual_filename, cv2.cvtColor(export_frame, cv2.COLOR_RGB2BGR))
+                    # Process visualization name to rewrite any symbols that cannot be included in PNG file names
+                    visualization_filename = f"{predictionResult.visualization_names[i]}.png"
+                    visualization_filename = visualization_filename.replace("\\","[SYMBOL - Backslash]")
+                    visualization_filename = visualization_filename.replace("/","[SYMBOL - Forward Slash]")
+                    visualization_filename = visualization_filename.replace(":","[SYMBOL - Colon]")
+                    visualization_filename = visualization_filename.replace("*","[SYMBOL - Asterisk]")
+                    visualization_filename = visualization_filename.replace("?","[SYMBOL - Question Mark]")
+                    visualization_filename = visualization_filename.replace("\"","[SYMBOL - Quotation Mark]")
+                    visualization_filename = visualization_filename.replace("<","[SYMBOL - Less Than]")
+                    visualization_filename = visualization_filename.replace(">","[SYMBOL - Greater Than]")
+                    visualization_filename = visualization_filename.replace("|","[SYMBOL - Bar]")
+
+                    # Save image as PNG to export folder
+                    cv2.imwrite(result_dir + visualization_filename, cv2.cvtColor(export_frame, cv2.COLOR_RGB2BGR))
                     
-                    document.add_heading(f"Visualization_{i+1}.png", level=2)
-                    document.add_picture(result_dir + visual_filename, width=Inches(6.0))
+                    # Add visualization to the export DOCX file
+                    document.add_heading(visualization_filename, level=2)
+                    document.add_picture(result_dir + visualization_filename, width=Inches(6.0))
             
 
             document.save(doc_name)

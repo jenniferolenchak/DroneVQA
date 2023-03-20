@@ -70,9 +70,12 @@ def predictVilt(model, processor, question, image):
 
     # Generate Names for Each Visualization
     # Order: Combined, token 1, token 2, ...., token n
+    # Naming Restriction: These visualization names will dicate the filenames of exported visualization PNGs. Ensure
+    #                     that visualization name structure remains compliant with OS filename symbol restrictions.
+
     visualization_names = ["Combined Attention Patches"]
     visualization_names.extend(
-        [f"Token {id}: {token}" for id, token in enumerate(decoded_tokens)]
+        [f"Token {id} - \'{token}\'" for id, token in enumerate(decoded_tokens)]
     )
    
     results = PredictionResults(question=question, image=image,
@@ -241,11 +244,9 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
     attention_rollout_image_scores = torch.sum(R_t_i, dim=0)
     image_scores.append(attention_rollout_image_scores)
 
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # Pre-format the image for visualization outputs
     for image_score in image_scores:
         path = create_image_vis(image, image_score, output_dict, r"./LxmertVisualization.jpg")
         visualization = cv2.imread(path)
-        visualization = cv2.cvtColor(visualization, cv2.COLOR_BGR2RGB)
         os.remove(path) # Remove the file after we read it
         visualizations.append(visualization)
     
