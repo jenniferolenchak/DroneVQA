@@ -44,10 +44,6 @@ class AirSimControl(QWidget):
         print("AirSim Client Initialized")
 
     def startDroneMovement(self, command, moveButtons):
-        # Disable movement until current movement is finished
-        for button in moveButtons:
-            button.setEnabled(False)
-
         if (command == "up"):
             self.client.moveByVelocityBodyFrameAsync(0, 0, 0-self.movementVelocity, 1)
         elif (command == "down"):
@@ -65,14 +61,8 @@ class AirSimControl(QWidget):
         elif (command == 'rotate_left'):
             self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
 
-        Timer(1.5, self.stopDroneMovement, [moveButtons]).start()
-        
-
     def stopDroneMovement(self, moveButtons):
         self.client.moveByVelocityAsync(0, 0, 0, 3)
-        # Enable movement after stopping current movement
-        for button in moveButtons:
-            button.setEnabled(True)
 
 
     def resetDrone(self, command):

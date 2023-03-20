@@ -56,7 +56,7 @@ class VQAInteractionScreen(QWidget):
         self.ui = loader.load(ui_file, self)
         ui_file.close()
 
-        # Create movement button array for enabling/disabling
+        # Create movement button array for enabling/disabling if necessary
         moveButtons = [self.ui.button_Up, self.ui.button_Down, self.ui.button_Left, self.ui.button_Right, self.ui.button_Forward, self.ui.button_Backward, self.ui.button_rotate_right, self.ui.button_rotate_left]
 
         # Connect drone navigation button actions to methods
@@ -68,6 +68,15 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_Backward.pressed.connect(lambda: self.controller.startDroneMovement("backward", moveButtons))
         self.ui.button_rotate_right.pressed.connect(lambda: self.controller.startDroneMovement("rotate_right", moveButtons))
         self.ui.button_rotate_left.pressed.connect(lambda: self.controller.startDroneMovement("rotate_left", moveButtons))
+
+        self.ui.button_Up.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_Down.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_Left.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_Right.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_Forward.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_Backward.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_rotate_right.released.connect(lambda: self.controller.stopDroneMovement)
+        self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
 
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.label_RainVal, self.ui.horizontalSlider_Rain.value()))
