@@ -66,28 +66,28 @@ This project takes a research-based approach to compare the performance of open-
 
 #### Loading Screen <!-- omit from toc --> 
 The loading screen is the first screen seen upon starting up the application. Depending on if it is your first time starting the application the loading screen will take an increased amount of time. However, this is only a first time start up and starting the application again will result in faster loading time.
-![Loading Screen](Screenshots/Loading_Screen.png)
+![Loading Screen](Application%20Screenshots/Loading_Screen.png)
 #### Launch Screen <!-- omit from toc --> 
 This is the first interactive screen that you will see. Here you will find the instructions to setup and start the Unreal Environment with the Microsoft AirSim plugin. After following those instructions click on 'Initialize Client.' 
-![Launch Screen](Screenshots/Launch_Screen.png)
+![Launch Screen](Application%20Screenshots/Launch_Screen.png)
 
 If everything is working properly then the VQA screen with appear, if not an error message will popup.
-![Initialization Error](Screenshots/Launch_Error.png) 
+![Initialization Error](Application%20Screenshots/Launch_Error.png) 
 #### VQA Interaction Screen <!-- omit from toc --> 
 This is the main screen of the application. Here you can see the live drone video feed, control the drone and environment weather, change specific camera effects, and ask your questions. 
-![VQA Screen](Screenshots/VQA_Screen.png)
+![VQA Screen](Application%20Screenshots/VQA_Screen.png)
 
 The drone camera feed section has three main features. Firstly, there is the freeze frame and snapshot buttons. The freeze frame only freezes the video feed and not the simulation in the background. The 'Take a Snapshot' button saves the current image to the 'Exports and Snapshot' locally created directory. The camera effects radio buttons are singular toggles that change the effects of the current image. These changes are reflected on the image passed into the ViLT and LXMERT models. 
-![Drone Camera Feed](Screenshots/Drone_feed.png)
+![Drone Camera Feed](Application%20Screenshots/Drone_feed.png)
 
 Below the drone camera feed is the flight controls, utility buttons, and the weather controls. The flight controls have a velocity slider which changes how fast the drone moves. There are also directional buttons allowing for full control of the drone. The utility buttons allow for control of the drone simulation in the event of unexpected behavior or the desire to reset to starting conditions. The weather and environment sliders provide options to control the simulation environment. It is important to note that these sliders will only affect the environment if the current Unreal Environment supports and includes the necessary weather assets. 
-![Drone Controls](Screenshots/Drone_controls.png)
+![Drone Controls](Application%20Screenshots/Drone_controls.png)
 
 On the right side of the VQA Screen is the model interaction. Here you can ask your question, select your model, and export results. The results to your question will appear in the 'Results' box. If exporting, the results are saved in .docx and .JSON format in the 'Exports and Snapshots' local directory. After asking your question model visualizations and results will appear. Depending on the selected model different visualizations are generated. Below are examples from both the ViLT and LXMERT models. 
-![ViLT Example](Screenshots/ViLT_example.png)
+![ViLT Example](Application%20Screenshots/ViLT_example.png)
 *ViLT Question and Result Example*
 
-![LXMERT Example](Screenshots/LXMERT_example.png)
+![LXMERT Example](Application%20Screenshots/LXMERT_example.png)
 *LXMERT Question and Result Example*
 
 
