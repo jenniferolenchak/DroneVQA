@@ -75,13 +75,13 @@ The loading screen is the first screen seen upon starting up the application. De
 This is the first interactive screen that you will see. Here you will find the instructions to setup and start the Unreal Environment with the Microsoft AirSim plugin. After following those instructions click on 'Initialize Client.' 
 
 <p align='center'>
-    <img src='Application%20Screenshots/Launch_Screen.png' height='75%' width='75%'/>
+    <img src='Application%20Screenshots/Launch_Screen.png' height='55%' width='55%'/>
 </p>
 
 If everything is working properly then the VQA screen with appear, if not an error message will popup.
 
 <p align='center'>
-    <img src='Application%20Screenshots/Launch_Error.png' height='75%' width='75%'/>
+    <img src='Application%20Screenshots/Launch_Error.png' height='55%' width='55%'/>
 </p>
 
 #### VQA Interaction Screen <!-- omit from toc --> 
@@ -108,15 +108,15 @@ On the right side of the VQA Screen is the model interaction. Here you can ask y
 
 <p align='center'>
     <img src='Application%20Screenshots/ViLT_example.png' height='75%' width='75%'/>
+    <br/>
+    <em>ViLT Question and Result Example</em>
 </p>
-
-*ViLT Question and Result Example*
 
 <p align='center'>
     <img src='Application%20Screenshots/LXMERT_example.png' height='75%' width='75%'/>
+    <br/>
+    <em>LXMERT Question and Result Example</em>
 </p>
-
-*LXMERT Question and Result Example*
 
 
 These questions can be anything but tailoring to the current environment will help produce better results. Also asking simpler questions will tend to produce better results. 
