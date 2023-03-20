@@ -70,9 +70,12 @@ def predictVilt(model, processor, question, image):
 
     # Generate Names for Each Visualization
     # Order: Combined, token 1, token 2, ...., token n
+    # Naming Restriction: These visualization names will dicate the filenames of exported visualization PNGs. Ensure
+    #                     that visualization name structure remains compliant with OS filename symbol restrictions.
+
     visualization_names = ["Combined Attention Patches"]
     visualization_names.extend(
-        [f"Token {id}: {token}" for id, token in enumerate(decoded_tokens)]
+        [f"Token {id} - \'{token}\'" for id, token in enumerate(decoded_tokens)]
     )
    
     results = PredictionResults(question=question, image=image,
