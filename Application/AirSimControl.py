@@ -22,11 +22,6 @@ class AirSimControl(QWidget):
         # Set default movement velocity
         self.movementVelocity = 20
 
-        # Set initial flight coordinates
-        self.x = 0
-        self.y = 0
-        self.z = -3
-
     @Slot()
     def initializeAirSimClient(self):
         '''Initializes AirSim client'''
@@ -40,13 +35,11 @@ class AirSimControl(QWidget):
 
         # Async methods returns Future. Call join() to wait for task to complete.
         self.client.takeoffAsync().join()
-        self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
         # Create second AirSim client for image threading
         self.image_client = airsim.MultirotorClient()
 
         print("AirSim Client Initialized")
-
 
     def startDroneMovement(self, command):
         if (command == "up"):
@@ -75,7 +68,6 @@ class AirSimControl(QWidget):
         self.client.enableApiControl(True)
         self.client.armDisarm(True)
         self.client.takeoffAsync().join()
-        self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
     def updateAirSimWeather(self, parameter, value):
         self.client.simSetWeatherParameter(parameter, value)
