@@ -5,7 +5,7 @@ import sys
 from threading import Timer
 
 import airsim
-from airsim.types import YawMode
+from airsim.types import YawMode, KinematicsState, Pose
 
 from PySide6.QtWidgets import QApplication, QWidget, QStackedWidget, QLabel
 from PySide6.QtGui import QIcon, QPixmap, QScreen
@@ -49,23 +49,23 @@ class AirSimControl(QWidget):
             button.setEnabled(False)
 
         if (command == "up"):
-            self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
-            Timer(1.5, self.stopDroneMovement, [moveButtons]).start()
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0-self.movementVelocity, 1)
         elif (command == "down"):
-            self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
-            Timer(1.5, self.stopDroneMovement, [moveButtons]).start()
+            self.client.moveByVelocityBodyFrameAsync(0, 0, self.movementVelocity, 1)
         elif (command == "left"):
-            self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
-            Timer(4, self.stopDroneMovement, [moveButtons]).start()
+            self.client.moveByVelocityBodyFrameAsync(0, 0-self.movementVelocity, 0, 1)
         elif (command == "right"):
-            self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
-            Timer(4, self.stopDroneMovement, [moveButtons]).start()
+            self.client.moveByVelocityBodyFrameAsync(0, self.movementVelocity, 0, 1)
         elif (command == "forward"):
-            self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
-            Timer(4, self.stopDroneMovement, [moveButtons]).start()
+            self.client.moveByVelocityBodyFrameAsync(self.movementVelocity, 0, 0, 1)
         elif (command == "backward"):
-            self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
-            Timer(4, self.stopDroneMovement, [moveButtons]).start()
+            self.client.moveByVelocityBodyFrameAsync(0-self.movementVelocity, 0, 0, 1)
+        elif (command == 'rotate_right'):
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
+        elif (command == 'rotate_left'):
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
+
+        Timer(1.5, self.stopDroneMovement, [moveButtons]).start()
         
 
     def stopDroneMovement(self, moveButtons):

@@ -57,7 +57,7 @@ class VQAInteractionScreen(QWidget):
         ui_file.close()
 
         # Create movement button array for enabling/disabling
-        moveButtons = [self.ui.button_Up, self.ui.button_Down, self.ui.button_Left, self.ui.button_Right, self.ui.button_Forward, self.ui.button_Backward]
+        moveButtons = [self.ui.button_Up, self.ui.button_Down, self.ui.button_Left, self.ui.button_Right, self.ui.button_Forward, self.ui.button_Backward, self.ui.button_rotate_right, self.ui.button_rotate_left]
 
         # Connect drone navigation button actions to methods
         self.ui.button_Up.pressed.connect(lambda: self.controller.startDroneMovement("up", moveButtons))
@@ -66,6 +66,8 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_Right.pressed.connect(lambda: self.controller.startDroneMovement("right", moveButtons))
         self.ui.button_Forward.pressed.connect(lambda: self.controller.startDroneMovement("forward", moveButtons))
         self.ui.button_Backward.pressed.connect(lambda: self.controller.startDroneMovement("backward", moveButtons))
+        self.ui.button_rotate_right.pressed.connect(lambda: self.controller.startDroneMovement("rotate_right", moveButtons))
+        self.ui.button_rotate_left.pressed.connect(lambda: self.controller.startDroneMovement("rotate_left", moveButtons))
 
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.label_RainVal, self.ui.horizontalSlider_Rain.value()))
