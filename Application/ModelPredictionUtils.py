@@ -23,6 +23,8 @@ from ModelVisualizations.Vilt.vilt_visualization import get_visualization_for_to
 
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
+device = "cpu"
+print(device)
 
 # class to store relevant prediction information
 @dataclass
@@ -115,10 +117,9 @@ def setupLxmertTransformer():
     lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
     lxmert_vqa.to(device)
 
-
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
-    frcnn_cfg.model.device = device # Immportant to have frcnn run on GPU for real time performance
+    frcnn_cfg.model.device = "cuda:0" if torch.cuda.is_available() else "cpu" # Immportant to have frcnn run on GPU for real time performance
 
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
@@ -134,7 +135,7 @@ def setupLxmertTransformer_finetuned():
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
-    frcnn_cfg.model.device = device # Immportant to have frcnn run on GPU for real time performance
+    frcnn_cfg.model.device = "cuda:0" if torch.cuda.is_available() else "cpu" # Immportant to have frcnn run on GPU for real time performance
 
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
