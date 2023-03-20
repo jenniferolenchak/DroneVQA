@@ -66,28 +66,56 @@ This project takes a research-based approach to compare the performance of open-
 
 #### Loading Screen <!-- omit from toc --> 
 The loading screen is the first screen seen upon starting up the application. Depending on if it is your first time starting the application the loading screen will take an increased amount of time. However, this is only a first time start up and starting the application again will result in faster loading time.
-![Loading Screen](Application%20Screenshots/Loading_Screen.png)
+
+<p align='center'>
+    <img src='Application%20Screenshots/Loading_Screen.png' height='75%' width='75%'/>
+</p>
+
 #### Launch Screen <!-- omit from toc --> 
 This is the first interactive screen that you will see. Here you will find the instructions to setup and start the Unreal Environment with the Microsoft AirSim plugin. After following those instructions click on 'Initialize Client.' 
-![Launch Screen](Application%20Screenshots/Launch_Screen.png)
+
+<p align='center'>
+    <img src='Application%20Screenshots/Launch_Screen.png' height='75%' width='75%'/>
+</p>
 
 If everything is working properly then the VQA screen with appear, if not an error message will popup.
-![Initialization Error](Application%20Screenshots/Launch_Error.png) 
+
+<p align='center'>
+    <img src='Application%20Screenshots/Launch_Error.png' height='75%' width='75%'/>
+</p>
+
 #### VQA Interaction Screen <!-- omit from toc --> 
 This is the main screen of the application. Here you can see the live drone video feed, control the drone and environment weather, change specific camera effects, and ask your questions. 
-![VQA Screen](Application%20Screenshots/VQA_Screen.png)
 
-The drone camera feed section has three main features. Firstly, there is the freeze frame and snapshot buttons. The freeze frame only freezes the video feed and not the simulation in the background. The 'Take a Snapshot' button saves the current image to the 'Exports and Snapshot' locally created directory. The camera effects radio buttons are singular toggles that change the effects of the current image. These changes are reflected on the image passed into the ViLT and LXMERT models. 
-![Drone Camera Feed](Application%20Screenshots/Drone_feed.png)
+<p align='center'>
+    <img src='Application%20Screenshots/VQA_Screen.png' height='75%' width='75%'/>
+</p>
+
+
+The drone camera feed section has three main features. Firstly, there is the freeze frame and snapshot buttons. The freeze frame only freezes the video feed and not the simulation in the background. The 'Take a Snapshot' button saves the current image to the 'Exports and Snapshot' locally created directory. The camera effects radio buttons are singular toggles that change the effects of the current image. These changes are reflected on the image passed into the ViLT and LXMERT models.
+
+<p align='center'>
+    <img src='Application%20Screenshots/Drone_feed.png' height='75%' width='75%'/>
+</p>
 
 Below the drone camera feed is the flight controls, utility buttons, and the weather controls. The flight controls have a velocity slider which changes how fast the drone moves. There are also directional buttons allowing for full control of the drone. The utility buttons allow for control of the drone simulation in the event of unexpected behavior or the desire to reset to starting conditions. The weather and environment sliders provide options to control the simulation environment. It is important to note that these sliders will only affect the environment if the current Unreal Environment supports and includes the necessary weather assets. 
-![Drone Controls](Application%20Screenshots/Drone_controls.png)
+
+<p align='center'>
+    <img src='Application%20Screenshots/Drone_controls.png' height='75%' width='75%'/>
+</p>
 
 On the right side of the VQA Screen is the model interaction. Here you can ask your question, select your model, and export results. The results to your question will appear in the 'Results' box. If exporting, the results are saved in .docx and .JSON format in the 'Exports and Snapshots' local directory. After asking your question model visualizations and results will appear. Depending on the selected model different visualizations are generated. Below are examples from both the ViLT and LXMERT models. 
-![ViLT Example](Application%20Screenshots/ViLT_example.png)
+
+<p align='center'>
+    <img src='Application%20Screenshots/ViLT_example.png' height='75%' width='75%'/>
+</p>
+
 *ViLT Question and Result Example*
 
-![LXMERT Example](Application%20Screenshots/LXMERT_example.png)
+<p align='center'>
+    <img src='Application%20Screenshots/LXMERT_example.png' height='75%' width='75%'/>
+</p>
+
 *LXMERT Question and Result Example*
 
 
