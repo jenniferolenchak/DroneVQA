@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 import sys
 
+from threading import Timer
+
 import airsim
 from airsim.types import YawMode
 
@@ -43,23 +45,31 @@ class AirSimControl(QWidget):
 
     def startDroneMovement(self, command):
         if (command == "up"):
-            self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1)
+            # self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1)
+            self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
         elif (command == "down"):
-            self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1)
+            # self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1)
+            self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
         elif (command == "left"):
-            self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 1)
+            # self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 1)
+            self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
         elif (command == "right"):
-            self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 1)
+            # self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 1)
+            self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
         elif (command == "forward"):
-            self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 1)
+            # self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 1)
+            self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
         elif (command == "backward"):
-            self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 1)
-        elif (command == 'rotate_right'):
-            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
-        elif (command == 'rotate_left'):
-            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
+            # self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 1)
+            self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 2, drivetrain=airsim.DrivetrainType.ForwardOnly,  yaw_mode=YawMode(False, 0))
+        # elif (command == 'rotate_right'):
+        #     self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
+        # elif (command == 'rotate_left'):
+        #     self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
 
-    def stopDroneMovement(self, command):
+        Timer(3, self.stopDroneMovement).start()
+
+    def stopDroneMovement(self):
         self.client.moveByVelocityAsync(0, 0, 0, 3)
 
     def resetDrone(self, command):

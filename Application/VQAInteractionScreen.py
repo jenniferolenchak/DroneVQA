@@ -66,14 +66,14 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_rotate_right.pressed.connect(lambda: self.controller.startDroneMovement("rotate_right"))
         self.ui.button_rotate_left.pressed.connect(lambda: self.controller.startDroneMovement("rotate_left"))
 
-        self.ui.button_Up.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_Down.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_Left.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_Right.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_Forward.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_Backward.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_rotate_right.released.connect(lambda: self.controller.stopDroneMovement)
-        self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_Up.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_Down.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_Left.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_Right.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_Forward.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_Backward.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_rotate_right.released.connect(lambda: self.controller.stopDroneMovement)
+        # self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
 
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.label_RainVal, self.ui.horizontalSlider_Rain.value()))
