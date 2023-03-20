@@ -244,11 +244,9 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
     attention_rollout_image_scores = torch.sum(R_t_i, dim=0)
     image_scores.append(attention_rollout_image_scores)
 
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # Pre-format the image for visualization outputs
     for image_score in image_scores:
         path = create_image_vis(image, image_score, output_dict, r"./LxmertVisualization.jpg")
         visualization = cv2.imread(path)
-        visualization = cv2.cvtColor(visualization, cv2.COLOR_BGR2RGB)
         os.remove(path) # Remove the file after we read it
         visualizations.append(visualization)
     
