@@ -65,7 +65,7 @@ This project takes a research-based approach to compare the performance of open-
 ### Screens
 
 #### Loading Screen <!-- omit from toc --> 
-The loading screen is the first screen seen upon starting up the application. Depending on if it is your first time starting the application the loading screen will take an increased amount of time. However, this is only a first time start up and starting the application again will result in faster loading time.
+The loading screen is the first screen seen upon starting the application. If it is your first time starting the application the loading screen will take longer. However, this is only on first-time start-up, and starting the application again will result in a faster loading time.
 
 <p align='center'>
     <img src='Application%20Screenshots/Loading_Screen.png' height='75%' width='75%'/>
@@ -92,7 +92,7 @@ This is the main screen of the application. Here you can see the live drone vide
 </p>
 
 
-The drone camera feed section has three main features. Firstly, there is the freeze frame and snapshot buttons. The freeze frame only freezes the video feed and not the simulation in the background. The 'Take a Snapshot' button saves the current image to the 'Exports and Snapshot' locally created directory. The camera effects radio buttons are singular toggles that change the effects of the current image. These changes are reflected on the image passed into the ViLT and LXMERT models.
+The drone camera feed section has three main features. Firstly, there is the freeze frame and snapshot buttons. The freeze frame only freezes the video feed and not the simulation in the background. The 'Take a Snapshot' button saves the current image to the 'Exports and Snapshot' in the locally created directory. The camera effect radio buttons are singular toggles that change the effects of the current image. These changes are reflected on the image passed into the ViLT and LXMERT models.
 
 <p align='center'>
     <img src='Application%20Screenshots/Drone_feed.png' height='75%' width='75%'/>
