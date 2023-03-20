@@ -60,14 +60,14 @@ class VQAInteractionScreen(QWidget):
         moveButtons = [self.ui.button_Up, self.ui.button_Down, self.ui.button_Left, self.ui.button_Right, self.ui.button_Forward, self.ui.button_Backward, self.ui.button_rotate_right, self.ui.button_rotate_left]
 
         # Connect drone navigation button actions to methods
-        self.ui.button_Up.pressed.connect(lambda: self.controller.startDroneMovement("up", moveButtons))
-        self.ui.button_Down.pressed.connect(lambda: self.controller.startDroneMovement("down", moveButtons))
-        self.ui.button_Left.pressed.connect(lambda: self.controller.startDroneMovement("left", moveButtons))
-        self.ui.button_Right.pressed.connect(lambda: self.controller.startDroneMovement("right", moveButtons))
-        self.ui.button_Forward.pressed.connect(lambda: self.controller.startDroneMovement("forward", moveButtons))
-        self.ui.button_Backward.pressed.connect(lambda: self.controller.startDroneMovement("backward", moveButtons))
-        self.ui.button_rotate_right.pressed.connect(lambda: self.controller.startDroneMovement("rotate_right", moveButtons))
-        self.ui.button_rotate_left.pressed.connect(lambda: self.controller.startDroneMovement("rotate_left", moveButtons))
+        self.ui.button_Up.pressed.connect(lambda: self.controller.startDroneMovement("up"))
+        self.ui.button_Down.pressed.connect(lambda: self.controller.startDroneMovement("down"))
+        self.ui.button_Left.pressed.connect(lambda: self.controller.startDroneMovement("left"))
+        self.ui.button_Right.pressed.connect(lambda: self.controller.startDroneMovement("right"))
+        self.ui.button_Forward.pressed.connect(lambda: self.controller.startDroneMovement("forward"))
+        self.ui.button_Backward.pressed.connect(lambda: self.controller.startDroneMovement("backward"))
+        self.ui.button_rotate_right.pressed.connect(lambda: self.controller.startDroneMovement("rotate_right"))
+        self.ui.button_rotate_left.pressed.connect(lambda: self.controller.startDroneMovement("rotate_left"))
 
         self.ui.button_Up.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_Down.released.connect(lambda: self.controller.stopDroneMovement)

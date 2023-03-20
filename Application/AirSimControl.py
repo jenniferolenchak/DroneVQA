@@ -2,8 +2,6 @@ import os
 from pathlib import Path
 import sys
 
-from threading import Timer
-
 import airsim
 from airsim.types import YawMode
 
@@ -43,7 +41,7 @@ class AirSimControl(QWidget):
 
         print("AirSim Client Initialized")
 
-    def startDroneMovement(self, command, moveButtons):
+    def startDroneMovement(self, command):
         if (command == "up"):
             self.client.moveByVelocityBodyFrameAsync(0, 0, 0-self.movementVelocity, 1)
         elif (command == "down"):
@@ -61,9 +59,8 @@ class AirSimControl(QWidget):
         elif (command == 'rotate_left'):
             self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
 
-    def stopDroneMovement(self, moveButtons):
+    def stopDroneMovement(self, command):
         self.client.moveByVelocityAsync(0, 0, 0, 3)
-
 
     def resetDrone(self, command):
         self.client.reset()
