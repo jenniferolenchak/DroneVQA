@@ -23,6 +23,8 @@ from ModelVisualizations.Vilt.vilt_visualization import get_visualization_for_to
 
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
+device = "cpu"
+print(device)
 
 # class to store relevant prediction information
 @dataclass
@@ -113,9 +115,12 @@ def setupLxmertTransformer():
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
     lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
+    lxmert_vqa.to(device)
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
+    frcnn_cfg.model.device = "cuda:0" if torch.cuda.is_available() else "cpu" # Immportant to have frcnn run on GPU for real time performance
+
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
 
@@ -126,9 +131,12 @@ def setupLxmertTransformer_finetuned():
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
     lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='Fine-Tuned Models/FineTunedLXMERT.pth', config='config.json')
+    lxmert_vqa_finetuned.to(device)
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
+    frcnn_cfg.model.device = "cuda:0" if torch.cuda.is_available() else "cpu" # Immportant to have frcnn run on GPU for real time performance
+
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
 
@@ -187,8 +195,8 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
     visualizations = [visualization]
 
     # Very important that the boxes are normalized
-    normalized_boxes = output_dict.get("normalized_boxes")
-    features = output_dict.get("roi_features")
+    normalized_boxes = output_dict.get("normalized_boxes").to(device)
+    features = output_dict.get("roi_features").to(device)
 
     VQA_URL = "https://raw.githubusercontent.com/airsplay/lxmert/master/data/vqa/trainval_label2ans.json"
     vqa_answers = get_data(VQA_URL)
@@ -202,7 +210,7 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
         return_attention_mask=True,
         add_special_tokens=True,
         return_tensors="pt",
-    )
+    ).to(device)
 
     # run lxmert
     output_vqa = lxmert_vqa(

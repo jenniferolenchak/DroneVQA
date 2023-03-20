@@ -44,16 +44,27 @@ This project takes a research-based approach to compare the performance of open-
     ```
     *If you wish to install the required packages using a different method, the ```requirements.txt``` file has been provided within this repository.
 
-4. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases).
+4. (Optional) Running Faster RCNN Backbone on GPU for major LXMERT performance improvements
 
-5. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
+    1. Manually create a new virtual environment and activate this new environment.
 
-6. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
+    2. Review https://pytorch.org/ for an installation with cuda. The installation command should look like:    
+    ```pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117```
+
+    3. Then install the rest of the dependencies:   
+    ```pip install -r requirements.txt```
+
+
+5. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases).
+
+6. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
+
+7. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
     ```
     python application.py
     ```
 
-7. Launch the environment executable when prompted by the application.
+8. Launch the environment executable when prompted by the application.
 
 <br/><br/>
 ## Members and Roles
