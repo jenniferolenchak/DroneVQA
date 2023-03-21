@@ -12,8 +12,8 @@
     - [Launch Screen](#launch-screen)
     - [VQA Interaction Screen](#vqa-interaction-screen)
         - [Drone Feed](drone-feed)
-        - [Flight Controls, AirSim Utility Buttons, and Weather Controls](flight-controls-airsim-utility-buttons-and-weather-controls)
-        - [Model Interaction and Visualization](#model-interaction-and-visualization)
+        - [Flight Controls, AirSim Utility Buttons, and Weather Controls](flight-controls-airsim-utility-buttons-weather-controls)
+        - [Model Interaction and Visualizations](#model-interaction-and-visualizations)
 - [Members and Roles](#members-and-roles)
 - [Visual Question Answering](#visual-question-answering)
 - [Multimodal Transformers](#multimodal-transformers)
@@ -109,7 +109,7 @@ Below the drone camera feed is the flight controls, AirSim utility buttons, and 
     <img src='Application%20Screenshots/Drone_controls.png' height='75%' width='75%'/>
 </p>
 
-##### Model Interaction and Visualization
+##### Model Interaction and Visualizations
 On the right side of the VQA Screen is the model interaction. Here you can ask your question, select your model, and export results. The results to your question will appear in the 'Results' box. If exporting, the results are saved in .docx and .JSON format in the 'Exports and Snapshots' local directory. After asking your question model visualizations and results will appear. Depending on the selected model different visualizations are generated. Below are examples from both the ViLT and LXMERT models. 
 
 <p align='center'>
