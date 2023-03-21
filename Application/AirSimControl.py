@@ -43,21 +43,21 @@ class AirSimControl(QWidget):
 
     def startDroneMovement(self, command):
         if (command == "up"):
-            self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0-self.movementVelocity, 1)
         elif (command == "down"):
-            self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, 0, self.movementVelocity, 1)
         elif (command == "left"):
-            self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, 0-self.movementVelocity, 0, 1)
         elif (command == "right"):
-            self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, self.movementVelocity, 0, 1)
         elif (command == "forward"):
-            self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(self.movementVelocity, 0, 0, 1)
         elif (command == "backward"):
-            self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(0-self.movementVelocity, 0, 0, 1)
         elif (command == 'rotate_right'):
-            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
         elif (command == 'rotate_left'):
-            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
 
     def stopDroneMovement(self, command):
         self.client.moveByVelocityAsync(0, 0, 0, 3)

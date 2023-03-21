@@ -56,6 +56,9 @@ class VQAInteractionScreen(QWidget):
         self.ui = loader.load(ui_file, self)
         ui_file.close()
 
+        # Create movement button array for enabling/disabling if necessary
+        moveButtons = [self.ui.button_Up, self.ui.button_Down, self.ui.button_Left, self.ui.button_Right, self.ui.button_Forward, self.ui.button_Backward, self.ui.button_rotate_right, self.ui.button_rotate_left]
+
         # Connect drone navigation button actions to methods
         self.ui.button_Up.pressed.connect(lambda: self.controller.startDroneMovement("up"))
         self.ui.button_Down.pressed.connect(lambda: self.controller.startDroneMovement("down"))
