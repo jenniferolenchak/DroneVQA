@@ -4,11 +4,16 @@
     <img src="/Application/Images/Logos/DroneVQALogo.png" />
 </p>
 
-## Table of Contents <!-- omit from toc --> 
+## Table of Contents
 - [About](#about)
-- [User Guide](#user-guide)
-  - [Getting Started](#getting-started)
-  - [Screens](#screens)
+- [Getting Started](#getting-started)
+- [Application User Guide](#application-user-guide)
+    - [Loading Screen](#loading-screen)
+    - [Launch Screen](#launch-screen)
+    - [VQA Interaction Screen](#vqa-interaction-screen)
+        - [Drone Feed](drone-feed)
+        - [Flight Controls, AirSim Utility Buttons, and Weather Controls](flight-controls-airsim-utility-buttons-and-weather-controls)
+        - [Model Interaction and Visualization](#model-interaction-and-visualization)
 - [Members and Roles](#members-and-roles)
 - [Visual Question Answering](#visual-question-answering)
 - [Multimodal Transformers](#multimodal-transformers)
@@ -31,8 +36,7 @@ This project takes a research-based approach to compare the performance of open-
 
 <br/><br/>
 
-## User Guide
-### Getting Started
+## Getting Started
 1. Clone the repository using one of the following options:    
     a) Using SSH:
     ```
@@ -62,16 +66,16 @@ This project takes a research-based approach to compare the performance of open-
 
 7. Launch the environment executable when prompted by the application.
 
-### Screens
+## Application User Guide
 
-#### Loading Screen <!-- omit from toc --> 
+#### Loading Screen
 The loading screen is the first screen seen upon starting the application. If it is your first time starting the application the loading screen will take longer. However, this is only on first-time start-up, and starting the application again will result in a faster loading time.
 
 <p align='center'>
     <img src='Application%20Screenshots/Loading_Screen.png' height='75%' width='75%'/>
 </p>
 
-#### Launch Screen <!-- omit from toc --> 
+#### Launch Screen
 This is the first interactive screen that you will see. Here you will find the instructions to setup and start the Unreal Environment with the Microsoft AirSim plugin. After following those instructions click on 'Initialize Client.' 
 
 <p align='center'>
@@ -84,26 +88,28 @@ If everything is working properly then the VQA screen with appear, if not an err
     <img src='Application%20Screenshots/Launch_Error.png' height='55%' width='55%'/>
 </p>
 
-#### VQA Interaction Screen <!-- omit from toc --> 
+#### VQA Interaction Screen
 This is the main screen of the application. Here you can see the live drone video feed, control the drone and environment weather, change specific camera effects, and ask your questions. 
 
 <p align='center'>
     <img src='Application%20Screenshots/VQA_Screen.png' height='75%' width='75%'/>
 </p>
 
-
+##### Drone Feed
 The drone camera feed section has three main features. Firstly, there is the freeze frame and snapshot buttons. The freeze frame only freezes the video feed and not the simulation in the background. The 'Take a Snapshot' button saves the current image to the 'Exports and Snapshot' in the locally created directory. The camera effect radio buttons are singular toggles that change the effects of the current image. These changes are reflected on the image passed into the ViLT and LXMERT models.
 
 <p align='center'>
     <img src='Application%20Screenshots/Drone_feed.png' height='75%' width='75%'/>
 </p>
 
-Below the drone camera feed is the flight controls, utility buttons, and the weather controls. The flight controls have a velocity slider which changes how fast the drone moves. There are also directional buttons allowing for full control of the drone. The utility buttons allow for control of the drone simulation in the event of unexpected behavior or the desire to reset to starting conditions. The weather and environment sliders provide options to control the simulation environment. It is important to note that these sliders will only affect the environment if the current Unreal Environment supports and includes the necessary weather assets. 
+##### Flight Controls, AirSim Utility Buttons, and Weather Controls
+Below the drone camera feed is the flight controls, AirSim utility buttons, and the weather controls. The flight controls have a velocity slider which changes how fast the drone moves. There are also directional buttons allowing for full control of the drone. The AirSim utility buttons allow for control of the drone simulation in the event of unexpected behavior or the desire to reset to starting conditions. The weather and environment sliders provide options to control the simulation environment. It is important to note that these sliders will only affect the environment if the current Unreal Environment supports and includes the necessary weather assets. 
 
 <p align='center'>
     <img src='Application%20Screenshots/Drone_controls.png' height='75%' width='75%'/>
 </p>
 
+##### Model Interaction and Visualization
 On the right side of the VQA Screen is the model interaction. Here you can ask your question, select your model, and export results. The results to your question will appear in the 'Results' box. If exporting, the results are saved in .docx and .JSON format in the 'Exports and Snapshots' local directory. After asking your question model visualizations and results will appear. Depending on the selected model different visualizations are generated. Below are examples from both the ViLT and LXMERT models. 
 
 <p align='center'>
@@ -119,7 +125,7 @@ On the right side of the VQA Screen is the model interaction. Here you can ask y
 </p>
 
 
-These questions can be anything but tailoring to the current environment will help produce better results. Also asking simpler questions will tend to produce better results. 
+These questions can be anything, but tailoring to the current environment will help produce better results. Additionally, asking simpler questions will tend to produce more accurate, concise results. 
 
 <br/><br/>
 
