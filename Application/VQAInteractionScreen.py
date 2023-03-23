@@ -22,6 +22,7 @@ from worker import Worker
 from ModelPredictionUtils import PredictionResults, predictVilt, predictLxmert
 
 from ExportUtils import ExportUtils
+from video_stream_worker import Video_Stream_Worker
 
 class VQAInteractionScreen(QWidget):
     def __init__(self, threadManager, controller, models, parent=None):
@@ -131,11 +132,14 @@ class VQAInteractionScreen(QWidget):
         """
         if (self.display_video):
             self.threadCamera()
+            
+            
 
     def threadCamera(self):
-        worker = Worker(self.get_video_stream)
-        worker.signals.result.connect(self.display_video_stream)
-        worker.signals.finished.connect(self.setupCamera)
+        worker = Video_Stream_Worker(self.get_video_stream)
+        # worker.signals.result.connect(self.display_video_stream)
+        # worker.signals.finished.connect(self.setupCamera)
+        worker.signals.progress.connect(self.display_video_stream)
         self.threadManager.start(worker)
 
     def restartCamera(self):
