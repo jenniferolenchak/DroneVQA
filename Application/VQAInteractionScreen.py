@@ -110,6 +110,7 @@ class VQAInteractionScreen(QWidget):
 
         # Ask Question Button
         self.ui.pushButton_Ask.clicked.connect(self.askQuestion)
+        self.ui.lineEdit_Question.returnPressed.connect(self.askQuestion)
 
     def changeWeather(self, command, valLabel, sliderVal):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
