@@ -169,7 +169,7 @@ class VQAInteractionScreen(QWidget):
                 frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
             self.cameraEffect = "Pixel Corruption"
             
-        self.currentImage = frame
+        # self.currentImage = frame
         
         # Resize Image for Display
         dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
