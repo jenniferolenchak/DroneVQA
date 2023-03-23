@@ -7,7 +7,7 @@ import numpy as np
 
 from PySide6.QtWidgets import QWidget, QRadioButton, QLabel, QToolBar
 from PySide6.QtGui import QPixmap, QImage
-from PySide6.QtCore import QFile, QTimer, Signal, Slot
+from PySide6.QtCore import QFile, QTimer
 from PySide6.QtUiTools import QUiLoader
 
 import random
