@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from pathlib import Path
 
+import sys
 import airsim
 import cv2
 import numpy as np
@@ -13,7 +14,7 @@ from PySide6.QtUiTools import QUiLoader
 import random
 import time
 import os
-from threading import Timer
+from threading import Timer, main_thread
 
 from docx import Document
 from docx.shared import Inches, Pt
@@ -22,6 +23,7 @@ from worker import Worker
 from ModelPredictionUtils import PredictionResults, predictVilt, predictLxmert
 
 from ExportUtils import ExportUtils
+from video_stream_worker import Video_Stream_Worker
 
 class VQAInteractionScreen(QWidget):
     def __init__(self, threadManager, controller, models, parent=None):
@@ -44,7 +46,9 @@ class VQAInteractionScreen(QWidget):
                                 ["Dust", 0.0], ["Fog", 0.0]
                             ]
         self.ExportResults = ExportUtils()
-        self.display_video = True
+        # Values for controlling video feed
+        self.run_video_stream = True
+        self.pause_video_stream = False
         self.load_ui()
       
     def load_ui(self):
@@ -129,69 +133,90 @@ class VQAInteractionScreen(QWidget):
         """
         Initialize camera.
         """
-        if (self.display_video):
-            self.threadCamera()
-
+        self.run_video_stream = True
+        self.threadCamera()
+            
     def threadCamera(self):
-        worker = Worker(self.get_video_stream)
-        worker.signals.result.connect(self.display_video_stream)
+        """
+        Thread camera to free main thread for increased GUI performance
+        Camera thread ends on exiting main thread through exception
+        """
+        # Setup long running thread to display image stream
+        worker = Video_Stream_Worker(self.get_video_stream)
+
+        # Use progress callback to send image to main thread
+        worker.signals.progress.connect(self.display_video_stream)
+
+        # When 'Restart Camera' button is pressed
+        # exit current thread and automatically create new thread
         worker.signals.finished.connect(self.setupCamera)
+
         self.threadManager.start(worker)
 
     def restartCamera(self):
-        self.setupCamera()
+        # Stop video stream loop ending camera thread
+        self.run_video_stream = False
 
-    def get_video_stream(self):
+    def get_video_stream(self, progress_callback):
         """
-        Read frame from camera and repaint QLabel widget.
+        Get frame from AirSim controller, apply camera effects, and resize for displaying
+        Send frame back to main thread through progress callback
         """
-        # Get Feed From AirSim
-        response_image = self.controller.getCurrentDroneImage()
+        while(self.run_video_stream):
+            # Exit from thread if main thread is terminated
+            if (not main_thread().is_alive()):
+                sys.exit()
+                
+            while(not self.pause_video_stream and self.run_video_stream):
+                # Exit from thread if main thread is terminated
+                if (not main_thread().is_alive()):
+                    sys.exit()
+                
+                # Get frame from AirSim
+                response_image = self.controller.getCurrentDroneImage()
 
-        np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
-        frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
+                frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        self.cameraEffect = "None"
+                # Camera Effects (None, Black Screen, Lens Blur, Pixel Corruption)
+                self.cameraEffect = "None"
 
-        # TODO: Add in the camera effects...
-        if (self.ui.radioButton_BlackScreen.isChecked()):
-            frame[frame != 0] = 0;
-            self.cameraEffect = "Black Screen"
+                if (self.ui.radioButton_BlackScreen.isChecked()):
+                    frame[frame != 0] = 0;
+                    self.cameraEffect = "Black Screen"
 
-        if (self.ui.radioButton_LensBlur.isChecked()):
-            frame = cv2.GaussianBlur(frame, (15,15), cv2.BORDER_DEFAULT)
-            self.cameraEffect = "Lens Blur"
+                if (self.ui.radioButton_LensBlur.isChecked()):
+                    frame = cv2.GaussianBlur(frame, (15,15), cv2.BORDER_DEFAULT)
+                    self.cameraEffect = "Lens Blur"
 
-        if (self.ui.radioButton_PixelCorruption.isChecked()):
-            frame_dim = frame.shape
-            for i in range(1000):
-                frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
-            self.cameraEffect = "Pixel Corruption"
-            
-        # self.currentImage = frame
-        
-        # Resize Image for Display
-        dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
-        frame = cv2.resize(frame, dim)
+                if (self.ui.radioButton_PixelCorruption.isChecked()):
+                    frame_dim = frame.shape
+                    for i in range(1000):
+                        frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
+                    self.cameraEffect = "Pixel Corruption"
+                
+                # Resize Image for Display
+                dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
+                frame = cv2.resize(frame, dim)
 
-        return frame
+                progress_callback.emit(frame)
        
     def display_video_stream(self, frame):
+        # Set global current image to be used as VQA image
         self.currentImage = frame
 
-        # Display Image
+        # Display Image by repainting QLabel widget
         image = QImage(frame, frame.shape[1], frame.shape[0], 
                        frame.strides[0], QImage.Format_RGB888)
         self.ui.label_CameraFeed.setPixmap(QPixmap.fromImage(image))
 
     def freezeUnfreezeCamera(self):
         if self.ui.pushButton_FreezeUnfreezeFrame.isChecked():
-            self.display_video = False
+            self.pause_video_stream = True
             self.ui.pushButton_FreezeUnfreezeFrame.setText("Unfreeze Frame")
         else:
-            self.display_video = True
-            self.setupCamera()
+            self.pause_video_stream = False
             self.ui.pushButton_FreezeUnfreezeFrame.setText("Freeze Frame")
     
     def askQuestion(self):
