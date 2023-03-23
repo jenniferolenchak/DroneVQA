@@ -44,7 +44,7 @@ background-color: white;
   <widget class="QLabel" name="label_DroneVQATitle">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>420</x>
      <y>-10</y>
      <width>641</width>
      <height>50</height>
@@ -131,7 +131,7 @@ background-color: white;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Images/Directional_Arrows/Arrow_Backward.png</normaloff>Images/Directional_Arrows/Arrow_Backward.png</iconset>
+          <normaloff>Images/Flight Control Arrows/B.png</normaloff>Images/Flight Control Arrows/B.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -155,6 +155,7 @@ background-color: white;
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -170,6 +171,7 @@ background-color: white;
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -192,7 +194,7 @@ background-color: white;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Images/Directional_Arrows/Arrow_Left.png</normaloff>Images/Directional_Arrows/Arrow_Left.png</iconset>
+          <normaloff>Images/Flight Control Arrows/L.png</normaloff>Images/Flight Control Arrows/L.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -229,7 +231,7 @@ background-color: white;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Images/Directional_Arrows/Arrow_Right.png</normaloff>Images/Directional_Arrows/Arrow_Right.png</iconset>
+          <normaloff>Images/Flight Control Arrows/R.png</normaloff>Images/Flight Control Arrows/R.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -263,7 +265,7 @@ background-color: white;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Images/Directional_Arrows/Arrow_Forward.png</normaloff>Images/Directional_Arrows/Arrow_Forward.png</iconset>
+          <normaloff>Images/Flight Control Arrows/F.png</normaloff>Images/Flight Control Arrows/F.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -287,6 +289,7 @@ background-color: white;
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -309,7 +312,7 @@ background-color: white;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Images/Directional_Arrows/Arrow_Down.png</normaloff>Images/Directional_Arrows/Arrow_Down.png</iconset>
+          <normaloff>Images/Flight Control Arrows/D.png</normaloff>Images/Flight Control Arrows/D.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -343,7 +346,7 @@ background-color: white;
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Images/Directional_Arrows/Arrow_Up.png</normaloff>Images/Directional_Arrows/Arrow_Up.png</iconset>
+          <normaloff>Images/Flight Control Arrows/U.png</normaloff>Images/Flight Control Arrows/U.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -367,6 +370,7 @@ background-color: white;
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -382,6 +386,7 @@ background-color: white;
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -397,6 +402,7 @@ background-color: white;
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -408,28 +414,130 @@ background-color: white;
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="button_rotate_right">
+       <widget class="QPushButton" name="button_rotate_left">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
         <property name="text">
-         <string>R</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>Images/Flight Control Arrows/RL.png</normaloff>Images/Flight Control Arrows/RL.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
         </property>
         <property name="autoRepeat">
          <bool>true</bool>
         </property>
         <property name="autoRepeatDelay">
          <number>100</number>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item row="5" column="3">
-       <widget class="QPushButton" name="button_rotate_left">
+       <widget class="QPushButton" name="button_rotate_right">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
         <property name="text">
-         <string>L</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>Images/Flight Control Arrows/RR.png</normaloff>Images/Flight Control Arrows/RR.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
         </property>
         <property name="autoRepeat">
          <bool>true</bool>
         </property>
         <property name="autoRepeatDelay">
          <number>100</number>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QLabel" name="label_rotate_right">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Rotate R.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_rotate_left">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Rotate L.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="label_drone_image">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>Images/Flight Control Arrows/drone.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -1461,8 +1569,8 @@ padding: 4px 0;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>592</width>
-         <height>98</height>
+         <width>612</width>
+         <height>96</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1613,7 +1721,7 @@ padding: 4px 0;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>20</y>
       <width>721</width>
       <height>431</height>
      </rect>

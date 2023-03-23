@@ -4,14 +4,15 @@ import os
 from pathlib import Path
 import sys
 
-from PySide6.QtWidgets import QApplication, QWidget
-from PySide6.QtGui import QScreen
+from PySide6.QtWidgets import QApplication, QWidget, QMessageBox
+from PySide6.QtGui import QScreen, QIcon
 from PySide6.QtCore import QFile, Slot
 from PySide6.QtUiTools import QUiLoader
 
 class LaunchScreen(QWidget):
-    def __init__(self, stackedWidget, threadManager, VQAScreen, controller, parent=None):
+    def __init__(self, app, stackedWidget, threadManager, VQAScreen, controller, parent=None):
         super().__init__(parent)
+        self.app = app
         self.stackedWidget = stackedWidget
         self.threadManager = threadManager
         self.VQAScreen = VQAScreen
@@ -48,13 +49,27 @@ class LaunchScreen(QWidget):
         # Start Camera
         self.VQAScreen.setupCamera()
 
-
     def startVQA(self):
         '''Initialize AirSim client, setup camera feed, and change window display to VQA Interaction Window'''
+        # Logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
         self.ui.button_InitializeClient.setText("Initializing Client...")
-        #TODO - Add logic to verify the success of initializeAirSimClient() and setupCamera() before switching to the VQA screen
-        self.controller.initializeAirSimClient()
-        self.navToVQAScreen()
+        self.app.processEvents()
+        try:
+            self.controller.initializeAirSimClient()
+            self.navToVQAScreen()
+        except:
+            errorBox = QMessageBox(self.ui)
+            errorBox.setText("""<p>Error initializing the client. 
+                Before initializing the client, please ensure that you have launched the AirSim Unreal Engine Environment and that the quadrotor drone is loaded completely. 
+                Select 'Retry Client Initialization' to try again.</p>""")
+            errorBox.setStyleSheet("""* { background: white; color: #0d0f75; font-family: Arial; font-size: 13px; font-weight: 400; } 
+                QPushButton{ background-color: rgb(13, 15, 117); color: white; border-color: blue; border-radius: 5px; padding: 10px 20px; }""")
+            errorBox.setWindowTitle("Error")
+            errorBox.setWindowIcon(QIcon("Images/Logos/logo_drone_only.png"))
+            errorBox.show()
+            errorBox.move(errorBox.pos().x()+10, errorBox.pos().y())
+            errorBox.exec()
+            self.ui.button_InitializeClient.setText("Retry Client Initialization")
 
 
 

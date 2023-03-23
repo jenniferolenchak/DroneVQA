@@ -22,11 +22,6 @@ class AirSimControl(QWidget):
         # Set default movement velocity
         self.movementVelocity = 20
 
-        # Set initial flight coordinates
-        self.x = 0
-        self.y = 0
-        self.z = -3
-
     @Slot()
     def initializeAirSimClient(self):
         '''Initializes AirSim client'''
@@ -40,31 +35,29 @@ class AirSimControl(QWidget):
 
         # Async methods returns Future. Call join() to wait for task to complete.
         self.client.takeoffAsync().join()
-        self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
         # Create second AirSim client for image threading
         self.image_client = airsim.MultirotorClient()
 
         print("AirSim Client Initialized")
 
-
     def startDroneMovement(self, command):
         if (command == "up"):
-            self.client.moveByVelocityAsync(0, 0, 0-self.movementVelocity, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0-self.movementVelocity, 1)
         elif (command == "down"):
-            self.client.moveByVelocityAsync(0, 0, self.movementVelocity, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, 0, self.movementVelocity, 1)
         elif (command == "left"):
-            self.client.moveByVelocityAsync(0, 0-self.movementVelocity, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, 0-self.movementVelocity, 0, 1)
         elif (command == "right"):
-            self.client.moveByVelocityAsync(0, self.movementVelocity, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(0, self.movementVelocity, 0, 1)
         elif (command == "forward"):
-            self.client.moveByVelocityAsync(self.movementVelocity, 0, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(self.movementVelocity, 0, 0, 1)
         elif (command == "backward"):
-            self.client.moveByVelocityAsync(0-self.movementVelocity, 0, 0, 1)
+            self.client.moveByVelocityBodyFrameAsync(0-self.movementVelocity, 0, 0, 1)
         elif (command == 'rotate_right'):
-            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, abs(0-self.movementVelocity)))
         elif (command == 'rotate_left'):
-            self.client.moveByVelocityAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
+            self.client.moveByVelocityBodyFrameAsync(0, 0, 0, 1, drivetrain=airsim.DrivetrainType.MaxDegreeOfFreedom,  yaw_mode=YawMode(True, -abs(0-self.movementVelocity)))
 
     def stopDroneMovement(self, command):
         self.client.moveByVelocityAsync(0, 0, 0, 3)
@@ -75,7 +68,6 @@ class AirSimControl(QWidget):
         self.client.enableApiControl(True)
         self.client.armDisarm(True)
         self.client.takeoffAsync().join()
-        self.client.moveToPositionAsync(self.x, self.y, self.z, 5).join()
 
     def updateAirSimWeather(self, parameter, value):
         self.client.simSetWeatherParameter(parameter, value)

@@ -70,8 +70,9 @@ def setupModels(progress_callback):
     return [VQAInteractionScreen, LaunchScreen, airsim_controller, models]
 
 def switchToLaunchScreen(threadManager, stackedWidget, VQAInteractionScreen, LaunchScreen, controller, final_models):
+    # Switch to the launch screen
     VQAScreen = VQAInteractionScreen(threadManager, controller, final_models)
-    launchScreen = LaunchScreen(stackedWidget, threadManager, VQAScreen, controller)
+    launchScreen = LaunchScreen(app, stackedWidget, threadManager, VQAScreen, controller)
     stackedWidget.addWidget(launchScreen)
     stackedWidget.addWidget(VQAScreen)
     stackedWidget.resize(500, 625)

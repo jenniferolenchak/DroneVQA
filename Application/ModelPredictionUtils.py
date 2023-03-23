@@ -12,9 +12,19 @@ from frcnn.utils import Config, get_data
 from frcnn.modeling_frcnn import GeneralizedRCNN
 from frcnn.processing_image import Preprocess
 from frcnn.visualizing_image import SingleImageViz
-from ModelVisualizations.vilt_visualization import get_visualization_for_token, combine_images, rgba2rgb
+from transformers import LxmertTokenizer
+# We need to use a modified version of the lxmert model that's based on huggingface
+from ModelVisualizations.Lxmert.lxmert_lrp import LxmertForQuestionAnswering
+from ModelVisualizations.Lxmert.lxmert_visualization_generator import LxmertVisualizationGenerator, create_image_vis
+import cv2
+
+# Imports related to ViLT
+from ModelVisualizations.Vilt.vilt_visualization import get_visualization_for_token, combine_images, rgba2rgb
+
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
+device = "cpu"
+print(device)
 
 # class to store relevant prediction information
 @dataclass
@@ -62,9 +72,12 @@ def predictVilt(model, processor, question, image):
 
     # Generate Names for Each Visualization
     # Order: Combined, token 1, token 2, ...., token n
+    # Naming Restriction: These visualization names will dicate the filenames of exported visualization PNGs. Ensure
+    #                     that visualization name structure remains compliant with OS filename symbol restrictions.
+
     visualization_names = ["Combined Attention Patches"]
     visualization_names.extend(
-        [f"Token {id}: {token}" for id, token in enumerate(decoded_tokens)]
+        [f"Token {id} - \'{token}\'" for id, token in enumerate(decoded_tokens)]
     )
    
     results = PredictionResults(question=question, image=image,
@@ -102,9 +115,12 @@ def setupLxmertTransformer():
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
     lxmert_vqa = LxmertForQuestionAnswering.from_pretrained("unc-nlp/lxmert-vqa-uncased") 
+    lxmert_vqa.to(device)
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
+    frcnn_cfg.model.device = "cuda:0" if torch.cuda.is_available() else "cpu" # Immportant to have frcnn run on GPU for real time performance
+
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
 
@@ -115,9 +131,12 @@ def setupLxmertTransformer_finetuned():
     # Define the model
     lxmert_tokenizer = LxmertTokenizer.from_pretrained("unc-nlp/lxmert-base-uncased")
     lxmert_vqa_finetuned = LxmertForQuestionAnswering.from_pretrained(pretrained_model_name_or_path='Fine-Tuned Models/FineTunedLXMERT.pth', config='config.json')
+    lxmert_vqa_finetuned.to(device)
 
     # Setup Faster RCNN Model for visual embeddings (backbone)
     frcnn_cfg = Config.from_pretrained("unc-nlp/frcnn-vg-finetuned")
+    frcnn_cfg.model.device = "cuda:0" if torch.cuda.is_available() else "cpu" # Immportant to have frcnn run on GPU for real time performance
+
     frcnn = GeneralizedRCNN.from_pretrained("unc-nlp/frcnn-vg-finetuned", config=frcnn_cfg)
     image_preprocess = Preprocess(frcnn_cfg)
 
@@ -173,10 +192,11 @@ def visualizeBoxes(output_dict):
 
 def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preprocess, question, image):
     output_dict, visualization = runFRCNN(image, image_preprocess, frcnn, frcnn_cfg) 
+    visualizations = [visualization]
 
     # Very important that the boxes are normalized
-    normalized_boxes = output_dict.get("normalized_boxes")
-    features = output_dict.get("roi_features")
+    normalized_boxes = output_dict.get("normalized_boxes").to(device)
+    features = output_dict.get("roi_features").to(device)
 
     VQA_URL = "https://raw.githubusercontent.com/airsplay/lxmert/master/data/vqa/trainval_label2ans.json"
     vqa_answers = get_data(VQA_URL)
@@ -190,7 +210,7 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
         return_attention_mask=True,
         add_special_tokens=True,
         return_tensors="pt",
-    )
+    ).to(device)
 
     # run lxmert
     output_vqa = lxmert_vqa(
@@ -212,13 +232,42 @@ def predictLxmert(lxmert_tokenizer, lxmert_vqa, frcnn_cfg, frcnn, image_preproce
     encoded_tokens = inputs['input_ids'].tolist()[0]
     decoded_tokens = [lxmert_tokenizer.convert_ids_to_tokens(token) for token in encoded_tokens]
 
+    # Generate Visualizations
+    visualization_generator = LxmertVisualizationGenerator(lxmert_vqa, output_dict, inputs, output_vqa)
+    image_scores = []
+
+    # Chefer Explainability
+    _, R_t_i = visualization_generator.generate_ours()
+    # Get all of the image scores across the 12 attention heads
+    chefer_image_scores = torch.sum(R_t_i, dim=0)
+    image_scores.append(chefer_image_scores)
+
+    # Gradcam Image Scores
+    _, R_t_i = visualization_generator.generate_attn_gradcam()
+    gradcam_image_scores = torch.sum(R_t_i, dim=0)
+    image_scores.append(gradcam_image_scores)
+
+    # Attention Rollout Image Scores
+    _, R_t_i = visualization_generator.generate_rollout()
+    attention_rollout_image_scores = torch.sum(R_t_i, dim=0)
+    image_scores.append(attention_rollout_image_scores)
+
+    for image_score in image_scores:
+        path = create_image_vis(image, image_score, output_dict, r"./LxmertVisualization.jpg")
+        visualization = cv2.imread(path)
+        os.remove(path) # Remove the file after we read it
+        visualizations.append(visualization)
+    
+    # Perform final color corrections
+    visualizations = [rgba2rgb(np.array(visual)) for visual in visualizations]
+
     # Currently only one visualization from LXMERT model
-    visualization_names = ["Faster RCNN Boxes"]
+    visualization_names = ["Faster RCNN Boxes", "Chefer Explainability", "Gradcam", "Attention Rollout"]
 
     results = PredictionResults(question=question, image=image, 
                                 model_used='LXMERT', 
                                 prediction=vqa_answers[pred_vqa], 
-                                top_predictions=top_predictions, visualizations=[visualization],
+                                top_predictions=top_predictions, visualizations=visualizations,
                                 visualization_names=visualization_names,
                                 encoded_tokens=encoded_tokens, decoded_tokens=decoded_tokens)
 
