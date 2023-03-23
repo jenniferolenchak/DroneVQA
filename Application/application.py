@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QApplication, QStackedWidget
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QThreadPool
 from LoadScreen import LoadScreen
-from setup_worker import setup_Worker
+from app_setup_worker import App_Setup_Worker
 
 # Global Variable Setup
 app = None
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     app.processEvents()
 
     # Setup Models 
-    worker = setup_Worker(setupModels)
+    worker = App_Setup_Worker(setupModels)
     worker.signals.result.connect(finalizeModels)
     worker.signals.progress.connect(updateLoadScreenProgress)
     threadManager.start(worker)

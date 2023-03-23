@@ -6,7 +6,7 @@ from PySide6.QtCore import QRunnable, Slot, Signal, QObject, QThreadPool
 import sys
 import traceback
 
-class setup_WorkerSignals(QObject):
+class App_Setup_WorkerSignals(QObject):
     '''
     Defines the signals available from a running worker thread.
 
@@ -30,7 +30,7 @@ class setup_WorkerSignals(QObject):
     result = Signal(object)
     progress = Signal(tuple)
 
-class setup_Worker(QRunnable):
+class App_Setup_Worker(QRunnable):
     '''
     Worker thread
 
@@ -45,13 +45,13 @@ class setup_Worker(QRunnable):
     '''
 
     def __init__(self, fn, *args, **kwargs):
-        super(setup_Worker, self).__init__()
+        super(App_Setup_Worker, self).__init__()
 
         # Store constructor arguments (re-used for processing)
         self.fn = fn
         self.args = args
         self.kwargs = kwargs
-        self.signals = setup_WorkerSignals()
+        self.signals = App_Setup_WorkerSignals()
 
         # Add the callback to our kwargs
         self.kwargs['progress_callback'] = self.signals.progress
