@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from pathlib import Path
 
+import sys
 import airsim
 import cv2
 import numpy as np
@@ -13,7 +14,7 @@ from PySide6.QtUiTools import QUiLoader
 import random
 import time
 import os
-from threading import Timer
+from threading import Timer, main_thread
 
 from docx import Document
 from docx.shared import Inches, Pt
@@ -162,7 +163,15 @@ class VQAInteractionScreen(QWidget):
         Send frame back to main thread through progress callback
         """
         while(self.run_video_stream):
+            # Exit from thread if main thread is terminated
+            if (not main_thread().is_alive()):
+                sys.exit()
+                
             while(not self.pause_video_stream and self.run_video_stream):
+                # Exit from thread if main thread is terminated
+                if (not main_thread().is_alive()):
+                    sys.exit()
+                
                 # Get frame from AirSim
                 response_image = self.controller.getCurrentDroneImage()
 
