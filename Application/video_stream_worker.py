@@ -45,7 +45,7 @@ class Video_Stream_Worker(QRunnable):
     '''
 
     def __init__(self, fn, *args, **kwargs):
-        super(Worker, self).__init__()
+        super(Video_Stream_Worker, self).__init__()
 
         # Store constructor arguments (re-used for processing)
         self.fn = fn
