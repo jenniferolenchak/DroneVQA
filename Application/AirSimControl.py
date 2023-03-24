@@ -12,15 +12,22 @@ from PySide6.QtUiTools import QUiLoader
 
 class AirSimControl(QWidget):
 
-    # Camera Variables
-    CAMERA_NAME = '0'
-    IMAGE_TYPE = airsim.ImageType.Scene
-
     def __init__(self, parent=None):
         super().__init__(parent)
-
+        
         # Set default movement velocity
         self.movementVelocity = 20
+
+        # Set default camera type to scene
+        self.imageType = airsim.ImageType.Scene
+        
+        # Set camera name value
+        self.CAMERA_NAME = '0'
+
+    def setCameraType(self, cameraIndex):
+        # Types of AirSim cameras available
+        CAMERA_TYPE = [airsim.ImageType.Scene, airsim.ImageType.DepthPlanar, airsim.ImageType.DepthPerspective, airsim.ImageType.DepthVis, airsim.ImageType.DisparityNormalized, airsim.ImageType.Segmentation, airsim.ImageType.SurfaceNormals, airsim.ImageType.Infrared, airsim.ImageType.OpticalFlow, airsim.ImageType.OpticalFlowVis]
+        self.imageType = CAMERA_TYPE[cameraIndex]
 
     @Slot()
     def initializeAirSimClient(self):
@@ -72,5 +79,5 @@ class AirSimControl(QWidget):
     def updateAirSimWeather(self, parameter, value):
         self.client.simSetWeatherParameter(parameter, value)
 
-    def getCurrentDroneImage(self, cameraName = CAMERA_NAME, imageType = IMAGE_TYPE):
-        return self.image_client.simGetImage(cameraName, imageType)
+    def getCurrentDroneImage(self):
+        return self.image_client.simGetImage(self.CAMERA_NAME, self.imageType)
