@@ -78,18 +78,9 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_rotate_right.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
 
-        self.ui.radioButton_Scene.clicked.connect(lambda: self.controller.setCameraType(0))
-        self.ui.radioButton_DepthPlanar.clicked.connect(lambda: self.controller.setCameraType(1))
-        self.ui.radioButton_DepthPerspective.clicked.connect(lambda: self.controller.setCameraType(2))
-        self.ui.radioButton_DepthVis.clicked.connect(lambda: self.controller.setCameraType(3))
-        self.ui.radioButton_DisparityNormalized.clicked.connect(lambda: self.controller.setCameraType(4))
-        self.ui.radioButton_Segmentation.clicked.connect(lambda: self.controller.setCameraType(5))
-        self.ui.radioButton_SurfaceNormals.clicked.connect(lambda: self.controller.setCameraType(6))
-        self.ui.radioButton_Infrared.clicked.connect(lambda: self.controller.setCameraType(7))
-        self.ui.radioButton_OpticalFlow.clicked.connect(lambda: self.controller.setCameraType(8))
-        self.ui.radioButton_OpticalFlowVis.clicked.connect(lambda: self.controller.setCameraType(9))
-
-
+        # Camera setting combo box drop-down value changed (camera view and type fields) to methods
+        self.ui.comboBox_CameraType.currentIndexChanged.connect(lambda: self.controller.setCameraType(self.ui.comboBox_CameraType.currentIndex()))
+        self.ui.comboBox_CameraView.currentIndexChanged.connect(lambda: self.controller.setCameraView(self.ui.comboBox_CameraView.currentIndex()))
 
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.label_RainVal, self.ui.horizontalSlider_Rain.value()))

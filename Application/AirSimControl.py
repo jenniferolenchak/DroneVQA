@@ -15,19 +15,26 @@ class AirSimControl(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         
-        # Set default movement velocity
+        # Set default movement velocity, camera type (scene), and camera view (front-center)
         self.movementVelocity = 20
-
-        # Set default camera type to scene
         self.imageType = airsim.ImageType.Scene
-        
-        # Set camera name value
-        self.CAMERA_NAME = '0'
+        self.cameraView = "0"
+        self.getPixelsAsFloat = False #Should only be true for normalized DisparityNormalized camera
+
+    def setCameraView(self, viewIndex):
+        # Per the AirSim API documentation, indices 0-4 represent front-center, front-right, front-left, bottom-center, and back-center camera views, respectively.
+        self.cameraView = str(viewIndex)
 
     def setCameraType(self, cameraIndex):
         # Types of AirSim cameras available
-        CAMERA_TYPE = [airsim.ImageType.Scene, airsim.ImageType.DepthPlanar, airsim.ImageType.DepthPerspective, airsim.ImageType.DepthVis, airsim.ImageType.DisparityNormalized, airsim.ImageType.Segmentation, airsim.ImageType.SurfaceNormals, airsim.ImageType.Infrared, airsim.ImageType.OpticalFlow, airsim.ImageType.OpticalFlowVis]
-        self.imageType = CAMERA_TYPE[cameraIndex]
+        CAMERA_TYPES = [airsim.ImageType.Scene, airsim.ImageType.DepthPlanar, airsim.ImageType.DepthPerspective, airsim.ImageType.DepthVis, airsim.ImageType.DisparityNormalized, airsim.ImageType.Segmentation, airsim.ImageType.SurfaceNormals, airsim.ImageType.Infrared, airsim.ImageType.OpticalFlow, airsim.ImageType.OpticalFlowVis]
+        self.imageType = CAMERA_TYPES[cameraIndex]
+
+        # Pixel values need to be recieved as floats to be normalized with DisparityNormalized camera type
+        if (cameraIndex == 4):
+            self.getPixelsAsFloat = False
+        else:
+            self.getPixelsAsFloat = True
 
     @Slot()
     def initializeAirSimClient(self):
@@ -80,4 +87,4 @@ class AirSimControl(QWidget):
         self.client.simSetWeatherParameter(parameter, value)
 
     def getCurrentDroneImage(self):
-        return self.image_client.simGetImage(self.CAMERA_NAME, self.imageType)
+        return self.image_client.simGetImage(self.cameraView, self.imageType)

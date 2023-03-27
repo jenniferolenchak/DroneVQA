@@ -1268,12 +1268,47 @@ padding: 5px;
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_CameraType">
+      <widget class="QComboBox" name="comboBox_CameraView">
        <property name="currentIndex">
-        <number>-1</number>
+        <number>0</number>
        </property>
        <property name="placeholderText">
-        <string>Change the Camera Type...</string>
+        <string>Change Camera View...</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Front-Center</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Front-Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Front-Left</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bottom-Center</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back-Center</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_CameraType">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="placeholderText">
+        <string>Change Camera Type...</string>
        </property>
        <item>
         <property name="text">
@@ -1317,12 +1352,12 @@ padding: 5px;
        </item>
        <item>
         <property name="text">
-         <string>Optical Flow (single-frame motion)</string>
+         <string>Optical Flow</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Visual Optical Flow (increased sensitivity)</string>
+         <string>Visual Optical Flow</string>
         </property>
        </item>
       </widget>
@@ -1355,116 +1390,6 @@ padding: 5px;
          <string>Black Screen</string>
         </property>
        </item>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>180</y>
-      <width>240</width>
-      <height>278</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_4">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">* {
-background-color: white; color: black; 
-}
-
-QPushButton {
-border-radius: 4px;
-padding: 4px 0;
-}</string>
-       </property>
-       <property name="text">
-        <string>Camera Types</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_Scene">
-       <property name="text">
-        <string>Scene Camera</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_DepthPlanar">
-       <property name="text">
-        <string>Planar Depth</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_DepthPerspective">
-       <property name="text">
-        <string>Perspective Depth</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_DepthVis">
-       <property name="text">
-        <string>Visualization Depth</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_DisparityNormalized">
-       <property name="text">
-        <string>Normalized Disparity</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_Segmentation">
-       <property name="text">
-        <string>Segmentation</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_SurfaceNormals">
-       <property name="text">
-        <string>Surface Normals</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_Infrared">
-       <property name="text">
-        <string>Simulated Infared</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_OpticalFlow">
-       <property name="text">
-        <string>Optical Flow (single frame motion)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_OpticalFlowVis">
-       <property name="text">
-        <string>Visual Optic Flow (colorized optical flow)</string>
-       </property>
       </widget>
      </item>
     </layout>
