@@ -166,23 +166,19 @@ class VQAInteractionScreen(QWidget):
         frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        self.cameraEffect = "None"
+        # Get user-selected camera effect text
+        self.cameraEffect = str(self.ui.comboBox_CameraEffect.currentText())
 
-        # TODO: Add in the camera effects...
-        if (self.ui.radioButton_BlackScreen.isChecked()):
-            frame[frame != 0] = 0;
-            self.cameraEffect = "Black Screen"
-
-        if (self.ui.radioButton_LensBlur.isChecked()):
+        # Apply effect to the frame, if applicable. "None" selection has no effect.
+        if (self.cameraEffect == "Black Screen"):
+            frame[frame != 0] = 0
+        elif (self.cameraEffect == "Lens Blur"):
             frame = cv2.GaussianBlur(frame, (15,15), cv2.BORDER_DEFAULT)
-            self.cameraEffect = "Lens Blur"
-
-        if (self.ui.radioButton_PixelCorruption.isChecked()):
+        elif (self.cameraEffect == "Pixel Corruption"):
             frame_dim = frame.shape
             for i in range(1000):
                 frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
-            self.cameraEffect = "Pixel Corruption"
-            
+
         self.currentImage = frame
         
         # Resize Image for Display

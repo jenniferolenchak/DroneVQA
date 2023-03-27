@@ -1268,79 +1268,93 @@ padding: 5px;
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QComboBox" name="comboBox_CameraType">
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="placeholderText">
+        <string>Change the Camera Type...</string>
        </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_CameraEffectNone">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>None</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
+       <item>
+        <property name="text">
+         <string>Scene Camera</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Planar Depth</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Perpective Depth</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Visualized Depth</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Normalized Disparity</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Segmentation</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Surface Normals</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Simulated Infared</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Optical Flow (single-frame motion)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Visual Optical Flow (increased sensitivity)</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_LensBlur">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
+      <widget class="QComboBox" name="comboBox_CameraEffect">
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
+       <property name="placeholderText">
+        <string>Select a Camera Effect...</string>
        </property>
-       <property name="text">
-        <string>Lens Blur</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_PixelCorruption">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>Pixel Corruption</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_BlackScreen">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>Black Screen</string>
-       </property>
+       <item>
+        <property name="text">
+         <string>None</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Lens Blur</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pixel Corruption</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Black Screen</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
