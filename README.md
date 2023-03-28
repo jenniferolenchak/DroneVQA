@@ -44,15 +44,17 @@ This project takes a research-based approach to compare the performance of open-
     git clone https://github.com/jenniferolenchak/DroneVQA.git
     ```
     
-2. Install python and pip. This application was developed using python v3.10 and pip v22.3, but newer versions may also be functional.
+2. Download a copy of ```FineTunedLXMERT.pth``` and ```FineTunedVILT.pt``` from this [shared OneDrive folder](https://knightsucfedu39751-my.sharepoint.com/:f:/g/personal/jenniferolenchak_knights_ucf_edu/EqXwJqszeqFIj6-7diRTAF0BriSv1i0XW1dK_nvBrsvL6Q?e=MKbdYZ). These two files must be placed within the existing folder [/Application/Fine-Tuned Models/](https://github.com/jenniferolenchak/DroneVQA/tree/main/Application/Fine-Tuned%20Models) such that the filepaths ```/Application/Fine-Tuned Models/FineTunedLXMERT.pth``` and ```/Application/Fine-Tuned Models/FineTunedVILT.pt``` can be referenced.
+    
+3. Install python and pip. This application was developed using python v3.10 and pip v22.3, but newer versions may also be functional.
 
-3. In the top-level directory of the cloned repository, set up the venv python virtual environment by executing the following command:
+4. In the top-level directory of the cloned repository, set up the venv python virtual environment by executing the following command:
     ```
     python setup_environment.py
     ```
     *If you wish to install the required packages using a different method, the ```requirements.txt``` file has been provided within this repository.
 
-4. (Optional) Running Faster RCNN Backbone on GPU for major LXMERT performance improvements
+5. (Optional) Running Faster RCNN Backbone on GPU for major LXMERT performance improvements
 
     1. Manually create a new virtual environment and activate this new environment.
 
@@ -63,16 +65,16 @@ This project takes a research-based approach to compare the performance of open-
     ```pip install -r requirements.txt```
 
 
-5. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases).
+6. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases).
 
-6. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
+7. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
 
-7. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
+8. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
     ```
     python application.py
     ```
 
-8. Launch the environment executable when prompted by the application.
+9. Launch the environment executable when prompted by the application.
 
 ## Application User Guide
 
