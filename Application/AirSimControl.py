@@ -27,7 +27,7 @@ class AirSimControl(QWidget):
 
     def setCameraType(self, cameraIndex):
         # Types of AirSim cameras available
-        CAMERA_TYPES = [airsim.ImageType.Scene, airsim.ImageType.DepthPlanar, airsim.ImageType.DepthPerspective, airsim.ImageType.DepthVis, airsim.ImageType.DisparityNormalized, airsim.ImageType.Segmentation, airsim.ImageType.SurfaceNormals, airsim.ImageType.Infrared, airsim.ImageType.OpticalFlow, airsim.ImageType.OpticalFlowVis]
+        CAMERA_TYPES = [airsim.ImageType.Scene, airsim.ImageType.DepthVis, airsim.ImageType.Segmentation, airsim.ImageType.SurfaceNormals, airsim.ImageType.Infrared, airsim.ImageType.OpticalFlow, airsim.ImageType.OpticalFlowVis]
         self.imageType = CAMERA_TYPES[cameraIndex]
 
         # Pixel values need to be recieved as floats to be normalized with DisparityNormalized camera type

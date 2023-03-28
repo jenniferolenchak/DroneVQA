@@ -1270,34 +1270,34 @@ padding: 5px;
      <item>
       <widget class="QComboBox" name="comboBox_CameraView">
        <property name="currentIndex">
-        <number>0</number>
+        <number>-1</number>
        </property>
        <property name="placeholderText">
         <string>Change Camera View...</string>
        </property>
        <item>
         <property name="text">
-         <string>Front-Center</string>
+         <string>Front: Center</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Front-Right</string>
+         <string>Front: Right Rotor</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Front-Left</string>
+         <string>Front: Left Rotor</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Bottom-Center</string>
+         <string>Bottom: Center</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Back-Center</string>
+         <string>Back: Center</string>
         </property>
        </item>
       </widget>
@@ -1317,22 +1317,7 @@ padding: 5px;
        </item>
        <item>
         <property name="text">
-         <string>Planar Depth</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Perpective Depth</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Visualized Depth</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Normalized Disparity</string>
+         <string>Depth Visualization</string>
         </property>
        </item>
        <item>
