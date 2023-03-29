@@ -65,7 +65,7 @@ This project takes a research-based approach to compare the performance of open-
     ```pip install -r requirements.txt```
 
 
-6. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases).
+6. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases). The unofficial Unreal V5 city map is available [here](https://knightsucfedu39751-my.sharepoint.com/:u:/g/personal/georgec_knights_ucf_edu/EX_7FaD9tp5KrDsan_br704Bzd5CeatU0i3EkygkDceTcQ?e=owa42D)
 
 7. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
 
