@@ -15,6 +15,7 @@
 - [Visual Question Answering](#visual-question-answering)
 - [Multimodal Transformers](#multimodal-transformers)
 - [Models](#models)
+- [Model Input and Output Specifications](#model-input-and-output-specifications)
 - [Visualization Methods](#visualization-methods)
 - [LXMERT Model Training and Fine-tuning Process](#lxmert-model-training-and-fine-tuning-process)
   - [Setup for Model Training and Procedure](#setup-for-model-training-and-procedure)
@@ -182,6 +183,28 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 *Source: LXMERT: Learning Cross-Modality Encoder Representations from Transformers (2019)*
 
 * LXMERT relies on a Faster RCNN backbone to obtain 36 object detections which are passed as input into the model. This backbone model requires more time for computation and slows down the results, but LXMERT can be useful for visual grounding purposes.
+
+## Model Input and Output Specifications
+
+### VILT 
+
+* Input
+    * VILT takes a 640x384 image as input. 
+    * The ViltProcessor will automatically resize the shorter edge of an image to 384 and limit the longer edge to under 640 while preserving the aspect ratio.
+    * VILT utilizes the BERT Tokenizer to tokenize input text.
+
+* Output
+    * For VQA Tasks, VILT will select the most appropriate response from 3,129 answer classes.
+
+### LXMERT
+
+* Input
+    * LXMERT's FasterRCNN backbone resizes images to a size of no larger than 1333x800. It then produces up to 36 detections (each with a feature map of size 2048) for the LXMERT model.
+    * LXMERT utilizes the LXMERT Tokenizer to tokenize input text.
+
+* Output
+    * For VQA Tasks, LXMERT will select the most appropriate response from 3,129 answer classes.
+
 
 ## Visualization Methods
 
