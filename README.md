@@ -228,11 +228,11 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 
 * The faster RCNN object detections are shown a visualization on screen. The faster RCNN model produces up to 36 object detections for the LXMERT model. 
 
-* Attention Rollout is designed for visualization attention based on the self-attention layers. The visualizations tend to give an wholistic view of all detections which are important to the model
+* Attention Rollout is designed for visualizing attention based on the visual self-attention layers. The visualizations tend to give an wholistic view of all detections which are important to the model
 
 * Gradcam (Gradient-weighted Class Activation Mapping) utilizes the classification of the model and the gradients leading to it to determine which parts of the input image were most impactful in generating the prediction. Note: Gradcam does not look at the Cross-Modality Encoder of LXMERT and focuses only on the Object-Relationship Encoder.
 
-* In the paper: "Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers" (2021) and corresponding repository: https://github.com/hila-chefer/Transformer-MM-Explainability, a method of developing XAI visualizations with multimodal transformers is proposed. The method uses model attention layers to "produce relevancy maps for each of the interactions between input modalities in the network". 
+* Chefer Explainability is described in the paper "Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers" (2021) and its corresponding repository: https://github.com/hila-chefer/Transformer-MM-Explainability. It is a method of developing XAI visualizations with multimodal transformers. The method uses model self- and co- attention layers to "produce relevancy maps for each of the interactions between input modalities in the network." 
 
 ![LXMERT Visualization](https://raw.githubusercontent.com/hila-chefer/Transformer-MM-Explainability/main/LXMERT.PNG)
 *Chefer Explainability      
