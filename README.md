@@ -15,6 +15,7 @@
 - [Visual Question Answering](#visual-question-answering)
 - [Multimodal Transformers](#multimodal-transformers)
 - [Models](#models)
+- [Model Input and Output Specifications](#model-input-and-output-specifications)
 - [Visualization Methods](#visualization-methods)
 - [LXMERT Model Training and Fine-tuning Process](#lxmert-model-training-and-fine-tuning-process)
   - [Setup for Model Training and Procedure](#setup-for-model-training-and-procedure)
@@ -185,6 +186,28 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 
 * LXMERT relies on a Faster RCNN backbone to obtain 36 object detections which are passed as input into the model. This backbone model requires more time for computation and slows down the results, but LXMERT can be useful for visual grounding purposes.
 
+## Model Input and Output Specifications
+
+### VILT 
+
+* Input
+    * VILT takes a 640x384 image as input. 
+    * The ViltProcessor will automatically resize the shorter edge of an image to 384 and limit the longer edge to under 640 while preserving the aspect ratio.
+    * VILT utilizes the BERT Tokenizer to tokenize input text.
+
+* Output
+    * For VQA Tasks, VILT will select the most appropriate response from 3,129 answer classes.
+
+### LXMERT
+
+* Input
+    * LXMERT's FasterRCNN backbone resizes images to a size of no larger than 1333x800. It then produces up to 36 detections (each with a feature map of size 2048) for the LXMERT model.
+    * LXMERT utilizes the LXMERT Tokenizer to tokenize input text.
+
+* Output
+    * For VQA Tasks, LXMERT will select the most appropriate response from 3,129 answer classes.
+
+
 ## Visualization Methods
 
 ### VILT Visualization Methods <!-- omit from toc --> 
@@ -197,14 +220,23 @@ The two models selected were ViLT and LXMERT. The goal is to compare these model
 
 ### LXMERT Visualization Methods <!-- omit from toc --> 
 
+* The four visualizations for the LXMERT model are:
+1. Faster RCNN Object Detections
+2. Attention Rollout
+3. Gradcam
+4. Chefer Explainability
+
 * The faster RCNN object detections are shown a visualization on screen. The faster RCNN model produces up to 36 object detections for the LXMERT model. 
 
-* In the paper: "Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers" (2021) and corresponding repository: https://github.com/hila-chefer/Transformer-MM-Explainability, a method of developing XAI visualizations with multimodal transformers is proposed. 
+* Attention Rollout is designed for visualizing attention based on the visual self-attention layers. The visualizations tend to give an wholistic view of all detections which are important to the model
 
-* The method used in the paper uses model attention layers to "produce relevancy maps for each of the interactions between input modalities in the network". The repository also contains sample visualizations using LXMERT. 
+* Gradcam (Gradient-weighted Class Activation Mapping) utilizes the classification of the model and the gradients leading to it to determine which parts of the input image were most impactful in generating the prediction. Note: Gradcam does not look at the Cross-Modality Encoder of LXMERT and focuses only on the Object-Relationship Encoder.
+
+* Chefer Explainability is described in the paper "Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers" (2021) and its corresponding repository: https://github.com/hila-chefer/Transformer-MM-Explainability. It is a method of developing XAI visualizations with multimodal transformers. The method uses model self- and co- attention layers to "produce relevancy maps for each of the interactions between input modalities in the network." 
 
 ![LXMERT Visualization](https://raw.githubusercontent.com/hila-chefer/Transformer-MM-Explainability/main/LXMERT.PNG)
-*Source: Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers (2021)*
+*Chefer Explainability      
+Source: Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers (2021)*
 
 ## LXMERT Model Training and Fine-tuning Process
 
