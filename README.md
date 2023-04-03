@@ -24,13 +24,13 @@
 <br/><br/>
 
 ## About
-**Utilizing Artificial Intelligence to Deploy Visual Question Answering on Simulated Quadrotor Drones for Visual Inspection**
+**DroneVQA: Deploying Transformer-Based Visual Question Answering (VQA) Artificial Intelligence Models on Simulated Quadrotor Drones to Perform Visual Inspection**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-This simulation-based proof-of-concept deploys open-source visual question answering (VQA) artificial intelligence models on the camera feed of simulated drones to perform visual inspection of simulated environments. Drones are ideal candidates for performing visual inspection, as they are easily maneuverable, remotely relocatable, able to self-navigate, and allow for dynamic perspectives. The real-world applications of this technology are limitless, enabling autonomous complex surveillance, environmental monitoring, situational-analysis, self-inspection, and maintenance support.
+This simulation-based proof-of-concept deploys two transformer-based open-source visual question answering (VQA) artificial intelligence models on the camera feed of simulated drones to perform visual inspection of simulated environments. Drones are ideal candidates for performing visual inspection, as they are easily maneuverable, remotely relocatable, able to self-navigate, and allow for dynamic perspectives. Developed by Hugging Face, the ViLT (Vision-and-Language Transformer Without Convolution or Region Supervision) and LXMERT (Learning Cross-Modality Encoder Representations from Transformers) models can provide an 'answer' when passed a natural language string accompanied by an image. The real-world applications of this technology suite are limitless, enabling autonomous complex surveillance, environmental monitoring, situational-analysis, self-inspection, and maintenance support.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-This project takes a research-based approach to compare the performance of open-source models among one another, as well as before and after they are fine-tuned for drone usage, by comparing key factors including answer accuracy, topic understanding, processing speed, and model training improvement. Using the DroneVQA desktop-based software tool, users can fly a drone around virtual environments and ask questions about what the drone’s camera sees. To demystify the functionality of VQA models, result visualizations displaying the exact image pixels or object-detection results that informed the model’s conclusion are provided along with the top answers. Users may also elect to simulate environmental weather effects such as rain, snow, dust, and fog, as well as camera defects including lens blur, pixel corruption, and disconnection, vital to evaluate self-inspection abilities and real-world model robustness.
+This project takes a research-based approach to compare the performance of open-source models among one another, as well as ease of fine-tuning for drone usage, by comparing key factors including answer accuracy, topic understanding, processing speed, and model training improvement.  Using the cross-platform, desktop-based DroneVQA software tool developed in Python with QT Creator and PySide 6, users can fly a drone around virtual environments and ask questions about what the drone’s camera sees. To demystify the functionality of VQA models, explainable AI (XAI) result visualizations are generated to display the provided prompt and image from the perspective of the AI model, highlighting key aspects which informed the model’s conclusion along with the top answer weights. Users may also elect to simulate environmental weather effects such as rain, snow, dust, and fog, as well as camera defects including lens blur, pixel corruption, and disconnection, which are vital to evaluate self-inspection abilities and real-world model robustness.
 
 <br/><br/>
 
@@ -45,15 +45,17 @@ This project takes a research-based approach to compare the performance of open-
     git clone https://github.com/jenniferolenchak/DroneVQA.git
     ```
     
-2. Install python and pip. This application was developed using python v3.10 and pip v22.3, but newer versions may also be functional.
+2. Download a copy of ```FineTunedLXMERT.pth``` and ```FineTunedVILT.pt``` from this [shared OneDrive folder](https://knightsucfedu39751-my.sharepoint.com/:f:/g/personal/jenniferolenchak_knights_ucf_edu/EqXwJqszeqFIj6-7diRTAF0BriSv1i0XW1dK_nvBrsvL6Q?e=MKbdYZ). These two files must be placed within the existing folder [/Application/Fine-Tuned Models/](https://github.com/jenniferolenchak/DroneVQA/tree/main/Application/Fine-Tuned%20Models) such that the filepaths ```/Application/Fine-Tuned Models/FineTunedLXMERT.pth``` and ```/Application/Fine-Tuned Models/FineTunedVILT.pt``` can be referenced.
+    
+3. Install python and pip. This application was developed using python v3.10 and pip v22.3, but newer versions may also be functional.
 
-3. In the top-level directory of the cloned repository, set up the venv python virtual environment by executing the following command:
+4. In the top-level directory of the cloned repository, set up the venv python virtual environment by executing the following command:
     ```
     python setup_environment.py
     ```
     *If you wish to install the required packages using a different method, the ```requirements.txt``` file has been provided within this repository.
 
-4. (Optional) Running Faster RCNN Backbone on GPU for major LXMERT performance improvements
+5. (Optional) Running Faster RCNN Backbone on GPU for major LXMERT performance improvements
 
     1. Manually create a new virtual environment and activate this new environment.
 
@@ -64,16 +66,16 @@ This project takes a research-based approach to compare the performance of open-
     ```pip install -r requirements.txt```
 
 
-5. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases).
+6. Download the ZIP file of an Unreal Engine environment containing the Microsoft AirSim plug-in. Officially released environments are available for download on GitHub [here](https://github.com/microsoft/AirSim/releases). The unofficial Unreal V5 city map is available [here](https://knightsucfedu39751-my.sharepoint.com/:u:/g/personal/georgec_knights_ucf_edu/EX_7FaD9tp5KrDsan_br704Bzd5CeatU0i3EkygkDceTcQ?e=owa42D)
 
-6. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
+7. Once the environment ZIP file has been downloaded, extract the file(s) and run the ```run.bat``` file.
 
-7. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
+8. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
     ```
     python application.py
     ```
 
-8. Launch the environment executable when prompted by the application.
+9. Launch the environment executable when prompted by the application.
 
 ## Application User Guide
 
