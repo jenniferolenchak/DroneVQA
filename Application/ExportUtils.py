@@ -42,7 +42,7 @@ class ExportUtils:
 
     def getCurrentFormattedTime(self): 
         current_time = time.localtime()
-        formatted_time = time.strftime("%Y-%b-%d-%H.%M.%S", current_time)
+        formatted_time = time.strftime("%Y-%m-%b-%d-%H.%M.%S", current_time)
         return formatted_time
 
     def resetTakeSnapshot(self, snapshotButton):

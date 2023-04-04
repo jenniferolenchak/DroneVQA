@@ -1352,7 +1352,7 @@ padding: 5px;
      <x>740</x>
      <y>550</y>
      <width>741</width>
-     <height>141</height>
+     <height>131</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -1502,7 +1502,7 @@ QComboBox QAbstractItemView {
 }
 
 QLineEdit {
-	padding: 10px 5px;
+	padding: 5px 5px;
 	border-radius: 5px;
 }</string>
       </property>
@@ -1522,6 +1522,9 @@ QLineEdit {
          <font>
           <family>Arial</family>
          </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="styleSheet">
          <string notr="true">* { background-color: lightgrey; color: black; }
@@ -1544,9 +1547,9 @@ padding: 4px 0;
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>700</y>
+     <y>690</y>
      <width>741</width>
-     <height>141</height>
+     <height>151</height>
     </rect>
    </property>
    <property name="font">
@@ -1607,6 +1610,9 @@ padding: 4px 0;
     </item>
     <item row="1" column="1">
      <widget class="QScrollArea" name="scrollArea">
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -1619,9 +1625,24 @@ padding: 4px 0;
          <height>98</height>
         </rect>
        </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QTextEdit" name="textEdit_Details">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <family>Arial</family>
@@ -1813,6 +1834,9 @@ padding: 4px 0;
         <font>
          <family>Arial</family>
         </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
         <string notr="true">* { background-color: lightgrey; color: black; }
