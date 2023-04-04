@@ -1352,7 +1352,7 @@ padding: 5px;
      <x>740</x>
      <y>550</y>
      <width>741</width>
-     <height>121</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -1385,51 +1385,101 @@ padding: 5px;
      <number>0</number>
     </property>
     <item>
-     <layout class="QGridLayout" name="gridLayout_Models" columnstretch="0,0">
-      <property name="topMargin">
-       <number>0</number>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
       </property>
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="radioButton_ViltBase">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Select Model</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_SelectModel">
         <property name="font">
          <font>
           <family>Arial</family>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: black;</string>
+         <string notr="true">/* Styles adpoted from https://doc.qt.io/qt-6/stylesheet-examples.html */
+QComboBox {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 1px 18px 1px 10px;
+}
+
+QComboBox:on { /* shift the text when the popup opens */
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+}</string>
         </property>
-        <property name="text">
+        <property name="currentText">
          <string>ViLT (Base)</string>
         </property>
-        <property name="checked">
-         <bool>true</bool>
+        <property name="placeholderText">
+         <string/>
         </property>
+        <item>
+         <property name="text">
+          <string>ViLT (Base)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ViLT (Fine Tuned)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>LXMERT (Base)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>LXMERT (Fine Tuned)</string>
+         </property>
+        </item>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="radioButton_LxmertBase">
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_ExportResults">
         <property name="font">
          <font>
           <family>Arial</family>
          </font>
         </property>
         <property name="text">
-         <string>LXMERT (Base)</string>
+         <string notr="true">Export Results</string>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="radioButton_LxmertFineTuned">
-        <property name="text">
-         <string>LXMERT (Fine Tuned)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QRadioButton" name="radioButton_ViltFineTuned">
-        <property name="text">
-         <string>ViLT (Fine Tuned)</string>
+        <property name="tristate">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -1446,7 +1496,15 @@ padding: 5px;
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: black;</string>
+       <string notr="true">* { 
+	border: 1px solid black;
+	color: black;
+}
+
+QLineEdit {
+	padding: 10px 5px;
+	border-radius: 5px;
+}</string>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -1478,18 +1536,6 @@ padding: 4px 0;
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="checkBox_ExportResults">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
-        </property>
-        <property name="text">
-         <string notr="true">Export Results</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -1498,9 +1544,9 @@ padding: 4px 0;
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>680</y>
+     <y>700</y>
      <width>741</width>
-     <height>161</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="font">
@@ -1569,8 +1615,8 @@ padding: 4px 0;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>612</width>
-         <height>96</height>
+         <width>592</width>
+         <height>98</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">

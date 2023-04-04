@@ -204,12 +204,13 @@ class VQAInteractionScreen(QWidget):
         self.ui.textEdit_Details.setText("")
 
         # Disable question asking options while model is running
-        self.ui.radioButton_ViltFineTuned.setEnabled(False)
-        self.ui.radioButton_ViltBase.setEnabled(False)
-        self.ui.radioButton_LxmertFineTuned.setEnabled(False)
-        self.ui.radioButton_LxmertBase.setEnabled(False)
-        self.ui.lineEdit_Question.setEnabled(False)
-        self.ui.checkBox_ExportResults.setEnabled(False)
+        # self.ui.radioButton_ViltFineTuned.setEnabled(False)
+        # self.ui.radioButton_ViltBase.setEnabled(False)
+        # self.ui.radioButton_LxmertFineTuned.setEnabled(False)
+        # self.ui.radioButton_LxmertBase.setEnabled(False)
+        # self.ui.lineEdit_Question.setEnabled(False)
+        # self.ui.checkBox_ExportResults.setEnabled(False)
+        self.ui.comboBox_SelectModel.setEnabled(False)
 
         # Change text/color/state of ask button to reflect that a model is running and results are loading
         self.ui.pushButton_Ask.setEnabled(False)
@@ -221,35 +222,38 @@ class VQAInteractionScreen(QWidget):
         image = self.currentImage.copy()
 
         model_index = 0
+        self.current_model_name = str(self.ui.comboBox_SelectModel.currentText())
+
         # ViLT (Base) Model
-        if self.ui.radioButton_ViltBase.isChecked():
+        if (self.current_model_name == "ViLT (Base)"):
             model_index = 0
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
-       #Fine Tuned ViLT
-        elif self.ui.radioButton_ViltFineTuned.isChecked():
+        #Fine Tuned ViLT
+        elif (self.current_model_name == "ViLT (Fine Tuned)"):
             model_index = 1
             model = self.models[model_index]
             worker = Worker(predictVilt, model[0], model[1], question, image) 
         # LXMERT (Base) Model
-        elif self.ui.radioButton_LxmertBase.isChecked():
+        elif (self.current_model_name == "LXMERT (Base)"):
             model_index = 2
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
         #Fine Tuned LXMERT
-        elif self.ui.radioButton_LxmertFineTuned.isChecked():
+        elif (self.current_model_name == "LXMERT (Fine Tuned)"):
             model_index = 3
             model = self.models[model_index]
             worker = Worker(predictLxmert, model[0], model[1], model[2], model[3], model[4], question, image)
 
         def completed():
             # Enable question asking options now that model is complete
-            self.ui.radioButton_ViltFineTuned.setEnabled(True)
-            self.ui.radioButton_ViltBase.setEnabled(True)
-            self.ui.radioButton_LxmertFineTuned.setEnabled(True)
-            self.ui.radioButton_LxmertBase.setEnabled(True)
-            self.ui.lineEdit_Question.setEnabled(True)
-            self.ui.checkBox_ExportResults.setEnabled(True)
+            # self.ui.radioButton_ViltFineTuned.setEnabled(True)
+            # self.ui.radioButton_ViltBase.setEnabled(True)
+            # self.ui.radioButton_LxmertFineTuned.setEnabled(True)
+            # self.ui.radioButton_LxmertBase.setEnabled(True)
+            # self.ui.lineEdit_Question.setEnabled(True)
+            # self.ui.checkBox_ExportResults.setEnabled(True)
+            self.ui.comboBox_SelectModel.setEnabled(True)
 
             # Set ask button active and change text/color back to user ask prompt
             self.ui.pushButton_Ask.setEnabled(True)
