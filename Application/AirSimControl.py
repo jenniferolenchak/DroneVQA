@@ -12,15 +12,29 @@ from PySide6.QtUiTools import QUiLoader
 
 class AirSimControl(QWidget):
 
-    # Camera Variables
-    CAMERA_NAME = '0'
-    IMAGE_TYPE = airsim.ImageType.Scene
-
     def __init__(self, parent=None):
         super().__init__(parent)
-
-        # Set default movement velocity
+        
+        # Set default movement velocity, camera type (scene), and camera view (front-center)
         self.movementVelocity = 20
+        self.imageType = airsim.ImageType.Scene
+        self.cameraView = "0"
+        self.getPixelsAsFloat = False #Should only be true for normalized DisparityNormalized camera
+
+    def setCameraView(self, viewIndex):
+        # Per the AirSim API documentation, indices 0-4 represent front-center, front-right, front-left, bottom-center, and back-center camera views, respectively.
+        self.cameraView = str(viewIndex)
+
+    def setCameraType(self, cameraIndex):
+        # Types of AirSim cameras available
+        CAMERA_TYPES = [airsim.ImageType.Scene, airsim.ImageType.DepthVis, airsim.ImageType.Segmentation, airsim.ImageType.SurfaceNormals, airsim.ImageType.Infrared, airsim.ImageType.OpticalFlow, airsim.ImageType.OpticalFlowVis]
+        self.imageType = CAMERA_TYPES[cameraIndex]
+
+        # Pixel values need to be recieved as floats to be normalized with DisparityNormalized camera type
+        if (cameraIndex == 4):
+            self.getPixelsAsFloat = False
+        else:
+            self.getPixelsAsFloat = True
 
     @Slot()
     def initializeAirSimClient(self):
@@ -72,5 +86,5 @@ class AirSimControl(QWidget):
     def updateAirSimWeather(self, parameter, value):
         self.client.simSetWeatherParameter(parameter, value)
 
-    def getCurrentDroneImage(self, cameraName = CAMERA_NAME, imageType = IMAGE_TYPE):
-        return self.image_client.simGetImage(cameraName, imageType)
+    def getCurrentDroneImage(self):
+        return self.image_client.simGetImage(self.cameraView, self.imageType)
