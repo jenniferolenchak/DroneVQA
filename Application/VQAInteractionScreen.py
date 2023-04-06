@@ -79,7 +79,6 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
 
         # Camera setting combo box drop-down value changed (camera view and type fields) to methods
-        self.ui.comboBox_CameraType.currentIndexChanged.connect(lambda: self.controller.setCameraType(self.ui.comboBox_CameraType.currentIndex()))
         self.ui.comboBox_CameraView.currentIndexChanged.connect(lambda: self.controller.setCameraView(self.ui.comboBox_CameraView.currentIndex()))
 
         # Connect weather and environment sliders to methods

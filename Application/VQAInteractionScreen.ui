@@ -1270,14 +1270,14 @@ padding: 5px;
      <item>
       <widget class="QComboBox" name="comboBox_CameraView">
        <property name="currentIndex">
-        <number>-1</number>
+        <number>0</number>
        </property>
        <property name="placeholderText">
         <string>Change Camera View...</string>
        </property>
        <item>
         <property name="text">
-         <string>Front: Center</string>
+         <string>Front: Center (Default View)</string>
         </property>
        </item>
        <item>
@@ -1298,51 +1298,6 @@ padding: 5px;
        <item>
         <property name="text">
          <string>Back: Center</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_CameraType">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <property name="placeholderText">
-        <string>Change Camera Type...</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Scene Camera</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Depth Visualization</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Segmentation</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Surface Normals</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Simulated Infared</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Optical Flow</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Visual Optical Flow</string>
         </property>
        </item>
       </widget>
@@ -1603,8 +1558,8 @@ padding: 4px 0;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>612</width>
-         <height>96</height>
+         <width>622</width>
+         <height>94</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
