@@ -6,7 +6,7 @@
 
 # Table of Contents
 - [About](#about)
-- [Getting Started](#getting-started)
+- [Setting Up & Getting Started](#setting-up-and-getting-started)
 - [Application User Guide](#application-user-guide)
     - [Loading Screen](#loading-screen)
     - [Launch Screen](#launch-screen)
@@ -34,7 +34,7 @@ This project takes a research-based approach to compare the performance of open-
 
 <br/><br/>
 
-# Getting Started
+# Setting Up and Getting Started
 1. Clone the repository using one of the following options:    
     - __[Option 1]__ Using SSH:
         ```
