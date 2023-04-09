@@ -2,7 +2,7 @@
     This University of Central Florida senior design project is sponsored by the Lockheed Martin Corporation.
     <br/><br/>
     <img src="/Application/Images/Logos/DroneVQALogo.png" />
-</p>image.pngimage.pngimage.pngimage.png
+</p>
 
 # Table of Contents
 - [About](#about)
