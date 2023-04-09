@@ -164,9 +164,9 @@ These questions can be anything, but tailoring to the current environment will h
 # Members and Roles
 | Name  | GitHub Username | Role |
 | ------------- | ------------- | ------------- |
-| Samuel Hearn | @SADPuppett |
+| Samuel Hearn | @SADPuppett | _Dataset Creation Lead_ |
 | Jennifer Olenchak | @jenniferolenchak | _Project Manager, Application Lead_|
-| Marco Peric | @marcoperic | _Dataset Creation & Training Lead_ |
+| Marco Peric | @marcoperic | _Training Lead_ |
 | Robin Perlman | @Perl-R |  _Model Research & Deployment Lead_ |
 | Ayden Rebhan | @ayden-rebhan |
 | Brandon Spangler  | @brandonspangler2 |
