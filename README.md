@@ -76,19 +76,22 @@ This project takes a research-based approach to compare the performance of open-
         3. Then install the rest of the dependencies:   
         ```pip install -r requirements.txt```
 
-6. Download an Unreal Engine environment that has the Microsoft AirSim plug-in enabled. Choose one of the following options:
+5. Download an Unreal Engine environment that has the Microsoft AirSim plug-in enabled. Choose one of the following options:
     - __[Option 1]__ Download the file(s) of an officially released Unreal Engine V4 environment containing the Microsoft AirSim plug-in from [https://github.com/microsoft/AirSim/releases](https://github.com/microsoft/AirSim/releases). Once the environment ZIP file has been downloaded, extract the file(s) using 7-zip and run the ```run.bat``` file. Further details about downloading and extracting the large environment files are available via the above link.
 
     - __[Option 2]__ Download the Unreal Engine V5 city map developed for use by this project, available [here](https://knightsucfedu39751-my.sharepoint.com/:u:/g/personal/georgec_knights_ucf_edu/EX_7FaD9tp5KrDsan_br704Bzd5CeatU0i3EkygkDceTcQ?e=owa42D).
 
     - __[Option 3]__ You may also choose to use your own Unreal Engine environment, but the Microsoft AirSim plug-in must be enabled and properly configured using the Unreal Editor in order to work with this application.
 
-8. With the virtual environment activated, launch the DroneVQA application, navigate to the ```/DroneVQA/Application``` directory and execute the following command:
+6. Launch the DroneVQA application by navigating to the ```/DroneVQA/Application``` directory and executing the following command:
     ```
     python application.py
     ```
+    If the above steps were successfully completed, a [Loading Screen](#loading-screen) should immediately appear and be replaced by a [Launch Screen](#launch-screen) when loading has concluded.
 
-9. Launch the Unreal Engine environment executable when prompted by the application.
+7. Launch the Unreal Engine environment executable when prompted by the application, once the [Launch Screen](#launch-screen) has been reached. From here, follow the directions listed within the application.
+
+8. Enjoy! We recommend that the the [Application User Guide](#application-user-guide) be reviewed for any necessary clarification about supported features.
 
 <br/><br/>
 # Application User Guide
