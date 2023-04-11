@@ -1268,79 +1268,68 @@ padding: 5px;
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QComboBox" name="comboBox_CameraView">
+       <property name="currentIndex">
+        <number>0</number>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="placeholderText">
+        <string>Change Camera View...</string>
        </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_CameraEffectNone">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>None</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
+       <item>
+        <property name="text">
+         <string>Front: Center (Default View)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Front: Right Rotor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Front: Left Rotor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bottom: Center</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back: Center</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_LensBlur">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
+      <widget class="QComboBox" name="comboBox_CameraEffect">
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
+       <property name="placeholderText">
+        <string>Select a Camera Effect...</string>
        </property>
-       <property name="text">
-        <string>Lens Blur</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_PixelCorruption">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>Pixel Corruption</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="radioButton_BlackScreen">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>Black Screen</string>
-       </property>
+       <item>
+        <property name="text">
+         <string>None</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Lens Blur</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pixel Corruption</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Black Screen</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
@@ -1569,8 +1558,8 @@ padding: 4px 0;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>612</width>
-         <height>96</height>
+         <width>622</width>
+         <height>94</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">

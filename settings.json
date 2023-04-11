@@ -1,0 +1,112 @@
+{
+  "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/main/docs/settings_json.md",
+  "SettingsVersion": 1.2,
+  "SimMode": "Multirotor",
+  "ClockSpeed": 1,
+  "LocalHostIp": "127.0.0.1",
+  "CameraDefaults": {
+        "CaptureSettings": [
+          {
+            "Width": 1216,
+            "Height": 684
+          }
+      ]
+  },
+  "Vehicles": {
+      "SimpleFlight": {
+        "VehicleType": "SimpleFlight",
+        "DefaultVehicleState": "Armed",
+        "EnableCollisionPassthrough": false,
+        "EnableCollisions": true,
+        "AllowAPIAlways": true,
+        "Sensors": {
+          "LidarSensor1": {
+            "SensorType": 6,
+            "Enabled": true,
+            "Range": 1,
+            "NumberOfChannels": 1,
+            "RotationsPerSecond": 10,
+            "PointsPerSecond": 100000,
+            "X": 0,
+            "Y": 0,
+            "Z": -1,
+            "Roll": 0,
+            "Pitch": 0,
+            "Yaw": 0,
+            "VerticalFOVUpper": -15,
+            "VerticalFOVLower": -25,
+            "HorizontalFOVStart": -20,
+            "HorizontalFOVEnd": 20,
+            "DrawDebugPoints": true,
+            "DataFrame": "SensorLocalFrame"
+          },
+          "LidarSensor2": {
+            "SensorType": 6,
+            "Enabled": true,
+            "Range": 1,
+            "NumberOfChannels": 1,
+            "RotationsPerSecond": 10,
+            "PointsPerSecond": 100000,
+            "X": 0,
+            "Y": 0,
+            "Z": -1,
+            "Roll": 0,
+            "Pitch": 0,
+            "Yaw": 90,
+            "VerticalFOVUpper": -15,
+            "VerticalFOVLower": -25,
+            "HorizontalFOVStart": -20,
+            "HorizontalFOVEnd": 20,
+            "DrawDebugPoints": true,
+            "DataFrame": "SensorLocalFrame"
+          },
+
+          "LidarSensor3": {
+            "SensorType": 6,
+            "Enabled": true,
+            "Range": 1,
+            "NumberOfChannels": 1,
+            "RotationsPerSecond": 10,
+            "PointsPerSecond": 100000,
+            "X": 0,
+            "Y": 0,
+            "Z": -1,
+            "Roll": 0,
+            "Pitch": 0,
+            "Yaw": 180,
+            "VerticalFOVUpper": -15,
+            "VerticalFOVLower": -25,
+            "HorizontalFOVStart": -20,
+            "HorizontalFOVEnd": 20,
+            "DrawDebugPoints": true,
+            "DataFrame": "SensorLocalFrame"
+          },
+
+          "LidarSensor4": {
+            "SensorType": 6,
+            "Enabled": true,
+            "Range": 1,
+            "NumberOfChannels": 1,
+            "RotationsPerSecond": 10,
+            "PointsPerSecond": 100000,
+            "X": 0,
+            "Y": 0,
+            "Z": -1,
+            "Roll": 0,
+            "Pitch": 0,
+            "Yaw": 270,
+            "VerticalFOVUpper": -15,
+            "VerticalFOVLower": -25,
+            "HorizontalFOVStart": -20,
+            "HorizontalFOVEnd": 20,
+            "DrawDebugPoints": true,
+            "DataFrame": "SensorLocalFrame"
+          }
+        },
+        "RC": {
+          "RemoteControlID": 0,
+          "AllowAPIWhenDisconnected": false
+        }
+      }
+    }
+}

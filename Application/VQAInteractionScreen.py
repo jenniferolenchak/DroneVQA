@@ -82,6 +82,9 @@ class VQAInteractionScreen(QWidget):
         self.ui.button_rotate_right.released.connect(lambda: self.controller.stopDroneMovement)
         self.ui.button_rotate_left.released.connect(lambda: self.controller.stopDroneMovement)
 
+        # Camera setting combo box drop-down value changed (camera view and type fields) to methods
+        self.ui.comboBox_CameraView.currentIndexChanged.connect(lambda: self.controller.setCameraView(self.ui.comboBox_CameraView.currentIndex()))
+
         # Connect weather and environment sliders to methods
         self.ui.horizontalSlider_Rain.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Rain, self.ui.label_RainVal, self.ui.horizontalSlider_Rain.value()))
         self.ui.horizontalSlider_Snow.valueChanged.connect(lambda: self.changeWeather(airsim.WeatherParameter.Snow, self.ui.label_SnowVal, self.ui.horizontalSlider_Snow.value()))
@@ -114,6 +117,7 @@ class VQAInteractionScreen(QWidget):
 
         # Ask Question Button
         self.ui.pushButton_Ask.clicked.connect(self.askQuestion)
+        self.ui.lineEdit_Question.returnPressed.connect(self.askQuestion)
 
     def changeWeather(self, command, valLabel, sliderVal):
         '''Updates the lcd number next to slider and passes updated weather values to air sim control'''
@@ -179,22 +183,20 @@ class VQAInteractionScreen(QWidget):
                 frame = cv2.imdecode(np_response_image, cv2.IMREAD_COLOR)        
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-                # Camera Effects (None, Black Screen, Lens Blur, Pixel Corruption)
-                self.cameraEffect = "None"
+                # Get user-selected camera effect text
+                self.cameraEffect = str(self.ui.comboBox_CameraEffect.currentText())
 
-                if (self.ui.radioButton_BlackScreen.isChecked()):
-                    frame[frame != 0] = 0;
-                    self.cameraEffect = "Black Screen"
-
-                if (self.ui.radioButton_LensBlur.isChecked()):
+                # Apply effect to the frame, if applicable. "None" selection has no effect.
+                if (self.cameraEffect == "Black Screen"):
+                    frame[frame != 0] = 0
+                elif (self.cameraEffect == "Lens Blur"):
                     frame = cv2.GaussianBlur(frame, (15,15), cv2.BORDER_DEFAULT)
-                    self.cameraEffect = "Lens Blur"
-
-                if (self.ui.radioButton_PixelCorruption.isChecked()):
+                elif (self.cameraEffect == "Pixel Corruption"):
                     frame_dim = frame.shape
                     for i in range(1000):
                         frame[random.randint(0, frame_dim[0] - 1), random.randint(0, frame_dim[1] - 1)] = 0
-                    self.cameraEffect = "Pixel Corruption"
+
+                self.currentImage = frame
                 
                 # Resize Image for Display
                 dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
