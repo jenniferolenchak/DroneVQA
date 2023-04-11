@@ -146,16 +146,16 @@ class VQAInteractionScreen(QWidget):
         Camera thread ends on exiting main thread through exception
         """
         # Setup long running thread to display image stream
-        worker = Video_Stream_Worker(self.get_video_stream)
+        video_stream_worker = Video_Stream_Worker(self.get_video_stream)
 
         # Use progress callback to send image to main thread
-        worker.signals.progress.connect(self.display_video_stream)
+        video_stream_worker.signals.progress.connect(self.display_video_stream)
 
         # When 'Restart Camera' button is pressed
         # exit current thread and automatically create new thread
-        worker.signals.finished.connect(self.setupCamera)
+        video_stream_worker.signals.finished.connect(self.setupCamera)
 
-        self.threadManager.start(worker)
+        self.threadManager.start(video_stream_worker)
 
     def restartCamera(self):
         # Stop video stream loop ending camera thread
@@ -201,10 +201,18 @@ class VQAInteractionScreen(QWidget):
                 # Resize Image for Display
                 dim = (self.ui.label_CameraFeed.width(),self.ui.label_CameraFeed.height())
                 frame = cv2.resize(frame, dim)
-
+                
+                # Return current frame back to main
                 progress_callback.emit(frame)
+
+            # Return paused status back to main
+            progress_callback.emit("Video Stream Paused.")
        
     def display_video_stream(self, frame):
+        # Check if the video stream is paused
+        if (frame == "Video Stream Paused."):
+            return
+        
         # Set global current image to be used as VQA image
         self.currentImage = frame
 
