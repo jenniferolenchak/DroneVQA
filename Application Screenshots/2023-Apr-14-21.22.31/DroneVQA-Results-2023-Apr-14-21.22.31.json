@@ -1,0 +1,15 @@
+{
+    "model": "ViLT",
+    "question": "How many cars are there?",
+    "answer": "2",
+    "details": {
+        "alt_answer_1": "2 0.96228",
+        "alt_answer_2": "3 0.02562",
+        "alt_answer_3": "1 0.00970",
+        "alt_answer_4": "4 0.00160",
+        "alt_answer_5": "5 0.00029"
+    },
+    "settings": {
+        "effect": ""
+    }
+}
