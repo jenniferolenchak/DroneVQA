@@ -1,5 +1,5 @@
 import os
-from transformers import ViltForQuestionAnswering, ViltProcessor 
+from transformers import ViltForQuestionAnswering, ViltProcessor, logging
 import torch
 import numpy as np
 
@@ -21,7 +21,7 @@ import cv2
 # Imports related to ViLT
 from ModelVisualizations.Vilt.vilt_visualization import get_visualization_for_token, combine_images, rgba2rgb
 
-
+logging.set_verbosity_error()
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 device = "cpu"
 print(device)
